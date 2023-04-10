@@ -1,0 +1,35 @@
+:root {
+    --primary: #0078e0;
+    --secondary: #3395a0;
+    --navBar-bg: #ffffff;
+
+    /* Colors for links */
+    --success-link: #73ee86;
+    --danger-link: #ff6b6b;
+    --warning-link: #ffcf55;
+    --info-link: #4fd6ff;
+    --light-link: #f0f0f0;
+    --dark-link: #000000;
+    --muted-link: #8a8a8a;
+    --white-link: #ffffff;
+
+    /* Colors for texts */
+    --text-success: #73ee86;
+    --text-danger: #ff6b6b;
+    --text-warning: #ffcf55;
+    --text-info: #4fd6ff;
+    --text-light: #f0f0f0;
+    --text-dark: #000000;
+    --text-muted: #8a8a8a;
+    --text-white: #ffffff;
+
+    /* Colors for back grounds */
+    --bg-success: #73ee86;
+    --bg-danger: #ff6b6b;
+    --bg-warning: #ffcf55;
+    --bg-info: #4fd6ff;
+    --bg-light: #f0f0f0;
+    --bg-dark: #000000;
+    --bg-muted: #8a8a8a;
+    --bg-white: #ffffff;
+}

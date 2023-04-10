@@ -1,0 +1,33 @@
+@import "normalize.css";
+@import "colors.css";
+@import "components/nav.css";
+@import "components/buttons.css";
+@import "standars.css";
+@import "components/star.css";
+@import "components/homeCard.css";
+@import "components/pageNav.css";
+
+body {
+    padding-top: 200px;
+    display: flex;
+    flex-direction: column;
+    /* height: 5000px; */
+    align-items: center;
+    /* background: var(--bg-light); */
+}
+
+.productCon {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    min-width: 600px;
+    max-width: 1000px;
+    /* background-color: var(--bg-white); */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}

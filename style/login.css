@@ -1,0 +1,155 @@
+@import "normalize.css";
+@import "colors.css";
+@import "components/nav.css";
+@import "components/buttons.css";
+@import "standars.css";
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-white);
+}
+.container {
+    margin-top: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+    padding: 100px;
+    position: relative;
+    width: 50%;
+    min-width: 470px;
+    max-width: 700px;
+}
+.container > img {
+    width: 35%;
+    position: absolute;
+}
+#logo1 {
+    left: 0;
+    top: 5%;
+}
+#logo2 {
+    position: absolute;
+    right: 0;
+    bottom: 5%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* height: 520px;
+    width: 400px; */
+    background-color: #ffffff55;
+    border-radius: 10px;
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 50px 35px;
+}
+form * {
+    color: var(--text-dark);
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+    margin: 0;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-weight: bold;
+}
+.inputContainer {
+    width: 100%;
+}
+input {
+    border: solid 1px var(--bg-muted);
+    display: block;
+    height: 30px;
+    width: 100%;
+    background-color: var(--bg-light);
+    opacity: 0.6;
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--primary);
+}
+input:focus {
+    background-color: var(--primary);
+    color: var(--text-white);
+    opacity: 0.5;
+}
+input::selection {
+    background: var(--bg-white);
+    color: black;
+    text-shadow: 1px 1px #fff;
+}
+
+/* Firefox */
+input::-moz-selection {
+    background: var(--bg-white);
+    color: black;
+    text-shadow: 1px 1px #fff;
+}
+
+::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+button {
+    margin-top: 30px;
+    width: 60%;
+    background-color: var(--primary);
+    color: var(--text-white);
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+button:hover {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    opacity: 0.9;
+}
+button:active {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    color: var(--white-link);
+    opacity: 0.7;
+}
+#loginSingupLink,
+#loginSingupLink:visited {
+    color: var(--dark-link);
+}
+#loginSingupLink:hover {
+    color: var(--primary);
+}
+
+#loginSingupLink:active,
+#loginSingupLink:focus {
+    color: var(--muted-link);
+}
+.errorMessage {
+    color: var(--text-danger);
+    margin-bottom: 0;
+}

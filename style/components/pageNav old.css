@@ -1,0 +1,24 @@
+/* ul.pagination > li.active > a {
+    background-color: red !important;
+    border-color: none !important;
+} */
+.pagination > li.active > a {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.pagination > li.active > a:hover {
+    color: var(--white-link);
+}
+.pagination > li.active > a:active {
+    border-color: var(--primary);
+}
+.pagination > li.active > a:focus {
+    border-color: var(--primary);
+}
+
+.pagination > li > a {
+    color: var(--primary);
+}
+.pagination > li > a:hover {
+    color: var(--primary);
+}

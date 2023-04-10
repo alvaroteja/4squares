@@ -1,0 +1,146 @@
+/**************************/
+/* Button 1 Style         */
+/**************************/
+.button1 {
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: var(--primary);
+    color: var(--white-link);
+    transition: 0.2s;
+}
+.button1:hover {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    opacity: 0.9;
+}
+.button1:active {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    color: var(--white-link);
+    opacity: 0.7;
+}
+
+/**************************/
+/* Button 2 Style         */
+/**************************/
+.button2 {
+    background-color: var(--bg-white);
+    border: solid 1px var(--primary);
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--primary);
+    transition: 0.2s;
+    opacity: 1;
+}
+.button2:hover {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    color: var(--white-link);
+}
+.button2:active {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    color: var(--white-link);
+    opacity: 0.7;
+}
+
+/**************************/
+/* ButtonMoreInfo Style   */
+/**************************/
+.buttonMoreInfo {
+    text-decoration: none;
+    color: var(--white-link);
+}
+.buttonMoreInfoBox {
+    margin: 5px;
+    background-color: var(--primary);
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+.buttonMoreInfoBox:hover {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    opacity: 0.9;
+}
+.buttonMoreInfoBox:active {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary);
+    color: var(--white-link);
+    opacity: 0.7;
+}
+/************************************************/
+/*                 Emoji Buttons                */
+/************************************************/
+
+/**************************/
+/* Hide Button            */
+/**************************/
+.hideSvg {
+    cursor: pointer;
+    stroke: var(--primary);
+    transition: 0.2s;
+}
+.hideSvg:hover {
+    stroke: var(--danger-link);
+}
+.hideSvg:active {
+    opacity: 0.6;
+}
+.hideSvg-off {
+    cursor: pointer;
+    stroke: var(--muted-link);
+    transition: 0.2s;
+}
+.hideSvg-off:hover {
+    stroke: var(--success-link);
+}
+.hideSvg-off:active {
+    opacity: 0.6;
+}
+
+/**************************/
+/* Delete Button          */
+/**************************/
+.deleteSvg {
+    cursor: pointer;
+    stroke: var(--dark-link);
+    transition: 0.2s;
+}
+.deleteSvg:hover {
+    stroke: var(--danger-link);
+}
+.deleteSvg:active {
+    opacity: 0.6;
+}
+
+/**************************/
+/* Favorite Button        */
+/**************************/
+.favoriteSvg {
+    cursor: pointer;
+    stroke: var(--dark-link);
+    transition: 0.2s;
+}
+.favoriteSvg:hover {
+    stroke: var(--primary);
+}
+.favoriteSvg:active {
+    opacity: 0.6;
+}
+
+.favoriteSvg-on {
+    cursor: pointer;
+    stroke: var(--primary);
+    fill: var(--primary);
+    transition: 0.2s;
+}
+.favoriteSvg-on:hover {
+    stroke: var(--danger-link);
+    fill: var(--danger-link);
+}
+.favoriteSvg-on:active {
+    opacity: 0.6;
+}

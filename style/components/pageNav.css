@@ -1,0 +1,42 @@
+.pageUl {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 50px 0;
+    box-sizing: border-box;
+}
+
+.pageUl > li > a {
+    border: solid 1px var(--bg-muted);
+    margin: 0 -0.5px;
+    padding: 5px 12px;
+    background-color: var(--bg-white);
+    text-decoration: none;
+    color: var(--primary);
+}
+.pageUl > li > a:hover {
+    background-color: var(--bg-light);
+}
+.pageUl > li > a:active,
+.pageUl > li > a:focus {
+    color: var(--bg-white);
+    border-color: var(--bg-muted);
+    background-color: var(--bg-muted);
+}
+.pageUl > li.active > a {
+    background-color: var(--primary);
+    color: var(--white-link);
+    border-color: var(--primary);
+}
+.pageUl > li.disabled > a {
+    background-color: var(--bg-light);
+    color: var(--text-muted);
+}
+.pageUl > li:first-child > a {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.pageUl > li:last-child > a {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
