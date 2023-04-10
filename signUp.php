@@ -40,7 +40,7 @@ session_start();
             </div>
 
             <button>Enviar</button>
-            <a id="loginRelink" href="controller/loginController.php">Login</a>
+            <a id="loginRelink" href="controller/loginController.php">Log in</a>
         </form>
         <img id="logo2" src="img/branding/square_blue.svg" alt="" />
     </div>

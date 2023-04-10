@@ -58,7 +58,7 @@ if (isset($_GET['userOrPass'])) {
                 <input name="password" type="password" placeholder="pandelembas" id="password" />
                 <?php echo ($passwordMessage); ?>
             </div>
-            <button>Login</button>
+            <button>Log in</button>
             <a id="loginSingupLink" href="signUp.php">Sign up</a>
             <?php echo ($errorMessage); ?>
             <input type="hidden" name="login" value="true">
