@@ -1,5 +1,5 @@
 <?php
-include("/xampp/htdocs/tfg/4squares/model/UserModel.php");
+include("../model/UserModel.php");
 class LoginService
 {
     var $user;

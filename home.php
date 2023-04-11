@@ -1,10 +1,12 @@
 <?php
-
-include("model/UserModel.php");
-include("service/DBConnection.php");
-include("service/ProductService.php");
-include("service/ScoreService.php");
-include("webSettings.php");
+// error_reporting(E_ALL);
+// ini_set('display_errors', '1');
+include("./model/UserModel.php");
+include("./service/DBConnection.php");
+include("./service/ProductService.php");
+include("./service/ScoreService.php");
+include("./webSettings.php");
+include("model/ProductModel.php");
 session_start();
 $connnection = new DBConnection();
 $scoreService = new ScoreService($connnection);
@@ -46,15 +48,15 @@ $productList = $_SESSION["productsList"];
     <link rel="stylesheet" href="style/home.css" />
 </head>
 <?php
-include("html/components/nav.php");
+include("./html/components/nav.php");
 
-include("html/components/pageNav.php");
+include("./html/components/pageNav.php");
 
 for ($i = 0; $i < $maxProductsAtHome; $i++) {
-    include("html/components/homeCard.php");
+    include("./html/components/homeCard.php");
 }
 
-include("html/components/pageNav.php");
+include("./html/components/pageNav.php");
 ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 <script>
