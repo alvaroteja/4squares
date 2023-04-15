@@ -6,7 +6,7 @@ include("./service/DBConnection.php");
 include("./service/ProductService.php");
 include("./service/ScoreService.php");
 include("./webSettings.php");
-include("model/ProductModel.php");
+include_once("model/ProductModel.php");
 session_start();
 $connnection = new DBConnection();
 $scoreService = new ScoreService($connnection);

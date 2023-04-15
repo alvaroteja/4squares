@@ -4,6 +4,7 @@
 
 include("../service/DBConnection.php");
 include("../service/ProductService.php");
+include("../model/ProductModel.php");
 include("../webSettings.php");
 session_start();
 $connnection = new DBConnection();

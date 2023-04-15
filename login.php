@@ -2,6 +2,12 @@
 include("generalData/messages.php");
 session_start();
 
+//si entramos aqui y se está logueado, nos manda a logout
+if (isset($_SESSION['user'])) {
+    header("Location: logout.php");
+}
+
+
 $userName = "";
 $userNameMessage = "";
 $password = "";
