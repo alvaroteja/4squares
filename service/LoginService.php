@@ -3,7 +3,6 @@ include("../model/UserModel.php");
 class LoginService
 {
     var $user;
-
     protected $connnection;
 
 
@@ -78,8 +77,5 @@ class LoginService
 
             return $r[5];
         }
-    }
-    function validPassword($password)
-    {
     }
 }

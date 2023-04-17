@@ -1,6 +1,7 @@
 <?php
 //include("/xampp/htdocs/tfg/4squares/model/ProductModel.php");
-include_once("model/ProductModel.php");
+//include_once("../model/ProductModel.php");
+//include_once("model/ProductModel.php");
 
 
 // $test = new ProductService();

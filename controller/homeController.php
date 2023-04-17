@@ -1,12 +1,13 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', '1');
-
 include("../service/DBConnection.php");
 include("../service/ProductService.php");
 include("../model/ProductModel.php");
 include("../webSettings.php");
 session_start();
+
+// error_reporting(E_ALL);
+// ini_set('display_errors', '1');
+
 $connnection = new DBConnection();
 $productService = new ProductService($connnection);
 

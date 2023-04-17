@@ -4,8 +4,8 @@ include("../service/LoginService.php");
 
 session_start();
 
-$connnection = new DBConnection();
-$loginService = new LoginService($connnection);
+//$connnection = new DBConnection();
+//$loginService = new LoginService($connnection);
 //Si ya está logeado el usuario, vamos a logout
 if (isset($_SESSION['user'])) {
     if (isset($_POST['logout'])) {

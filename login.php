@@ -16,7 +16,7 @@ $errorMessage = "";
 
 if (isset($_GET['userName'])) {
     if ($_GET['userName']  == "empty") {
-        $userNameMessage = "<p class='errorMessage'>" . $generalUserNameMessage . "</p>";
+        $userNameMessage = "<p class='errorMessage'>" . $loginUserNameMessage . "</p>";
     } else {
         $userName = $_GET['userName'];
     }
@@ -24,13 +24,13 @@ if (isset($_GET['userName'])) {
 
 if (isset($_GET['password'])) {
     if ($_GET['password']  == "empty") {
-        $passwordMessage = "<p class='errorMessage'>$generalPasswordMessage</p>";
+        $passwordMessage = "<p class='errorMessage'>$loginPasswordMessage</p>";
     }
 }
 
 if (isset($_GET['userOrPass'])) {
     if ($_GET['userOrPass']  == "noMatches") {
-        $errorMessage = "<p class='errorMessage'>$generalErrorMessage</p>";
+        $errorMessage = "<p class='errorMessage'>$loginErrorMessage</p>";
     }
 }
 ?>

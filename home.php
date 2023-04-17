@@ -8,6 +8,12 @@ include("./service/ScoreService.php");
 include("./webSettings.php");
 include_once("model/ProductModel.php");
 session_start();
+
+//si se consigue llegar aqui sin una lista de productos en la sesion, manda a index para que se genere
+if (!isset($_SESSION["productsIdList"])) {
+    header("Location: index.php");
+}
+
 $connnection = new DBConnection();
 $scoreService = new ScoreService($connnection);
 
