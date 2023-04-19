@@ -42,7 +42,8 @@ class ProductService
         $query = "SELECT * FROM `products` WHERE id = $id_product";
         $resultset = $con->query($query);
         if ($resultset->num_rows == 0) {
-            mysqli_close($con);
+            //mysqli_close($con);
+            $con->close();
             return false;
         } else {
             $row = $resultset->fetch_array(MYSQLI_ASSOC);
@@ -60,7 +61,8 @@ class ProductService
             }
 
 
-            mysqli_close($con);
+            //mysqli_close($con);
+            $con->close();
             return $product;
         }
     }
@@ -95,7 +97,8 @@ class ProductService
         foreach ($resultset as $result) {
             array_push($idList, $result['id']);
         }
-        mysqli_close($con);
+        //mysqli_close($con);
+        $con->close();
         return $idList;
     }
 
@@ -114,7 +117,8 @@ class ProductService
         $row = $resultset->fetch_array(MYSQLI_ASSOC);
 
         $r = array_values($row);
-        mysqli_close($con);
+        //mysqli_close($con);
+        $con->close();
         return $r[0];
     }
 
@@ -132,7 +136,8 @@ class ProductService
         $row = $resultset->fetch_array(MYSQLI_ASSOC);
 
         $r = array_values($row);
-        mysqli_close($con);
+        //mysqli_close($con);
+        $con->close();
         return $r[0];
     }
 
@@ -150,7 +155,8 @@ class ProductService
         $row = $resultset->fetch_array(MYSQLI_ASSOC);
 
         $r = array_values($row);
-        mysqli_close($con);
+        //mysqli_close($con);
+        $con->close();
         return $r[0];
     }
 
@@ -166,14 +172,16 @@ class ProductService
         $query = "SELECT `url`,`type` FROM `product_medias` WHERE id_product=" . $id_product . ";";
         $resultset = $con->query($query);
         if ($resultset->num_rows == 0) {
-            mysqli_close($con);
+            //mysqli_close($con);
+            $con->close();
             return false;
         } else {
             $mediaList = array();
             foreach ($resultset as $result) {
                 array_push($mediaList, $result);
             }
-            mysqli_close($con);
+            //mysqli_close($con);
+            $con->close();
             return $mediaList;
         }
     }

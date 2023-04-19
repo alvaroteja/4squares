@@ -1,5 +1,5 @@
 <?php
-include("generalData/messages.php");
+include("generalData/messagesLogin.php");
 session_start();
 
 //si entramos aqui y se está logueado, nos manda a logout

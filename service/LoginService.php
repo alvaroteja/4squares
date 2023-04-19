@@ -64,7 +64,8 @@ class LoginService
 
         if ($resultset->num_rows == 0) {
 
-            mysqli_close($con);
+            //mysqli_close($con);
+            $con->close();
             return false;
         } else {
 
@@ -73,7 +74,9 @@ class LoginService
 
             $userModel = new UserModel($r[0], $r[1], $r[2], $r[3], $r[4], $r[6], $r[8], $r[9]);
             $this->user = $userModel;
-            mysqli_close($con);
+
+            //mysqli_close($con);
+            $con->close();
 
             return $r[5];
         }

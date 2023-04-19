@@ -32,13 +32,15 @@ class ScoreService
         $resultset = $con->query($query);
 
         if ($resultset->num_rows == 0) {
-            mysqli_close($con);
+            //mysqli_close($con);
+            $con->close();
             return false;
         } else {
             while ($row = mysqli_fetch_array($resultset, MYSQLI_NUM)) {
                 array_push($scoreList, $row[0]);
             }
-            mysqli_close($con);
+            //mysqli_close($con);
+            $con->close();
         }
         return $scoreList;
     }

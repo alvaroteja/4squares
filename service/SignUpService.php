@@ -1,208 +1,58 @@
 <?php
-include_once("../generalData/messages.php");
+include_once("../validations/SignUpValidations.php");
 
 class SignUpService
 {
-    var $user;
-
     protected $connnection;
-
-    public function __construct($connnection)
+    protected $Messages;
+    //var $SignUpValidations = new SignUpValidations($connnection, $Messages);
+    public function __construct($connnection, $Messages)
     {
         $this->connnection = $connnection;
+        $this->Messages = $Messages;
     }
 
+
+    //creo una lista con los errores que hay en los distintos campos
     function validateInputs($inputList)
     {
-        $errorList = array();
-        //valido el campo nombre, si hay algun error se añaden a $errorList
-        if ($errors = $this->validateName($inputList["name"])) {
-            $errorList["name"] =  $errors;
-        }
-        //valido el campo apellido, si hay algun error se añaden a $errorList
-        if ($errors = $this->validateSurname($inputList["surname"])) {
-            $errorList["surname"] =  $errors;
-        }
-        //valido el campo email, si hay algun error se añaden a $errorList
-        if ($errors = $this->validateEmail($inputList["email"])) {
-            $errorList["email"] =  $errors;
-        }
-        if ($errors = $this->validateUserName($inputList["userName"])) {
-            $errorList["userName"] =  $errors;
+        $SignUpValidations = new SignUpValidations($this->connnection, $this->Messages);
+        $errorList = $SignUpValidations->validateInputs($inputList);
+
+        if (count($errorList) <= 0) {
+            $this->createUser($inputList);
+            return true;
         }
         return $errorList;
     }
-    function validateName($name)
+
+    function createUser($inputList)
     {
-        $nameErrorList = array();
-        //voy añadiendo los errores a $nameErrorList
-        if ($error = $this->isEmpty($name)) {
-            $nameErrorList[] = $error;
-            return $nameErrorList;
-        }
-        if ($error = $this->thereAreOuterBlankSpaces($name)) {
-            $nameErrorList[] = $error;
-        }
-        if ($error = $this->hasInvalidCharacters($name)) {
-            $nameErrorList[] = $error;
-            return $nameErrorList;
-        }
-
-        //si hay errores en la lista retorno la lista, si no, retorno false
-        if (count($nameErrorList) > 0) {
-            return $nameErrorList;
-        }
-        return false;
-    }
-
-    function validateSurname($surname)
-    {
-        $surnameErrorList = array();
-        //voy añadiendo los errores a $surnameErrorList
-        if ($error = $this->isEmpty($surname)) {
-            $surnameErrorList[] = $error;
-            return $surnameErrorList;
-        }
-        if ($error = $this->thereAreOuterBlankSpaces($surname)) {
-            $surnameErrorList[] = $error;
-        }
-        if ($error = $this->hasInvalidCharacters($surname)) {
-            $surnameErrorList[] = $error;
-            return $surnameErrorList;
-        }
-
-        //si hay errores en la lista retorno la lista, si no, retorno false
-        if (count($surnameErrorList) > 0) {
-            return $surnameErrorList;
-        }
-        return false;
-    }
-
-    function validateEmail($email)
-    {
-        $emailErrorList = array();
-        //voy añadiendo los errores a $emailErrorList
-        if ($error = $this->isEmpty($email)) {
-            $emailErrorList[] = $error;
-            return $emailErrorList;
-        }
-        if ($error = $this->thereAreOuterBlankSpaces($email)) {
-            $emailErrorList[] = $error;
-        }
-        if ($error = $this->thereAreBlankSpaces($email)) {
-            $emailErrorList[] = $error;
-            return $emailErrorList;
-        }
-        if ($error = $this->isInvalidEmail($email)) {
-            $emailErrorList[] = $error;
-        }
-
-        //si hay errores en la lista retorno la lista, si no, retorno false
-        if (count($emailErrorList) > 0) {
-            return $emailErrorList;
-        }
-        return false;
-    }
-
-    function validateUserName($userName)
-    {
-        $userNameErrorList = array();
-        //voy añadiendo los errores a $emailErrorList
-        if ($error = $this->isEmpty($userName)) {
-            $userNameErrorList[] = $error;
-            return $userNameErrorList;
-        }
-        if ($error = $this->thereAreBlankSpaces($userName)) {
-            $userNameErrorList[] = $error;
-            return $userNameErrorList;
-        }
-        if ($error = $this->userNameExist($userName)) {
-            $userNameErrorList[] = $error;
-            return $userNameErrorList;
-        }
-        if ($error = $this->hasInvalidCharactersButNumbersAreSupported($userName)) {
-            $userNameErrorList[] = $error;
-            return $userNameErrorList;
-        }
-
-        //si hay errores en la lista retorno la lista, si no, retorno false
-        if (count($userNameErrorList) > 0) {
-            return $userNameErrorList;
-        }
-        return false;
-    }
+        try {
+            $con = $this->connnection->getConnection();
+            if ($con->connect_error) {
+                die("Connection failed: " . $con->connect_error);
+            }
+            $name = $inputList['name'];
+            $surname = $inputList['surname'];
+            $email = $inputList['email'];
+            $userName = $inputList['userName'];
+            $password = $inputList['password'];
 
 
-    function isEmpty($value)
-    {
-        if (!isset($value) || is_null($value) || empty($value) || $value == "") {
-            return "El campo está vacio.";
-        }
-        return false;
-    }
+            $query = "INSERT INTO `users` (`id`, `first_name`, `surename`, `nickname`, `email`, `password`, `id_avatar`, `sing_up_date`, `muted`, `credentials`) VALUES (NULL, '$name', '$surname', '$userName', '$email', '$password', '1', current_timestamp(), '0', '0');";
 
-    function thereAreOuterBlankSpaces($value)
-    {
-        $firstLength = strlen($value);
-        $value = trim($value, " ");
-        $secondLength = strlen($value);
-
-        if ($firstLength != $secondLength) {
-            return "No puede haber espacios en blanco al principio ni al final.";
-        }
-
-        return false;
-    }
-    function thereAreBlankSpaces($value)
-    {
-        if (str_contains($value, ' ')) {
-            return "Es campo no puede contener espacios en blanco.";
-        }
-
-        return false;
-    }
-
-
-    function isInvalidEmail($str)
-    {
-        if (!filter_var($str, FILTER_VALIDATE_EMAIL)) {
-            return "Este email no tiene un formato correcto.";
-        }
-        return false;
-    }
-
-    function userNameExist($userName)
-    {
-        $con = $this->connnection->getConnection();
-
-        $query = "SELECT * FROM `users` WHERE nickname = '" . $userName . "'";
-        $resultset = $con->query($query);
-
-        if ($resultset->num_rows == 0) {
-            mysqli_close($con);
-
+            if ($con->query($query) === TRUE) {
+                //echo "Se ha creado el usuario satisfactoriamente.";
+                $con->close();
+                return true;
+            } else {
+                //echo "Error: " . $query . "<br>" . $con->error;
+                $con->close();
+                return false;
+            }
+        } catch (\Throwable $th) {
             return false;
         }
-
-        return "Este Nombre de usuario ya existe.";
-    }
-
-    function hasInvalidCharacters($string)
-    {
-        //"/[^A-Za-z'-'_' ']/
-        //'^[a-zA-Z0-9\-_]{3,20}$'
-        if (!preg_match("/^[a-zA-Z0-9á-úÁ-Úä-üÄ-ÜñÑçÇ\s]{1,15}$/", $string)) {
-            return "El nombre no puede contener caracteres especiales o numeros y su longitud máxima es de 15 caracteres.";
-        }
-        return false;
-    }
-    function hasInvalidCharactersButNumbersAreSupported($string)
-    {
-        //"/[^A-Za-z'-'_' ']/
-        //'^[a-zA-Z0-9\-_]{3,20}$'
-        if (!preg_match("/^[a-zA-Z0-9á-úÁ-Úä-üÄ-ÜñÑçÇ\s]{1,15}$/", $string)) {
-            return "El nombre no puede contener caracteres especiales y su longitud máxima es de 15 caracteres.";
-        }
-        return false;
     }
 }
