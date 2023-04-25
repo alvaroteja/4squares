@@ -36,6 +36,9 @@ class ProductService
      */
     function getAProduct($id_product)
     {
+        if (!is_numeric($id_product)) {
+            return false;
+        }
 
         $con = $this->connnection->getConnection();
 
@@ -59,7 +62,6 @@ class ProductService
             if ($mediaList) {
                 $product->setMedia_list($mediaList);
             }
-
 
             //mysqli_close($con);
             $con->close();

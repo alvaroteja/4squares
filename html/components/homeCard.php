@@ -128,7 +128,7 @@ if (isset($_SESSION["user"])) {
             </p>
         </div>
         <div class="productCon-infoCon-con2">
-            <a class="buttonMoreInfo" href="productInfo.php?id=<?php echo ($productList[$i]->getId_product()) ?>">
+            <a class="buttonMoreInfo" href="./controller/productInfoController.php?id=<?php echo ($productList[$i]->getId_product()) ?>">
                 <div class="buttonMoreInfoBox">Ver más...</div>
             </a>
         </div>

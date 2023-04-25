@@ -1,7 +1,7 @@
 <?php
 include_once("../service/DBConnection.php");
 include_once("../service/SignUpService.php");
-include_once("../generalData/messages.php");
+include_once("../generalData/signUpMessages.php");
 
 session_start();
 

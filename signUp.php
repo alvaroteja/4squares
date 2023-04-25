@@ -1,4 +1,7 @@
 <?php
+include("service/AvatarService.php");
+include("./model/UserModel.php");
+include("./service/DBConnection.php");
 session_start();
 //si entramos aqui y se está logueado, nos manda a logout
 if (isset($_SESSION['user'])) {

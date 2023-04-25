@@ -1,5 +1,9 @@
 <?php
-include("generalData/messagesLogin.php");
+include("service/AvatarService.php");
+include("./model/UserModel.php");
+include("./service/DBConnection.php");
+include("./generalData/messagesLogin.php");
+
 session_start();
 
 //si entramos aqui y se está logueado, nos manda a logout
