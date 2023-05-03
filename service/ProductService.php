@@ -62,7 +62,6 @@ class ProductService
             if ($mediaList) {
                 $product->setMedia_list($mediaList);
             }
-
             //mysqli_close($con);
             $con->close();
             return $product;

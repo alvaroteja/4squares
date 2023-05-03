@@ -42,7 +42,7 @@ if (isset($_SESSION["user"])) {
                         $active = "";
                     }
                     echo ('
-                        <button type="button" data-bs-target="#productId-' . $productList[$i]->getId_product() . '" data-bs-slide-to="' . $j . '" ' . $active . 'class="active" aria-current="true" aria-label="Slide ' . ($j + 1) . '"></button>
+                        <button type="button" data-bs-target="#productId-' . $productList[$i]->getId_product() . '" data-bs-slide-to="' . $j . '" ' . $active . ' aria-label="Slide ' . ($j + 1) . '"></button>
                     ');
                 }
             }

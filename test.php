@@ -1,6 +1,7 @@
 <?php
 include("service/DBConnection.php");
-include("service/AvatarService.php");
+include("service/ReviewService.php");
+include("dto/reviewDto.php");
 $connnection = new DBConnection();
-$avatarService = new AvatarService($connnection);
-print_r($avatarService->getAvatarByID(0));
+$reviewService = new ReviewService($connnection);
+$reviewService->getAllReviewsById(1);
