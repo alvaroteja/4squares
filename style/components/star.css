@@ -2,6 +2,7 @@
     fill: var(--primary);
     stroke: var(--primary);
 }
+
 .starSvgEmpty {
     stroke: var(--primary);
 }

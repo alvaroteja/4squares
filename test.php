@@ -1,7 +1,11 @@
 <?php
-include("service/DBConnection.php");
-include("service/ReviewService.php");
-include("dto/reviewDto.php");
+include("./service/DBConnection.php");
+include "./service/ReviewService.php";
+
 $connnection = new DBConnection();
-$reviewService = new ReviewService($connnection);
-$reviewService->getAllReviewsById(1);
+$a = new ReviewService($connnection);
+$r = $a->hasBeenVotedByUserId(1, 7);
+if (!$r) {
+    echo "es falso";
+}
+echo $r;

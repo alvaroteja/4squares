@@ -12,7 +12,10 @@ if (!isset($_SESSION["currentProduct"]) || !isset($_SESSION["currentAverageScore
     header("Location: ./index.php");
     exit;
 }
-
+if (isset($_SESSION["reviewErrorMessage"])) {
+    $reviewErrorMessage = $_SESSION["reviewErrorMessage"];
+    unset($_SESSION["reviewErrorMessage"]);
+}
 $currentProduct = $_SESSION["currentProduct"];
 $productId = $currentProduct->getId_product();
 $productName = $currentProduct->getName();
@@ -46,7 +49,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
     include("html/components/nav.php");
     //echo "<pre>";
     // print_r($productMediaList);
-    //print_r($_SESSION["currentReviewList"]);
+    //print_r($_SESSION);
     ?><div class="info-container">
         <div id="productId-2" class="carousel carousel-dark slide">
             <div class="carousel-inner">
@@ -186,19 +189,30 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 </td>
             </tr>
         </table>
+        <a name="error"></a>
     </div>
     <div id="social-container">
-        <form action="" method="post">
-            <h4>
-                <?php if (!empty($currentReviewList)) {
-                    echo "Deja tu comentario.";
-                } else {
-                    echo "Sé el primero en dejar un comentario.";
-                }  ?>
-            </h4>
-            <textarea name="review" id="" cols="30" rows="10" maxlength="1000"></textarea>
-            <input class="button1" type="submit" value="Enviar" />
-        </form>
+        <?php
+        if (!empty($currentReviewList)) {
+            echo "<h4>Deja tu comentario.</h4>";
+        } else {
+            echo "<h4>Sé el primero en dejar un comentario.</h4>";
+        }
+        if (isset($reviewErrorMessage)) {
+            echo "<p style='color:red;'>$reviewErrorMessage</p>";
+        }
+        if (isset($_SESSION['user'])) {
+            include("./html/components/reviewForm.php");
+        } else {
+            echo ("
+                <div id='logInToReview'>
+                    <h4>Haz Log in para poder comentar</h4>
+                    <a class='button1' href='controller/loginController.php'>Log in</a> 
+                </div>
+            ");
+        }
+        ?>
+
         <?php
         if (!empty($currentReviewList)) {
             for ($i = count($currentReviewList) - 1; $i >= 0; $i--) {
@@ -219,10 +233,19 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 ");
             }
         }
-
-
         ?>
     </div>
+    <?php
+    if (isset($_SESSION['user'])) {
+        if (isset($_SESSION['productScoreByUser']) && $_SESSION['productScoreByUser']) {
+            echo "ya hay nota";
+        } else {
+            include("./html/components/productInfoVoteLoged.php");
+        }
+    } else {
+        include("./html/components/productInfoVoteNotLoged.php");
+    }
+    ?>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 <script>

@@ -1,261 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>4squares</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
-        <link rel="stylesheet" href="./style/productInfo.css" />
-    </head>
 
-    <body>
-        <div class="info-container">
-            <div id="productId-2" class="carousel carousel-dark slide">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="video">
-                            <iframe src="https://www.youtube.com/embed/ovK9TE3rArw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/test.css">
+</head>
 
-                    <div class="carousel-item">
-                        <img src="img/products/2-Monopoly/2.jpg" class="d-block w-100" alt="..." />
-                    </div>
-
-                    <div class="carousel-item">
-                        <img src="img/products/2-Monopoly/3.jpg" class="d-block w-100" alt="..." />
-                    </div>
-
-                    <div class="carousel-item">
-                        <img src="img/products/2-Monopoly/4.jpg" class="d-block w-100" alt="..." />
-                    </div>
-
-                    <div class="carousel-item">
-                        <img src="img/products/2-Monopoly/5.jpg" class="d-block w-100" alt="..." />
-                    </div>
-
-                    <div class="carousel-item">
-                        <img src="img/products/2-Monopoly/6.jpg" class="d-block w-100" alt="..." />
-                    </div>
-                </div>
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#productId-2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-
-                    <button type="button" data-bs-target="#productId-2" data-bs-slide-to="1" class="active" aria-current="true" aria-label="Slide 2"></button>
-
-                    <button type="button" data-bs-target="#productId-2" data-bs-slide-to="2" class="active" aria-current="true" aria-label="Slide 3"></button>
-
-                    <button type="button" data-bs-target="#productId-2" data-bs-slide-to="3" class="active" aria-current="true" aria-label="Slide 4"></button>
-
-                    <button type="button" data-bs-target="#productId-2" data-bs-slide-to="4" class="active" aria-current="true" aria-label="Slide 5"></button>
-
-                    <button type="button" data-bs-target="#productId-2" data-bs-slide-to="5" class="active" aria-current="true" aria-label="Slide 6"></button>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#productId-2" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productId-2" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+<body>
+    <button id="openModalBtn">Abrir capa</button>
+    <div id="overlay">
+        <div id="modal">
+            <button id="closeModalBtn">&times;</button>
+            <div class="voteStars">
+                <svg xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000'
+                    stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
+                    <polygon id="star-1" class='starSvgEmpty'
+                        points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'>
+                    </polygon>
+                </svg>
+                <svg xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000'
+                    stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
+                    <polygon id="star-2" class='starSvgEmpty'
+                        points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'>
+                    </polygon>
+                </svg>
+                <svg xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000'
+                    stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
+                    <polygon id="star-3" class='starSvgEmpty'
+                        points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'>
+                    </polygon>
+                </svg>
+                <svg xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000'
+                    stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
+                    <polygon id="star-4" class='starSvgEmpty'
+                        points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'>
+                    </polygon>
+                </svg>
+                <svg xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000'
+                    stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
+                    <polygon id="star-5" class='starSvgEmpty'
+                        points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'>
+                    </polygon>
+                </svg>
             </div>
-            <h1 id="product-name">Esto es el nombre del juego</h1>
-            <div id="score-vote-buy-container">
-                <div id="score-container">
-                    <div id="product-score-number">
-                        <p>3</p>
-                    </div>
-                    <div id="stars">
-                        <svg class="starSvgFilled" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg class="starSvgFilled" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg class="starSvgFilled" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg class="starSvgFilled" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg class="starSvgFilled" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                    </div>
-                </div>
-                <div id="vote-buy-buttons">
-                    <button id="vote-button">Votar</button>
-                    <a id="buy-button" href="">
-                        <img class="button-amazon-hover" src="img/buttons/button-amazon-hover.png" alt="" />
-                        <img class="button-amazon" src="img/buttons/button-amazon.png" alt="" />
-                    </a>
-                </div>
-            </div>
-
-            <div id="players-length-age-container">
-                <div id="players">
-                    <img id="players-icon" src="./img/icons/players.svg" alt="" />
-                    <p id="players-range">2 - 6</p>
-                </div>
-                <div id="length">
-                    <img id="length-icon" src="./img/icons/length.svg" alt="" />
-                    <p id="length-range">120 min</p>
-                </div>
-                <div id="age">
-                    <img id="age-icon" src="./img/icons/age.svg" alt="" />
-                    <p id="age-range">+4</p>
-                </div>
-            </div>
-            <p id="product-description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo vitae natus id libero, expedita totam accusamus cupiditate non, fugiat debitis, at provident necessitatibus aut aliquid autem possimus harum eius laudantium!
-            </p>
-            <table>
-                <tr>
-                    <td id="min-players-row">
-                        <h3>Mínimo de jugadores:</h3>
-                        <p>2</p>
-                    </td>
-                    <td id="max-h3layers-row">
-                        <h3>Máximo de jugadores:</h3>
-                        <p>6</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td id="length-row">
-                        <h3>Duración ah3roximada:</h3>
-                        <p>120 min</p>
-                    </td>
-                    <td id="min-age-row">
-                        <h3>Edad mínima:</h3>
-                        <p>+4</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td id="tyh3e-row">
-                        <h3>Tipo de juego:</h3>
-                        <p>Cartas</p>
-                    </td>
-                    <td id="category-row">
-                        <h3>Categoría:</h3>
-                        <p>Estrategia</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td id="h3ublisher-row">
-                        <h3>Editorial:</h3>
-                        <p>Vivari</p>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="social-container">
-            <form action="" method="post">
-                <h4>Deja tu comentario</h4>
-                <textarea name="review" id="" cols="30" rows="10" maxlength="1000"></textarea>
-                <input class="button1" type="submit" value="Enviar" />
+            <form action="/submit-rating" method="post">
+                <input type="hidden" name="rating" id="rating">
+                <input type="submit" value="Votar">
             </form>
-
-            <div class="user-review">
-                <hr />
-                <div class="user-review-data">
-                    <p class="user-name">Paco Fernandez</p>
-                    <p class="review-date">17-08-2022</p>
-                </div>
-                <div class="photo-and-review-container">
-                    <img src="/img/avatars/avatar04.png" alt="" />
-                    <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit
-                        amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet
-                        consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur
-                        adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut!
-                    </p>
-                </div>
-            </div>
-            <div class="user-review">
-                <hr />
-                <div class="user-review-data">
-                    <p class="user-name">Paco Fernandez</p>
-                    <p class="review-date">17-08-2022</p>
-                </div>
-                <div class="photo-and-review-container">
-                    <img src="/img/avatars/avatar04.png" alt="" />
-                    <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit
-                        amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet
-                        consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur
-                        adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut!
-                    </p>
-                </div>
-            </div>
-            <div class="user-review">
-                <hr />
-                <div class="user-review-data">
-                    <p class="user-name">Paco Fernandez</p>
-                    <p class="review-date">17-08-2022</p>
-                </div>
-                <div class="photo-and-review-container">
-                    <img src="/img/avatars/avatar04.png" alt="" />
-                    <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit
-                        amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet
-                        consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur
-                        adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut!
-                    </p>
-                </div>
-            </div>
-            <div class="user-review">
-                <hr />
-                <div class="user-review-data">
-                    <p class="user-name">Paco Fernandez</p>
-                    <p class="review-date">17-08-2022</p>
-                </div>
-                <div class="photo-and-review-container">
-                    <img src="/img/avatars/avatar04.png" alt="" />
-                    <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit
-                        amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet
-                        consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur
-                        adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut!
-                    </p>
-                </div>
-            </div>
-            <div class="user-review">
-                <hr />
-                <div class="user-review-data">
-                    <p class="user-name">Paco Fernandez</p>
-                    <p class="review-date">17-08-2022</p>
-                </div>
-                <div class="photo-and-review-container">
-                    <img src="/img/avatars/avatar04.png" alt="" />
-                    <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit
-                        amet consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet
-                        consectetur adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur
-                        adipisicing elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut! Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Incidunt hic possimus quam autem ad? Facilis asperiores veniam atque consequatur cupiditate pariatur, libero nulla. Enim odio unde eligendi delectus cum ut!
-                    </p>
-                </div>
-            </div>
         </div>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
-    <script>
-        function toggleClass(element, class1, class2) {
-            if (element.classList.contains(class1) && !element.classList.contains(class2)) {
-                element.classList.add(class2);
-                element.classList.remove(class1);
-            } else if (!element.classList.contains(class1) && element.classList.contains(class2)) {
-                element.classList.add(class1);
-                element.classList.remove(class2);
-            }
-        }
-    </script>
+    </div>
+</body>
+
 </html>
+<script>
+    // Añadir evento "click" a todas las estrellas
+    var stars = document.querySelectorAll('.starSvgEmpty');
+    for (var i = 0; i < stars.length; i++) {
+
+        stars[i].addEventListener('click', function (e) {
+            // Obtener la cantidad de estrellas seleccionadas
+            var rating = e.target.id.split('-')[1];
+
+            // Cambiar la clase de las estrellas anteriores y actuales
+            for (var j = 1; j <= rating; j++) {
+                var star = document.getElementById('star-' + j);
+                star.classList.remove('starSvgEmpty');
+                star.classList.add('starSvgFull');
+            }
+            for (var k = parseInt(rating) + 1; k <= 5; k++) {
+                var star = document.getElementById('star-' + k);
+                star.classList.remove('starSvgFull');
+                star.classList.add('starSvgEmpty');
+            }
+            // Si la primera estrella está coloreada y se vuelve a clicar, se descolorean todas las estrellas
+            if (this === document.querySelector('.starSvg:first-child') && !this.classList.contains('starSvgEmpty')) {
+                var allStars = document.querySelectorAll('.starSvg');
+                for (var j = 0; j < allStars.length; j++) {
+                    allStars[j].classList.add('starSvgEmpty');
+                }
+                document.getElementById('stars').value = '';
+            }
+            // Actualizar el campo "input" con la cantidad de estrellas seleccionadas
+            document.getElementById('rating').value = rating;
+        });
+        //para el menu de votación
+        // Obtenemos los elementos del DOM
+        var openModalBtn = document.getElementById("openModalBtn");
+        var closeModalBtn = document.getElementById("closeModalBtn");
+        var overlay = document.getElementById("overlay");
+
+        // Añadimos el evento 'click' al botón de abrir la capa
+        openModalBtn.addEventListener("click", function () {
+            overlay.style.display = "block";
+        });
+
+        // Añadimos el evento 'click' al botón de cerrar
+        closeModalBtn.addEventListener("click", function () {
+            overlay.style.display = "none";
+        });
+    }
+
+
+</script>
