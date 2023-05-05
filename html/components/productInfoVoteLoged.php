@@ -25,8 +25,10 @@
                 </polygon>
             </svg>
         </div>
-        <form action="/submit-rating" method="post">
-            <input type="hidden" name="rating" id="rating" value="5">
+        <form action="./controller/productInfoController.php" method="post">
+            <input type="hidden" name="id_product" id="id_product" value="<?php echo $productId ?> ">
+            <input type="hidden" name="score" id="score" value="5">
+            <input type="hidden" name="id_user" value="<?php echo $_SESSION['user']->getId_user() ?>">
             <input class="button1" type="submit" value="Enviar">
         </form>
     </div>
@@ -39,15 +41,15 @@
 
         stars[i].addEventListener('click', function(e) {
             // Obtener la cantidad de estrellas seleccionadas
-            var rating = e.target.id.split('-')[1];
+            var score = e.target.id.split('-')[1];
 
             // Cambiar la clase de las estrellas anteriores y actuales
-            for (var j = 1; j <= rating; j++) {
+            for (var j = 1; j <= score; j++) {
                 var star = document.getElementById('star-' + j);
                 star.classList.remove('starSvgEmpty');
                 star.classList.add('starSvgFull');
             }
-            for (var k = parseInt(rating) + 1; k <= 5; k++) {
+            for (var k = parseInt(score) + 1; k <= 5; k++) {
                 var star = document.getElementById('star-' + k);
                 star.classList.remove('starSvgFull');
                 star.classList.add('starSvgEmpty');
@@ -61,7 +63,7 @@
                 document.getElementById('stars').value = '';
             }
             // Actualizar el campo "input" con la cantidad de estrellas seleccionadas
-            document.getElementById('rating').value = rating;
+            document.getElementById('score').value = score;
         });
     }
     //para el menu de votación

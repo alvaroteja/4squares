@@ -9,7 +9,9 @@ session_start();
 //Si ya está logeado el usuario, vamos a logout
 if (isset($_SESSION['user'])) {
     if (isset($_POST['logout'])) {
-        unset($_SESSION['user']);
+        session_destroy();
+        // unset($_SESSION['user']);
+        // unset($_SESSION);
         header("Location: ../index.php");
     } else {
         header("Location: ../logout.php");

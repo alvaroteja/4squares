@@ -11,6 +11,7 @@ session_start();
 
 $connnection = new DBConnection();
 $ancla = "";
+//si se llega aqui para guardar un comentario
 if (isset($_POST["writeComment"])) {
     if (strlen($_POST['review']) > 0) {
         $reviewService = new ReviewService($connnection);
@@ -21,9 +22,27 @@ if (isset($_POST["writeComment"])) {
         $_SESSION["reviewErrorMessage"] = $error;
     }
     $currentProductId = $_POST['id_product'];
-    // header("Location: ../productInfo.php");
-    // exit;
-} else {
+}
+//si se llega aqui para borrar un comentario
+elseif (isset($_POST["deleteReview"])) {
+    $reviewService = new ReviewService($connnection);
+    $scoreService->deleteReview($_POST["reviewId"]);
+    //$currentProductId = $_POST['id_product'];
+}
+//si se llega aqui para votar el producto
+elseif (isset($_POST["score"])) {
+    $scoreService = new ScoreService($connnection);
+    $scoreService->insertScore($_POST['id_product'], $_POST['id_user'], $_POST['score']);
+    $currentProductId = $_POST['id_product'];
+}
+//si se llega aqui para cambiar una votacion
+elseif (isset($_POST["changingScore"])) {
+    $scoreService = new ScoreService($connnection);
+    $scoreService->updateScore($_POST['id_product'], $_POST['id_user'], $_POST['changingScore']);
+    $currentProductId = $_POST['id_product'];
+}
+//si se consigue llegar aquí sin id de producto, mandamos a index y si viene el id por el get, lo pillamos
+else {
     //si no hay id o está vacio, mandamos a index
     if (!isset($_GET["id"]) || empty($_GET["id"])) {
         header("Location: ../index.php");
@@ -60,4 +79,5 @@ if (isset($_SESSION['user'])) {
 $_SESSION["currentProduct"] = $product;
 $_SESSION["currentAverageScore"] = $averageScore;
 $_SESSION["currentReviewList"] = $reviewList;
+
 header("Location: ../productInfo.php$ancla");

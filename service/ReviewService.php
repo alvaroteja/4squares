@@ -33,8 +33,7 @@ class ReviewService
                 $date = $row->add_date;
                 $hidden = $row->hidden;
                 $review = $row->review;
-
-                $reviewDto = new ReviewDto($nickname, $avatar, $date, $hidden, $review);
+                $reviewDto = new ReviewDto($nickname, $avatar, $date, $hidden, $review, $row->id_user, $row->id);
 
                 array_push($reviewDtoList, $reviewDto);
             }
@@ -110,5 +109,26 @@ class ReviewService
             $con->close();
             return $score;
         }
+    }
+
+    function deleteReview($id)
+    {
+        try {
+            $con = $this->connnection->getConnection();
+
+            $query = "DELETE FROM reviews WHERE id=$id;";
+            $con->query($query);
+            $con->close();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    function saveText($texto)
+    {
+        $texto = "Este es el contenido que quiero guardar en el archivo de texto.";
+        $ruta_archivo = "./archivo.txt";
+
+        // Guardar el contenido en el archivo
+        file_put_contents($ruta_archivo, $texto);
     }
 }

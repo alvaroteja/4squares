@@ -126,7 +126,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 </div>
             </div>
             <div id="vote-buy-buttons">
-                <button id="vote-button">Votar</button>
+                <button id="vote-button"><?php echo isset($_SESSION['productScoreByUser']) && $_SESSION['productScoreByUser'] ? 'Cambiar voto' : "Votar"; ?></button>
                 <a id="buy-button" href="<?php echo $productShoppingLink ?>">
                     <img class="button-amazon-hover" src="img/buttons/button-amazon-hover.png" alt="" />
                     <img class="button-amazon" src="img/buttons/button-amazon.png" alt="" />
@@ -214,14 +214,32 @@ $currentReviewList = $_SESSION["currentReviewList"];
         ?>
 
         <?php
+
         if (!empty($currentReviewList)) {
             for ($i = count($currentReviewList) - 1; $i >= 0; $i--) {
+                //print_r($currentReviewList[$i]);
+                //echo $currentReviewList[$i]->getIdUser() . "aaaa";
+                $deleteIcon = "";
+                $idReview = $currentReviewList[$i]->getIdReview();
+                if (isset($_SESSION["user"]) && $currentReviewList[$i]->getIdUser() == $_SESSION["user"]->getId_user()) {
+                    $deleteIcon = "
+                    <svg id='deleteIconReviewId-$idReview' class='deleteSvg deleteIcon' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                        <polyline class='deleteIcon' points='3 6 5 6 21 6'></polyline>
+                        <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>
+                        <line x1='10' y1='11' x2='10' y2='17'></line>
+                        <line x1='14' y1='11' x2='14' y2='17'></line>
+                    </svg>
+                    ";
+                }
                 echo ("
                     <div class='user-review'>
                         <hr />
                         <div class='user-review-data'>
                             <p class='user-name'>" . $currentReviewList[$i]->getNickname() . "</p>
+                            <div class='dateAndDelete'>
                             <p class='review-date'>" . $currentReviewList[$i]->getDate() . "</p>
+                            $deleteIcon
+                            </div>
                         </div>
                         <div class='photo-and-review-container'>
                             <img src='./img/avatars/" . $currentReviewList[$i]->getAvatar() . "' alt='' />
@@ -238,7 +256,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
     <?php
     if (isset($_SESSION['user'])) {
         if (isset($_SESSION['productScoreByUser']) && $_SESSION['productScoreByUser']) {
-            echo "ya hay nota";
+            include("./html/components/productInfoVoteLogedAndVoted.php");
         } else {
             include("./html/components/productInfoVoteLoged.php");
         }
@@ -257,6 +275,33 @@ $currentReviewList = $_SESSION["currentReviewList"];
             element.classList.add(class1);
             element.classList.remove(class2);
         }
+    }
+
+
+    var deleteIcons = document.querySelectorAll('.deleteIcon');
+    for (var i = 0; i < deleteIcons.length; i++) {
+        deleteIcons[i].addEventListener('click', function() {
+            alert("boton pulsado");
+            var reviewId = this.id.split('-')[1]; // Obtener el ID del comentario a borrar
+
+            const formData = new FormData();
+            formData.append('reviewId', reviewId);
+            formData.append('deleteReview', true);
+
+            fetch('http://localhost/tfg/4squares/controller/productInfoController.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    alert("Ha llegado al server");
+                })
+                .catch(error => {
+                    alert("Ha dado error");
+                });
+        });
     }
 </script>
 

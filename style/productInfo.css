@@ -323,8 +323,15 @@ form textarea:focus {
     font-weight: bold;
 }
 
+.dateAndDelete {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .review-date {
     color: var(--primary);
+    margin: 0;
 }
 
 .photo-and-review-container {

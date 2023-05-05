@@ -6,7 +6,9 @@ class reviewDto
     protected $date;
     protected $hidden;
     protected $review;
-    public function __construct($nickname, $avatar, $date, $hidden, $review)
+    protected $idUser;
+    protected $idReview;
+    public function __construct($nickname, $avatar, $date, $hidden, $review, $idUser, $idReview)
     {
         $this->nickname = $nickname;
         $this->avatar = $avatar;
@@ -14,6 +16,8 @@ class reviewDto
         $this->hidden = $hidden;
         $this->hidden = $hidden;
         $this->review = $review;
+        $this->idUser = $idUser;
+        $this->idReview = $idReview;
     }
 
     public function getnickname()
@@ -81,6 +85,32 @@ class reviewDto
         $this->review = $review;
     }
 
+    public function getIdUser()
+    {
+        return $this->idUser;
+    }
+
+    /**
+     * @param $review
+     */
+    public function setIdUser($idUser)
+    {
+        $this->idUser = $idUser;
+    }
+
+    public function getIdReview()
+    {
+        return $this->idReview;
+    }
+
+    /**
+     * @param $review
+     */
+    public function setIdReview($idReview)
+    {
+        $this->idReview = $idReview;
+    }
+
 
 
     /**
@@ -88,6 +118,6 @@ class reviewDto
      */
     public function __toString()
     {
-        return "nickname: {$this->nickname}, Avatar: {$this->avatar}, Date: {$this->date}, hidden: {$this->hidden}, Review: {$this->review}";
+        return "nickname: {$this->nickname}, Avatar: {$this->avatar}, Date: {$this->date}, hidden: {$this->hidden}, Review: {$this->review},IdUser: {$this->idUser}";
     }
 }

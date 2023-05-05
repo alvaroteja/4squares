@@ -9,8 +9,6 @@ class ScoreService
         $this->connnection = $connnection;
     }
 
-
-
     function getAverageScore($id_product)
     {
         $scoreList = $this->getScoreList($id_product);
@@ -19,7 +17,7 @@ class ScoreService
         } else {
             $average = false;
         }
-        return $average;
+        return round($average, 1);
     }
 
     function getScoreList($id_product)
@@ -43,5 +41,27 @@ class ScoreService
             $con->close();
         }
         return $scoreList;
+    }
+    function insertScore($id_product, $id_user, $score)
+    {
+        try {
+            $con = $this->connnection->getConnection();
+            $query = "INSERT INTO `scores` (`id`, `id_product`, `id_user`, `score`) VALUES (NULL, '" . $id_product . "', '" . $id_user . "', '" . $score . "');";
+            $resultset = $con->query($query);
+            return $resultset;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    function updateScore($id_product, $id_user, $score)
+    {
+        try {
+            $con = $this->connnection->getConnection();
+            $query = "UPDATE scores SET score = $score WHERE id_product = $id_product and id_user = $id_user;";
+            $resultset = $con->query($query);
+            return $resultset;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

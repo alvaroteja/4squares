@@ -57,13 +57,24 @@ $productList = $_SESSION["productsList"];
 
 <body>
     <?php
+    // echo "<pre>∫";
+    // print_r($_SESSION);
     include("./html/components/nav.php");
 
     include("./html/components/pageNav.php");
 
-    for ($i = 0; $i < $maxProductsAtHome; $i++) {
-        include("./html/components/homeCard.php");
+    //todo esto para asegurarnos que al llegar al final de la lista de productos, si queda alguno suelto, no salga outofbounds del array
+    if (count($_SESSION['productsIdList']) - $_SESSION["currentPage"] * $maxProductsAtHome >= 0) {
+        for ($i = 0; $i < $maxProductsAtHome; $i++) {
+            include("./html/components/homeCard.php");
+        }
+    } else {
+        $limit = $maxProductsAtHome - ($_SESSION["currentPage"] * $maxProductsAtHome - count($_SESSION['productsIdList']));
+        for ($i = 0; $i < $limit; $i++) {
+            include("./html/components/homeCard.php");
+        }
     }
+
 
     include("./html/components/pageNav.php");
     ?>
