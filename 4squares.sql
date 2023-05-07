@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-04-2023 a las 19:32:37
+-- Tiempo de generación: 07-05-2023 a las 19:36:11
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -111,7 +111,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `shopping_link`, `min_players`, `max_players`, `length`, `minimum_age`, `type`, `category`, `publisher`, `add_date`, `hidden`) VALUES
-(1, 'Ajedrez', 'Un juego de estrategia en el que dos jugadores se enfrentan en un tablero de 64 casillas con piezas como el rey, la reina, los caballos, etc. El objetivo es dar jaque mate al rey del oponente.', 'https://www.amazon.es/s?k=Ajedrez', 2, 6, 78, 4, 1, 1, 158, '2023-04-03 11:37:21', 0),
+(1, 'Ajedrez', 'Un juego de estrategia en el que dos jugadores se enfrentan en un tablero de 64 casillas con piezas como el rey, la reina, los caballos, etc. El objetivo es dar jaque mate al rey del oponente.', 'https://www.amazon.es/s?k=Ajedrez', 2, 2, 78, 4, 1, 1, 158, '2023-04-03 11:37:21', 0),
 (2, 'Monopoly', 'Un juego de negociación y comercio en el que los jugadores compran y venden propiedades, construyen edificios y cobran alquiler a otros jugadores. El objetivo es hacer que los demás jugadores quiebren y ser el último en pie.', 'https://www.amazon.es/s?k=Monopoly', 2, 5, 39, 2, 1, 7, 111, '2023-04-03 11:37:22', 0),
 (3, 'Scrabble', 'Un juego de palabras en el que los jugadores forman palabras con las letras que tienen en su poder en un tablero de 15x15 casillas. Cada letra tiene un valor y el objetivo es obtener la mayor cantidad de puntos.', 'https://www.amazon.es/s?k=Scrabble', 2, 4, 76, 4, 1, 7, 52, '2023-04-03 11:37:23', 0),
 (4, 'Risk', 'Un juego de estrategia en el que los jugadores deben conquistar territorios y defenderlos de los ataques de otros jugadores. El objetivo es dominar el mundo.', 'https://www.amazon.es/s?k=Risk', 2, 5, 55, 3, 1, 9, 60, '2023-04-03 11:37:24', 0),
@@ -189,7 +189,8 @@ INSERT INTO `product_medias` (`id`, `id_product`, `url`, `type`) VALUES
 (7, 2, '2-Monopoly/3.jpg', 'image'),
 (8, 2, '2-Monopoly/4.jpg', 'image'),
 (9, 2, '2-Monopoly/5.jpg', 'image'),
-(10, 2, '2-Monopoly/6.jpg', 'image');
+(10, 2, '2-Monopoly/6.jpg', 'image'),
+(11, 1, 'https://www.youtube.com/embed/x4R2EPkYzZk', 'video');
 
 -- --------------------------------------------------------
 
@@ -391,6 +392,22 @@ CREATE TABLE `reviews` (
   `add_date` date NOT NULL DEFAULT current_timestamp(),
   `hidden` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `id_product`, `id_user`, `review`, `add_date`, `hidden`) VALUES
+(2, 1, 79, 'El ajedrez es uno de los juegos de mesa más antiguos y populares del mundo. Su origen se remonta a la India, donde se conocía como chaturanga. Desde entonces, ha evolucionado y se ha extendido por todo el mundo, y hoy en día es jugado por millones de personas de todas las edades y niveles de habilidad. El ajedrez es un juego de estrategia pura que requiere concentración, paciencia y creatividad. Aunque puede ser muy complejo, también es muy gratificante cuando se logra una jugada brillante. Recomiendo encarecidamente este juego a cualquier persona interesada en los juegos de mesa y la estrategia.', '2023-05-02', 0),
+(3, 1, 93, 'El Ajedrez es un juego de estrategia increíble que siempre te hace pensar. Me encanta jugarlo con amigos y familiares.', '2023-05-02', 0),
+(4, 1, 79, 'Ajedrez es un juego clásico que nunca pasa de moda. Siempre es un placer jugarlo y desafiar a mi oponente.', '2023-05-02', 0),
+(5, 1, 67, 'El Ajedrez es un juego muy interesante y entretenido. Me gusta la sensación de pensar en cada movimiento y planear mi estrategia.', '2023-05-02', 0),
+(6, 1, 87, 'El Ajedrez es un juego que siempre me ha gustado mucho. Es muy divertido y desafiante, y siempre me hace pensar.', '2023-05-02', 0),
+(7, 1, 56, 'Ajedrez es uno de mis juegos favoritos de todos los tiempos. Me encanta la estrategia involucrada y la sensación de competencia.', '2023-05-02', 0),
+(8, 1, 98, 'El Ajedrez es un juego que siempre he disfrutado jugando. Me encanta la emoción de planear y ejecutar una estrategia exitosa.', '2023-05-02', 0),
+(10, 1, 72, 'El Ajedrez es un juego que siempre me ha gustado. Me encanta la sensación de competencia y el desafío que ofrece.', '2023-05-02', 0),
+(11, 1, 83, 'Ajedrez es un juego clásico que siempre me ha gustado. Me encanta la estrategia involucrada y la sensación de logro.', '2023-05-02', 1),
+(29, 1, 106, 'gf dghdfg dfg', '2023-05-06', 0);
 
 -- --------------------------------------------------------
 
@@ -2909,7 +2926,8 @@ INSERT INTO `scores` (`id`, `id_product`, `id_user`, `score`) VALUES
 (2550, 47, 100, 1),
 (2551, 48, 100, 0),
 (2552, 49, 100, 0),
-(2553, 50, 100, 4);
+(2553, 50, 100, 4),
+(2554, 1, 106, 5);
 
 -- --------------------------------------------------------
 
@@ -2983,7 +3001,7 @@ INSERT INTO `users` (`id`, `first_name`, `surename`, `nickname`, `email`, `passw
 (80, 'isabella', 'rivera', 'isabellaluna', 'isabellarivera@gmail.com', '1234', 4, '2023-04-02', 0, 0),
 (81, 'daniel', 'morales', 'danielrojo', 'danielmorales@gmail.com', '1234', 1, '2023-04-02', 0, 0),
 (82, 'fernanda', 'rios', 'fernandafantasia', 'fernandarios@gmail.com', '1234', 6, '2023-04-02', 0, 0),
-(83, 'rafael', 'romero', 'rafarayo', 'rafaelromero@gmail.com', '1234', 2, '2023-04-02', 0, 0),
+(83, 'rafael', 'romero', 'rafarayo', 'rafaelromero@gmail.com', '1234', 2, '2023-04-02', 1, 0),
 (84, 'miranda', 'salazar', 'miramar', 'mirandasalazar@gmail.com', '1234', 5, '2023-04-02', 0, 0),
 (85, 'gonzalo', 'silva', 'gonzagalaxia', 'gonzalosilva@gmail.com', '1234', 2, '2023-04-02', 0, 0),
 (86, 'renata', 'zamora', 'renirosa', 'renatazamora@gmail.com', '1234', 5, '2023-04-02', 0, 0),
@@ -3006,7 +3024,10 @@ INSERT INTO `users` (`id`, `first_name`, `surename`, `nickname`, `email`, `passw
 (103, 'lorena', 'tapia', 'lorelluvia', 'lorenatapia@gmail.com', '1234', 5, '2023-04-02', 0, 0),
 (104, 'angel', 'chavez', 'angelalado', 'angelchavez@gmail.com', '1234', 5, '2023-04-02', 0, 0),
 (105, 'maria', 'miranda', 'mariposamaria', 'mariamiranda@gmail.com', '1234', 4, '2023-04-02', 0, 0),
-(106, 'admin', 'admin', 'admin', 'admin@gmail.com', '1234', 4, '2023-04-10', 0, 1);
+(106, 'admin', 'admin', 'admin', 'admin@gmail.com', '1234', 4, '2023-04-10', 0, 1),
+(107, 'Carmen', 'Prado', 'CPrado', 'cprado@gmail.com', '123456Aa@', 1, '2023-04-19', 0, 0),
+(108, 'Alvaro', 'Teja', 'aaa', 'a@gmail.com', '123456Aa@', 1, '2023-04-19', 0, 0),
+(109, 'Alvaro', 'Teja Centeno', 'aaaa', 'alteja17@gmail.com', '123456Aa@', 1, '2023-04-19', 0, 0);
 
 --
 -- Índices para tablas volcadas
@@ -3059,8 +3080,8 @@ ALTER TABLE `publishers`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_product` (`id_product`);
+  ADD KEY `reviews_ibfk_2` (`id_user`),
+  ADD KEY `reviews_ibfk_3` (`id_product`);
 
 --
 -- Indices de la tabla `scores`
@@ -3115,7 +3136,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `product_medias`
 --
 ALTER TABLE `product_medias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `publishers`
@@ -3127,13 +3148,13 @@ ALTER TABLE `publishers`
 -- AUTO_INCREMENT de la tabla `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2554;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2555;
 
 --
 -- AUTO_INCREMENT de la tabla `types`
@@ -3145,7 +3166,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- Restricciones para tablas volcadas
@@ -3176,8 +3197,8 @@ ALTER TABLE `product_medias`
 -- Filtros para la tabla `reviews`
 --
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `scores`
