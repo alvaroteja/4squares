@@ -2,7 +2,7 @@
 /* Button 1 Style         */
 /**************************/
 .button1 {
-    padding: 10px !important;
+    padding: 5px 10px !important;
     border-radius: 5px !important;
     text-decoration: none !important;
     background-color: var(--primary) !important;
@@ -27,7 +27,7 @@
 .button2 {
     background-color: var(--bg-white);
     border: solid 1px var(--primary);
-    padding: 10px;
+    padding: 5px 10px !important;
     border-radius: 5px;
     text-decoration: none;
     color: var(--primary);
@@ -79,6 +79,7 @@
 /* Hide Button            */
 /**************************/
 .hideSvg {
+    stroke-width: 2px;
     cursor: pointer;
     stroke: var(--primary);
     transition: 0.2s;
@@ -90,6 +91,7 @@
     opacity: 0.6;
 }
 .hideSvg-off {
+    stroke-width: 2px;
     cursor: pointer;
     stroke: var(--muted-link);
     transition: 0.2s;
@@ -142,5 +144,75 @@
     fill: var(--danger-link);
 }
 .favoriteSvg-on:active {
+    opacity: 0.6;
+}
+
+/**************************/
+/* Mute user Button       */
+/**************************/
+.muted-user-icon,
+.muted-user-icon-off {
+    width: 25px;
+    stroke-width: 0.5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.muted-user-icon {
+    stroke: var(--primary);
+    fill: var(--primary);
+}
+.muted-user-icon:hover {
+    stroke: var(--danger-link);
+    fill: var(--danger-link);
+}
+.muted-user-icon:active {
+    opacity: 0.6;
+}
+
+.muted-user-icon-off {
+    stroke: var(--muted-link);
+    fill: var(--muted-link);
+}
+.muted-user-icon-off:hover {
+    stroke: var(--success-link);
+    fill: var(--success-link);
+}
+.muted-user-icon-off:active {
+    opacity: 0.6;
+}
+
+/**************************/
+/* Delete user Button     */
+/**************************/
+.delete-user-icon,
+.delete-user-icon-off {
+    width: 25px;
+    stroke-width: 0.5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.delete-user-icon {
+    stroke: var(--primary);
+    fill: var(--primary);
+}
+.delete-user-icon:hover {
+    stroke: var(--danger-link);
+    fill: var(--danger-link);
+}
+.delete-user-icon:active {
+    opacity: 0.6;
+}
+
+.delete-user-icon-off {
+    stroke: var(--muted-link);
+    fill: var(--muted-link);
+}
+.delete-user-icon-off:hover {
+    stroke: var(--success-link);
+    fill: var(--success-link);
+}
+.delete-user-icon-off:active {
     opacity: 0.6;
 }

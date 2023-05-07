@@ -20,6 +20,7 @@ class ProductModel
             "type" => "notFound"
         )
     );
+    protected $AverageScore;
 
     function __construct()
     {
@@ -259,7 +260,18 @@ class ProductModel
     {
         $this->media_list = $media_list;
     }
+    public function getAverageScore()
+    {
+        return $this->AverageScore;
+    }
 
+    /**
+     * @param $AverageScore
+     */
+    public function setAverageScore($AverageScore)
+    {
+        $this->AverageScore = $AverageScore;
+    }
     /**
      * @return string
      */

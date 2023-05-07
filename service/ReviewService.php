@@ -33,7 +33,9 @@ class ReviewService
                 $date = $row->add_date;
                 $hidden = $row->hidden;
                 $review = $row->review;
-                $reviewDto = new ReviewDto($nickname, $avatar, $date, $hidden, $review, $row->id_user, $row->id);
+                $userMuted = $this->getUserMuted($row->id_user);
+
+                $reviewDto = new ReviewDto($nickname, $avatar, $date, $hidden, $review, $row->id_user, $row->id, $userMuted);
 
                 array_push($reviewDtoList, $reviewDto);
             }
@@ -56,6 +58,21 @@ class ReviewService
         $row = $resultset->fetch_object();
         $con->close();
         return $row->nickname;
+    }
+
+    function getUserMuted($id_user)
+    {
+        if (!is_numeric($id_user)) {
+            return false;
+        }
+
+        $con = $this->connnection->getConnection();
+
+        $query = "SELECT muted FROM `users` WHERE id = $id_user";
+        $resultset = $con->query($query);
+        $row = $resultset->fetch_object();
+        $con->close();
+        return $row->muted;
     }
 
     function getAvatar($id_user)
@@ -123,12 +140,16 @@ class ReviewService
             return false;
         }
     }
-    function saveText($texto)
-    {
-        $texto = "Este es el contenido que quiero guardar en el archivo de texto.";
-        $ruta_archivo = "./archivo.txt";
 
-        // Guardar el contenido en el archivo
-        file_put_contents($ruta_archivo, $texto);
+    function hideReview($id, $value)
+    {
+        try {
+            $con = $this->connnection->getConnection();
+            $query = "UPDATE reviews SET hidden = $value WHERE id = $id;";
+            $con->query($query);
+            $con->close();
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

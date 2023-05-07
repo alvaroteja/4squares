@@ -6,9 +6,10 @@
         <div id="navLinks">
             <?php
             if (isset($_SESSION["user"])) {
-                $connnection = new DBConnection();
-                $avatarService = new AvatarService($connnection);
-                $avatarUrl = $avatarService->getAvatarByID($_SESSION["user"]->getId_avatar());
+                // $connnection = new DBConnection();
+                // $avatarService = new AvatarService($connnection);
+                // $avatarUrl = $avatarService->getAvatarByID($_SESSION["user"]->getId_avatar());
+                $avatarUrl =  $_SESSION["user"]->getId_avatar();
                 $userName = $_SESSION["user"]->getNickname();
                 echo ("
                         <a class='button2' href='controller/loginController.php'>Log out</a>  

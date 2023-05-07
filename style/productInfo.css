@@ -146,7 +146,7 @@ iframe {
     gap: 5px;
 }
 
-#stars>svg {
+#stars > svg {
     width: 35px;
 }
 
@@ -239,7 +239,7 @@ button {
     height: 20px;
 }
 
-#players-length-age-container>div {
+#players-length-age-container > div {
     display: flex;
     gap: 10px;
 }
@@ -305,22 +305,50 @@ form textarea:focus {
     align-items: center;
 }
 
-#logInToReview>h4 {
+#logInToReview > h4 {
     margin: 0;
 }
 
 .user-review {
+    padding: 10px;
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
+}
+
+.hidden-review {
+    background-color: #c9c9c91a;
+}
+.hidden-review p,
+.hidden-review img {
+    opacity: 0.4;
 }
 
 .user-review-data {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 15px;
 }
 
 .user-name {
+    margin: 0;
     font-weight: bold;
+}
+.userNameAndNoticeUserIsMuted {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.userNameMutedClass {
+    margin: 0;
+    color: red;
+}
+.noticeUserIsMuted {
+    margin: 0;
+    font-style: italic;
+    color: red;
+    font-size: smaller;
 }
 
 .dateAndDelete {
@@ -343,4 +371,11 @@ form textarea:focus {
     border-radius: 100%;
     width: 100px;
     height: 100px;
+}
+.mute-and-delete-icons-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 5px;
+}
+.muted-user-icon {
 }

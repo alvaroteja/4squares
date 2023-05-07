@@ -1,6 +1,7 @@
 <?php
 include("../service/DBConnection.php");
 include("../service/LoginService.php");
+include("../service/AvatarService.php");
 
 session_start();
 
@@ -53,6 +54,13 @@ if (isset($_SESSION['user'])) {
         }
         //si todo ha ido bien, obtenemos un objeto usuario con sus datos, lo metemos en session y vamos a la home
         else {
+            //cambio el id del avatar del usuario registrado por la url de la imagen
+            $avatarService = new AvatarService($connnection);
+            $avatarUrl = $avatarService->getAvatarByID($errorList->getId_avatar());
+            $errorList->setId_avatar($avatarUrl);
+            // print_r($errorList);
+            // exit;
+
             $_SESSION['user'] = $errorList;
             header("Location: ../index.php");
         }

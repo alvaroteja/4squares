@@ -7,7 +7,12 @@ include("./dto/reviewDto.php");
 
 
 session_start();
-
+if (!isset($_SESSION['redireccion']) || empty($_SESSION['redireccion'])) {
+    $idProduct = $_SESSION["currentProduct"]->getId_product();
+    header("Location: ./controller/productInfoController.php?id=$idProduct");
+    exit;
+}
+unset($_SESSION['redireccion']);
 if (!isset($_SESSION["currentProduct"]) || !isset($_SESSION["currentAverageScore"]) || !isset($_SESSION["currentReviewList"])) {
     header("Location: ./index.php");
     exit;
@@ -51,6 +56,9 @@ $currentReviewList = $_SESSION["currentReviewList"];
     // print_r($productMediaList);
     //print_r($_SESSION);
     ?><div class="info-container">
+        <!-- ********************************** -->
+        <!--             carrousel              -->
+        <!-- ********************************** -->
         <div id="productId-2" class="carousel carousel-dark slide">
             <div class="carousel-inner">
                 <?php
@@ -94,15 +102,19 @@ $currentReviewList = $_SESSION["currentReviewList"];
 
                 ?>
             </div>
+
             <button class="carousel-control-prev" type="button" data-bs-target="#productId-2" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="carousel-control-prev-icon" aria-hiden="true"></span>
+                <!-- <span class="visually-hiden">Previous</span> -->
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#productId-2" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="carousel-control-next-icon" aria-hiden="true"></span>
+                <!-- <span class="visually-hiden">Next</span> -->
             </button>
         </div>
+        <!-- ********************************** -->
+        <!--            datos producto          -->
+        <!-- ********************************** -->
         <h1 id="product-name"><?php echo $productName ?></h1>
         <div id="score-vote-buy-container">
             <div id="score-container">
@@ -151,6 +163,9 @@ $currentReviewList = $_SESSION["currentReviewList"];
         <p id="product-description">
             <?php echo ($productDescription) ?>
         </p>
+        <!-- ********************************** -->
+        <!--    tabla con datos del producto    -->
+        <!-- ********************************** -->
         <table>
             <tr>
                 <td id="min-players-row">
@@ -191,8 +206,12 @@ $currentReviewList = $_SESSION["currentReviewList"];
         </table>
         <a name="error"></a>
     </div>
+    <!-- ********************************** -->
+    <!--        seccion de comentario       -->
+    <!-- ********************************** -->
     <div id="social-container">
         <?php
+        //primera parte de la seccion de comentarios, la caja para escribir un comentario...
         if (!empty($currentReviewList)) {
             echo "<h4>Deja tu comentario.</h4>";
         } else {
@@ -214,14 +233,24 @@ $currentReviewList = $_SESSION["currentReviewList"];
         ?>
 
         <?php
-
+        //comentarios de todos los usuarios
         if (!empty($currentReviewList)) {
             for ($i = count($currentReviewList) - 1; $i >= 0; $i--) {
-                //print_r($currentReviewList[$i]);
-                //echo $currentReviewList[$i]->getIdUser() . "aaaa";
+
+                $muteIcon = "";
+                $deleteUserIcon = "";
+                $idUser = $currentReviewList[$i]->getIdUser();
+                $mutedUserIconClass = "muted-user-icon-off";
+                //si el creador del comentario está muteado
+                if ($currentReviewList[$i]->getUserMuted()) {
+                    $mutedUserIconClass = "muted-user-icon";
+                }
+
+
                 $deleteIcon = "";
                 $idReview = $currentReviewList[$i]->getIdReview();
-                if (isset($_SESSION["user"]) && $currentReviewList[$i]->getIdUser() == $_SESSION["user"]->getId_user()) {
+                //Si el comentario es del usuario que está registrado o el usuario registrado tiene permisos de admin, añadimos el boton de borrar
+                if ((isset($_SESSION["user"]) && $currentReviewList[$i]->getIdUser() == $_SESSION["user"]->getId_user()) || (isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1)) {
                     $deleteIcon = "
                     <svg id='deleteIconReviewId-$idReview' class='deleteSvg deleteIcon' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
                         <polyline class='deleteIcon' points='3 6 5 6 21 6'></polyline>
@@ -231,29 +260,88 @@ $currentReviewList = $_SESSION["currentReviewList"];
                     </svg>
                     ";
                 }
-                echo ("
-                    <div class='user-review'>
+
+                $hideIcon = "";
+                $hiddenReview = "";
+                //si el comentario esta oculto añadimos la clase que lo hace transparente
+                if ($currentReviewList[$i]->gethidden()) {
+                    $hideSvgClass = "hideSvg-off";
+                    $hiddenReview = "hidden-review";
+                } else {
+                    $hideSvgClass = "hideSvg";
+                }
+                //si el creador del comentario esta muteado y el usuario registrado es admin, ponemos el nombre del creador del comentario en rojo
+                $userNameMutedClass = "";
+                $noticeUserIsMuted
+
+                    = "";
+                if ($currentReviewList[$i]->getUserMuted() && isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1) {
+                    $userNameMutedClass = "userNameMutedClass";
+                    $noticeUserIsMuted = "Usuario muteado.";
+                }
+
+                //aunque el comentario esté oculto, no se mostrara transaparente para el usuario que ha hecho el comentario a no ser que sea el admin
+                if ($currentReviewList[$i]->gethidden() && isset($_SESSION["user"]) &&  $_SESSION["user"]->getCredentials() == 0 && $currentReviewList[$i]->getIdUser() == $_SESSION["user"]->getId_user()) {
+                    $hiddenReview = "";
+                }
+
+                //Si usuario registrado tiene permisos de admin, añadimos el boton ocultar comentario, mutear usuario y eliminar usuario
+                if (isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1) {
+                    $hideIcon = "
+                        <svg id='hideIconReviewId-$idReview' class='hideIcon $hideSvgClass' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                            <path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'></path>
+                            <circle cx='12' cy='12' r='3'></circle>
+                        </svg>
+                    ";
+                    $muteIcon = "
+                        <svg id='muteIconUserId-$idUser' class='muteUserIcon $mutedUserIconClass' viewBox='0 0 20 20'>
+                            <path d='M18.084,11.639c0.168,0.169,0.168,0.442,0,0.611c-0.084,0.084-0.195,0.127-0.306,0.127c-0.111,0-0.221-0.043-0.306-0.127l-1.639-1.639l-1.639,1.639c-0.084,0.084-0.195,0.127-0.306,0.127c-0.111,0-0.222-0.043-0.307-0.127c-0.168-0.169-0.168-0.442,0-0.611L15.223,10l-1.64-1.639c-0.168-0.168-0.168-0.442,0-0.61c0.17-0.169,0.442-0.169,0.612,0l1.639,1.639l1.639-1.639c0.169-0.169,0.442-0.169,0.611,0c0.168,0.168,0.168,0.442,0,0.61L16.445,10L18.084,11.639z M12.161,2.654v14.691c0,0.175-0.105,0.333-0.267,0.4c-0.054,0.021-0.109,0.032-0.166,0.032c-0.111,0-0.223-0.043-0.305-0.127l-3.979-3.979H2.222c-0.237,0-0.432-0.194-0.432-0.432V6.759c0-0.237,0.195-0.432,0.432-0.432h5.222l3.979-3.978c0.123-0.125,0.309-0.163,0.471-0.095C12.056,2.322,12.161,2.479,12.161,2.654 M7.192,7.192H2.654v5.617h4.538V7.192z M11.296,3.698l-3.24,3.241v6.123l3.24,3.24V3.698z'></path>
+                        </svg>
+                    ";
+                    $deleteUserIcon = "
+                        <svg id='deleteUserIconUserId-$idUser' class='deleteUserIcon delete-user-icon' viewBox='0 0 20 20'>
+                            <path d='M10.185,1.417c-4.741,0-8.583,3.842-8.583,8.583c0,4.74,3.842,8.582,8.583,8.582S18.768,14.74,18.768,10C18.768,5.259,14.926,1.417,10.185,1.417 M10.185,17.68c-4.235,0-7.679-3.445-7.679-7.68c0-4.235,3.444-7.679,7.679-7.679S17.864,5.765,17.864,10C17.864,14.234,14.42,17.68,10.185,17.68 M10.824,10l2.842-2.844c0.178-0.176,0.178-0.46,0-0.637c-0.177-0.178-0.461-0.178-0.637,0l-2.844,2.841L7.341,6.52c-0.176-0.178-0.46-0.178-0.637,0c-0.178,0.176-0.178,0.461,0,0.637L9.546,10l-2.841,2.844c-0.178,0.176-0.178,0.461,0,0.637c0.178,0.178,0.459,0.178,0.637,0l2.844-2.841l2.844,2.841c0.178,0.178,0.459,0.178,0.637,0c0.178-0.176,0.178-0.461,0-0.637L10.824,10z'></path>
+                        </svg>
+                    ";
+                }
+                //se muestra el comentario si no esta oculto o si esta oculto pero el usuario es el admin, o si está oculto pero el usuario es el creador del comentario, y ademas, se mostrara si el creador del comentario no esta muteado o si esta muteado pero el usuario registrado es el propio creador del comentario o un admin
+                if ((!$currentReviewList[$i]->gethidden() || (isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1) || (isset($_SESSION["user"]) && $currentReviewList[$i]->getIdUser() == $_SESSION["user"]->getId_user())) && (!$currentReviewList[$i]->getUserMuted() || ($currentReviewList[$i]->getUserMuted() && (isset($_SESSION["user"]) && ($_SESSION["user"]->getCredentials() == 1 || ($currentReviewList[$i]->getIdUser() == $_SESSION["user"]->getId_user())))))) {
+                    echo ("
+                    <div class='user-review $hiddenReview'>
                         <hr />
                         <div class='user-review-data'>
-                            <p class='user-name'>" . $currentReviewList[$i]->getNickname() . "</p>
+                            <div class='userNameAndNoticeUserIsMuted'>
+                                <p class='user-name $userNameMutedClass'>" . $currentReviewList[$i]->getNickname() . "</p>
+                                <p class='noticeUserIsMuted'>" . $noticeUserIsMuted . "</p>
+                            </div>
                             <div class='dateAndDelete'>
                             <p class='review-date'>" . $currentReviewList[$i]->getDate() . "</p>
                             $deleteIcon
+                            $hideIcon
+                            
                             </div>
                         </div>
                         <div class='photo-and-review-container'>
-                            <img src='./img/avatars/" . $currentReviewList[$i]->getAvatar() . "' alt='' />
+                            <div class='img-box'>
+                                <img src='./img/avatars/" . $currentReviewList[$i]->getAvatar() . "' alt='' />
+                                <div class='mute-and-delete-icons-container'  >
+                                    $muteIcon
+                                    $deleteUserIcon
+                                </div>
+                            </div>
                             <p>
                             " . $currentReviewList[$i]->getReview() . "
                             </p>
                         </div>
                     </div>
                 ");
+                }
             }
         }
         ?>
     </div>
     <?php
+    //Pop up que sale al darle al boton de votar
     if (isset($_SESSION['user'])) {
         if (isset($_SESSION['productScoreByUser']) && $_SESSION['productScoreByUser']) {
             include("./html/components/productInfoVoteLogedAndVoted.php");
@@ -265,42 +353,152 @@ $currentReviewList = $_SESSION["currentReviewList"];
     }
     ?>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 <script>
-    function toggleClass(element, class1, class2) {
-        if (element.classList.contains(class1) && !element.classList.contains(class2)) {
-            element.classList.add(class2);
-            element.classList.remove(class1);
-        } else if (!element.classList.contains(class1) && element.classList.contains(class2)) {
-            element.classList.add(class1);
-            element.classList.remove(class2);
-        }
-    }
-
-
+    //funcion para borrar comentarior
     var deleteIcons = document.querySelectorAll('.deleteIcon');
+
     for (var i = 0; i < deleteIcons.length; i++) {
         deleteIcons[i].addEventListener('click', function() {
-            alert("boton pulsado");
-            var reviewId = this.id.split('-')[1]; // Obtener el ID del comentario a borrar
+            // Obtener el ID del comentario a borrar
+            var reviewId = this.id.split('-')[1];
+            if (confirm("¿Estás seguro de que quieres eliminar este comentario?")) {
+                fetch(`http://localhost/tfg/4squares/controller/productInfoController.php?deleteReview=${reviewId}`, {
+                        method: 'GET'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            const reviewContainer = document.querySelector(`#deleteIconReviewId-${reviewId}`).closest('.user-review');
+                            reviewContainer.remove();
+                        } else {
+                            alert('No se pudo eliminar el comentario.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('No se pudo eliminar el comentario.');
+                    });
+            }
+        });
+    }
 
-            const formData = new FormData();
-            formData.append('reviewId', reviewId);
-            formData.append('deleteReview', true);
+    //funcion para ocultar comentarior
+    var hideIcons = document.querySelectorAll('.hideIcon');
 
-            fetch('http://localhost/tfg/4squares/controller/productInfoController.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    body: formData
+    for (var i = 0; i < hideIcons.length; i++) {
+
+        hideIcons[i].addEventListener('click', function() {
+            //Obtener el ID del comentario a borrar
+            var reviewId = this.id.split('-')[1];
+
+            var value;
+            this.classList.contains("hideSvg-off") ? value = 0 : value = 1;
+            fetch(`http://localhost/tfg/4squares/controller/productInfoController.php?hideReview=${reviewId}&value=${value}`, {
+                    method: 'GET'
                 })
                 .then(response => {
-                    alert("Ha llegado al server");
+                    if (response.ok) {
+                        const reviewContainer = document.querySelector(`#deleteIconReviewId-${reviewId}`).closest('.user-review');
+                        //cambia la clase del icono al pincharlo y la transparencia del comentario
+                        if (this.classList.contains("hideSvg") && !this.classList.contains("hideSvg-off")) {
+                            reviewContainer.classList.add("hidden-review")
+                            this.classList.add("hideSvg-off");
+                            this.classList.remove("hideSvg");
+                        } else if (!this.classList.contains("hideSvg") && this.classList.contains("hideSvg-off")) {
+                            this.classList.add("hideSvg");
+                            this.classList.remove("hideSvg-off");
+                            reviewContainer.classList.remove("hidden-review")
+                        }
+                    } else {
+                        alert('No se pudo ocultar el comentario.');
+                    }
                 })
                 .catch(error => {
-                    alert("Ha dado error");
+                    alert('No se pudo ocultar el comentario.');
                 });
+        });
+    }
+    //funcion para mutear usuario
+    var muteUserIcons = document.querySelectorAll('.muteUserIcon');
+
+    for (var i = 0; i < muteUserIcons.length; i++) {
+
+        muteUserIcons[i].addEventListener('click', function() {
+            //Obtener el ID del usuario a mutear
+            var idUser = this.id.split('-')[1];
+
+            var value;
+            this.classList.contains("muted-user-icon-off") ? value = 1 : value = 0;
+
+            fetch(`http://localhost/tfg/4squares/controller/userController.php?muteUser=true&id=${idUser}&value=${value}`, {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // const userNameAndNoticeUserIsMuted = this;
+                        //const userNameAndNoticeUserIsMuted = this.parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
+
+                        // //cambia la clase del icono al pincharlo y la transparencia del comentario
+                        if (this.classList.contains("muted-user-icon")) {
+                            alert('El usuario ha sido desmuteado.');
+                            const elements = document.querySelectorAll(`div.user-review [id^='muteIconUserId-'][id$='-${idUser}']`);
+                            for (let j = 0; j < elements.length; j++) {
+                                const userNameAndNoticeUserIsMuted = elements[j].parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
+                                elements[j].classList.remove("muted-user-icon");
+                                elements[j].classList.add("muted-user-icon-off");
+                                userNameAndNoticeUserIsMuted.querySelector('.noticeUserIsMuted').innerHTML = "";
+                                userNameAndNoticeUserIsMuted.querySelector('.user-name').classList.remove('userNameMutedClass');
+                            }
+                        } else if (this.classList.contains("muted-user-icon-off")) {
+                            alert('El usuario ha sido muteado.');
+                            const elements = document.querySelectorAll(`div.user-review [id^='muteIconUserId-'][id$='-${idUser}']`);
+                            for (let j = 0; j < elements.length; j++) {
+                                const userNameAndNoticeUserIsMuted = elements[j].parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
+                                elements[j].classList.remove("muted-user-icon-off");
+                                elements[j].classList.add("muted-user-icon");
+                                userNameAndNoticeUserIsMuted.querySelector('.noticeUserIsMuted').innerHTML = "Usuario muteado.";
+                                userNameAndNoticeUserIsMuted.querySelector('.user-name').classList.add('userNameMutedClass');
+                            }
+
+                        }
+                    } else {
+                        alert('No se pudo mutear al usuario.');
+                    }
+                })
+                .catch(error => {
+                    alert('No se pudo mutear al usuario.');
+                });
+        });
+    }
+
+    //funcion para borrar usuario
+    var deleteUserIcon = document.querySelectorAll('.deleteUserIcon');
+
+    for (var i = 0; i < deleteUserIcon.length; i++) {
+        deleteUserIcon[i].addEventListener('click', function() {
+            // Obtener el ID del usuario a borrar
+            var userId = this.id.split('-')[1];
+            if (confirm("¿Estás seguro de que quieres eliminar este usuario? Esta acción eliminará definitivamente al usuario y todos sus comentarios.")) {
+                fetch(`http://localhost/tfg/4squares/controller/userController.php?deleteUser=true&userId=${userId}`, {
+                        method: 'GET'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            //Se todos los comentarios del usuario de esta pagina y se borran
+                            alert('El usuario ha sido eliminado.');
+                            const elements = document.querySelectorAll(`div.user-review [id^='deleteUserIconUserId-'][id$='-${userId}']`);
+                            for (let j = 0; j < elements.length; j++) {
+                                const userReview = elements[j].parentNode.parentNode.parentNode.parentNode;
+                                userReview.remove();
+                            }
+                        } else {
+                            alert('No se pudo eliminar el usuario.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('No se pudo eliminar el usuario.');
+                    });
+            }
         });
     }
 </script>

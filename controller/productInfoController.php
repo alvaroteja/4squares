@@ -24,9 +24,15 @@ if (isset($_POST["writeComment"])) {
     $currentProductId = $_POST['id_product'];
 }
 //si se llega aqui para borrar un comentario
-elseif (isset($_POST["deleteReview"])) {
+elseif (isset($_GET["deleteReview"])) {
     $reviewService = new ReviewService($connnection);
-    $scoreService->deleteReview($_POST["reviewId"]);
+    $reviewService->deleteReview($_GET["deleteReview"]);
+    //$currentProductId = $_POST['id_product'];
+}
+//si se llega aqui para ocultar un comentario
+elseif (isset($_GET["hideReview"])) {
+    $reviewService = new ReviewService($connnection);
+    $reviewService->hideReview($_GET["hideReview"], $_GET["value"]);
     //$currentProductId = $_POST['id_product'];
 }
 //si se llega aqui para votar el producto
@@ -53,7 +59,6 @@ else {
 }
 
 $productService = new ProductService($connnection);
-
 $product = $productService->getAProduct($currentProductId);
 
 //si el producto no existe, mandamos a index
@@ -80,4 +85,5 @@ $_SESSION["currentProduct"] = $product;
 $_SESSION["currentAverageScore"] = $averageScore;
 $_SESSION["currentReviewList"] = $reviewList;
 
+$_SESSION['redireccion'] = true;
 header("Location: ../productInfo.php$ancla");

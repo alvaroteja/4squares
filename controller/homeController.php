@@ -1,6 +1,7 @@
 <?php
 include("../service/DBConnection.php");
 include("../service/ProductService.php");
+include("../service/ScoreService.php");
 include("../model/ProductModel.php");
 include("../webSettings.php");
 session_start();
@@ -31,7 +32,12 @@ $i = $maxProductsAtHome * $_SESSION["currentPage"] - $maxProductsAtHome;
 
 for ($i; $i < $maxProductsAtHome * $_SESSION["currentPage"]; $i++) {
     if ($i < count($productsIdList)) {
-        array_push($productsList, $productService->getAProduct($productsIdList[$i]));
+        $product = $productService->getAProduct($productsIdList[$i]);
+        //aqui añadir a cada producto de la lista su media de score actual con un scoreService
+        $scoreService = new ScoreService($connnection);
+        $averageScore = $scoreService->getAverageScore($productsIdList[$i]);
+        $product->setAverageScore($averageScore);
+        array_push($productsList, $product);
     } else {
         break;
     }
