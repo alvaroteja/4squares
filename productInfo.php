@@ -115,6 +115,45 @@ $currentReviewList = $_SESSION["currentReviewList"];
         <!-- ********************************** -->
         <!--            datos producto          -->
         <!-- ********************************** -->
+        <?php
+        //Si el no usuario está registrado, añadimos boton de favorito que te manda a log, si no, boton funcional
+        $favoriteIcon = "";
+        if (!isset($_SESSION["user"])) {
+
+            $favoriteIcon = "
+                <svg id='favorite-icon' class='favoriteSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                    <path d='M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'></path>
+                </svg>
+            ";
+        } else {
+            //meter aqui el boton de favoritos con clases distintas para que haga el fetch
+            $favoriteIcon = "
+                <svg id='favorite-icon-loged' class='favoriteSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                    <path d='M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'></path>
+                </svg>
+            ";
+        }
+        //Si usuario registrado tiene permisos de admin, añadimos el boton ocultar producto y borrar producto
+
+        $hideProductIcon = "";
+        $deleteProductIcon = "";
+        if (isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1) {
+            $hideProductIcon = "
+                <svg class='hideSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                    <path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'></path>
+                    <circle cx='12' cy='12' r='3'></circle>
+                </svg>
+            ";
+            $deleteProductIcon = "
+                <svg class='deleteSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                    <polyline points='3 6 5 6 21 6'></polyline>
+                    <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>
+                    <line x1='10' y1='11' x2='10' y2='17'></line>
+                    <line x1='14' y1='11' x2='14' y2='17'></line>
+                </svg>
+            ";
+        }
+        ?>
         <h1 id="product-name"><?php echo $productName ?></h1>
         <div id="score-vote-buy-container">
             <div id="score-container">
@@ -138,6 +177,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 </div>
             </div>
             <div id="vote-buy-buttons">
+                <?php echo $hideProductIcon . $deleteProductIcon . $favoriteIcon ?>
                 <button id="vote-button"><?php echo isset($_SESSION['productScoreByUser']) && $_SESSION['productScoreByUser'] ? 'Cambiar voto' : "Votar"; ?></button>
                 <a id="buy-button" href="<?php echo $productShoppingLink ?>">
                     <img class="button-amazon-hover" src="img/buttons/button-amazon-hover.png" alt="" />
@@ -350,6 +390,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
         }
     } else {
         include("./html/components/productInfoVoteNotLoged.php");
+        include("./html/components/favoriteButtonNotLoged.php");
     }
     ?>
 </body>
@@ -501,6 +542,20 @@ $currentReviewList = $_SESSION["currentReviewList"];
             }
         });
     }
+
+
+    var favoriteIcon = document.getElementById("favorite-icon");
+    var closeModalBtnFavoriteIcon = document.getElementById("closeModalBtnFavoriteIcon");
+    var overlayFavoriteIcon = document.getElementById("overlayFavoriteIcon");
+
+    // Añadimos el evento 'click' al botón de abrir la capa
+    favoriteIcon.addEventListener("click", function() {
+        overlayFavoriteIcon.style.display = "block";
+    });
+    // Añadimos el evento 'click' al botón de cerrar
+    closeModalBtnFavoriteIcon.addEventListener("click", function() {
+        overlayFavoriteIcon.style.display = "none";
+    });
 </script>
 
 </html>

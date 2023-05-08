@@ -1,0 +1,43 @@
+/* Estilos para la capa semitransparente */
+#overlayFavoriteIcon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: none;
+}
+
+/* Estilos para el formulario dentro de la capa */
+#modalFavoriteIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Estilos para el botón de cerrar */
+#closeModalBtnFavoriteIcon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+#closeModalBtnFavoriteIcon:hover {
+    scale: 1.3;
+}
