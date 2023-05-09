@@ -9,11 +9,13 @@
     color: var(--white-link) !important;
     transition: 0.2s !important;
 }
+
 .button1:hover {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2) !important;
     background-color: var(--primary) !important;
     opacity: 0.9 !important;
 }
+
 .button1:active {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2) !important;
     background-color: var(--primary) !important;
@@ -34,11 +36,13 @@
     transition: 0.2s;
     opacity: 1;
 }
+
 .button2:hover {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
     background-color: var(--primary);
     color: var(--white-link);
 }
+
 .button2:active {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
     background-color: var(--primary);
@@ -53,6 +57,7 @@
     text-decoration: none;
     color: var(--white-link);
 }
+
 .buttonMoreInfoBox {
     margin: 5px;
     background-color: var(--primary);
@@ -60,17 +65,20 @@
     padding: 5px;
     border-radius: 5px;
 }
+
 .buttonMoreInfoBox:hover {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
     background-color: var(--primary);
     opacity: 0.9;
 }
+
 .buttonMoreInfoBox:active {
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
     background-color: var(--primary);
     color: var(--white-link);
     opacity: 0.7;
 }
+
 /************************************************/
 /*                 Emoji Buttons                */
 /************************************************/
@@ -82,23 +90,30 @@
     stroke-width: 2px;
     cursor: pointer;
     stroke: var(--primary);
-    transition: 0.2s;
+    transition-property: stroke;
+    transition-duration: 0.2s;
 }
+
 .hideSvg:hover {
     stroke: var(--danger-link);
 }
+
 .hideSvg:active {
     opacity: 0.6;
 }
+
 .hideSvg-off {
     stroke-width: 2px;
     cursor: pointer;
     stroke: var(--muted-link);
-    transition: 0.2s;
+    transition-property: stroke;
+    transition-duration: 0.2s;
 }
+
 .hideSvg-off:hover {
     stroke: var(--success-link);
 }
+
 .hideSvg-off:active {
     opacity: 0.6;
 }
@@ -111,9 +126,11 @@
     stroke: var(--dark-link);
     transition: 0.2s;
 }
+
 .deleteSvg:hover {
     stroke: var(--danger-link);
 }
+
 .deleteSvg:active {
     opacity: 0.6;
 }
@@ -126,9 +143,11 @@
     stroke: var(--dark-link);
     transition: 0.2s;
 }
+
 .favoriteSvg:hover {
     stroke: var(--primary);
 }
+
 .favoriteSvg:active {
     opacity: 0.6;
 }
@@ -139,10 +158,12 @@
     fill: var(--primary);
     transition: 0.2s;
 }
+
 .favoriteSvg-on:hover {
     stroke: var(--danger-link);
     fill: var(--danger-link);
 }
+
 .favoriteSvg-on:active {
     opacity: 0.6;
 }
@@ -162,10 +183,12 @@
     stroke: var(--primary);
     fill: var(--primary);
 }
+
 .muted-user-icon:hover {
     stroke: var(--danger-link);
     fill: var(--danger-link);
 }
+
 .muted-user-icon:active {
     opacity: 0.6;
 }
@@ -174,10 +197,12 @@
     stroke: var(--muted-link);
     fill: var(--muted-link);
 }
+
 .muted-user-icon-off:hover {
     stroke: var(--success-link);
     fill: var(--success-link);
 }
+
 .muted-user-icon-off:active {
     opacity: 0.6;
 }
@@ -197,10 +222,12 @@
     stroke: var(--primary);
     fill: var(--primary);
 }
+
 .delete-user-icon:hover {
     stroke: var(--danger-link);
     fill: var(--danger-link);
 }
+
 .delete-user-icon:active {
     opacity: 0.6;
 }
@@ -209,10 +236,12 @@
     stroke: var(--muted-link);
     fill: var(--muted-link);
 }
+
 .delete-user-icon-off:hover {
     stroke: var(--success-link);
     fill: var(--success-link);
 }
+
 .delete-user-icon-off:active {
     opacity: 0.6;
 }

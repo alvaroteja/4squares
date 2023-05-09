@@ -73,7 +73,7 @@ if (isset($_SESSION["user"])) {
                                 $class = "starSvgEmpty";
                             }
                             echo ("
-                                <svg class='$class' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
+                                <svg class='$class' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
                                     <polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon>
                                 </svg>
                             ");
@@ -86,11 +86,11 @@ if (isset($_SESSION["user"])) {
                     if ($userCredentials == 1) {
                         echo ('
                         
-                    <svg onclick="toggleClass(this,\'hideSvg\',\'hideSvg-off\')" class="hideSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg onclick="toggleClass(this,\'hideSvg\',\'hideSvg-off\')" class="hideSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
                     </svg>
-                    <svg class="deleteSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="deleteSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="3 6 5 6 21 6"></polyline>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                         <line x1="10" y1="11" x2="10" y2="17"></line>
@@ -99,7 +99,7 @@ if (isset($_SESSION["user"])) {
                     ');
                     }
                     ?>
-                    <svg onclick="toggleClass(this,'favoriteSvg','favoriteSvg-on')" class="favoriteSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg onclick="toggleClass(this,'favoriteSvg','favoriteSvg-on')" class="favoriteSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                     </svg>
                     <a class="productCon-infoCon-header-buttons-amazon" href="<?php echo ($productList[$i]->getShopping_link()) . "+juego+de+mesa"; ?>">

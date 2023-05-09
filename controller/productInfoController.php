@@ -6,6 +6,7 @@ include("../model/UserModel.php");
 include("../service/ScoreService.php");
 include("../dto/reviewDto.php");
 include("../service/ReviewService.php");
+include("../service/FavoriteService.php");
 
 session_start();
 
@@ -79,6 +80,13 @@ $reviewList = $reviewService->getAllReviewsById($currentProductId);
 if (isset($_SESSION['user'])) {
     $vote = $reviewService->hasBeenVotedByUserId($currentProductId, $_SESSION['user']->getId_user());
     $_SESSION["productScoreByUser"] = $vote;
+}
+
+//Miro si el producto está en la lista de favoritos del usuario
+if (isset($_SESSION['user'])) {
+    $favoriteService = new FavoriteService($connnection);
+    $isAFavoriteProduct = $favoriteService->checkIfFavoriteByUserId($currentProductId, $_SESSION['user']->getId_user());
+    $_SESSION["isAFavoriteProduct"] = $isAFavoriteProduct;
 }
 
 $_SESSION["currentProduct"] = $product;

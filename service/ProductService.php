@@ -186,6 +186,30 @@ class ProductService
             return $mediaList;
         }
     }
+
+    function switchProductHideState($productId, $value)
+    {
+        try {
+            $value = $value == 0 ? 1 : 0;
+            $con = $this->connnection->getConnection();
+            $query = "UPDATE products SET hidden = $value WHERE id = $productId;";
+            $con->query($query);
+            $con->close();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    function deleteProductById($productId)
+    {
+        try {
+            $con = $this->connnection->getConnection();
+            $query = "DELETE FROM products WHERE id = $productId;";
+            $con->query($query);
+            $con->close();
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
 }
 // if ($resultset->num_rows == 0) {
 //     return false;

@@ -116,7 +116,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
         <!--            datos producto          -->
         <!-- ********************************** -->
         <?php
-        //Si el no usuario está registrado, añadimos boton de favorito que te manda a log, si no, boton funcional
+        //Si el usuario no está registrado, añadimos boton de favorito que te manda a log, si no, boton funcional
         $favoriteIcon = "";
         if (!isset($_SESSION["user"])) {
 
@@ -126,9 +126,14 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 </svg>
             ";
         } else {
+            $favorteIconVisibility = "favoriteSvg";
+            //$favorteIconVisibility = isset($_SESSION['isAFavoriteProduct']) && $_SESSION['isAFavoriteProduct'] ? 'favoriteSvg-on' : "favoriteSvg";
+            if (isset($_SESSION['isAFavoriteProduct']) && $_SESSION['isAFavoriteProduct']) {
+                $favorteIconVisibility = "favoriteSvg-on";
+            }
             //meter aqui el boton de favoritos con clases distintas para que haga el fetch
             $favoriteIcon = "
-                <svg id='favorite-icon-loged' class='favoriteSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                <svg id='favorite-icon-loged' class='$favorteIconVisibility' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
                     <path d='M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'></path>
                 </svg>
             ";
@@ -137,15 +142,16 @@ $currentReviewList = $_SESSION["currentReviewList"];
 
         $hideProductIcon = "";
         $deleteProductIcon = "";
+        $hideProductIconClass = $_SESSION["currentProduct"]->getHiden() ? 'hideSvg-off' : 'hideSvg';
         if (isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1) {
             $hideProductIcon = "
-                <svg class='hideSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                <svg id='hideProductIcon' class='$hideProductIconClass' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
                     <path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'></path>
                     <circle cx='12' cy='12' r='3'></circle>
                 </svg>
             ";
             $deleteProductIcon = "
-                <svg class='deleteSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                <svg id='deleteProductIcon' class='deleteSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
                     <polyline points='3 6 5 6 21 6'></polyline>
                     <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>
                     <line x1='10' y1='11' x2='10' y2='17'></line>
@@ -206,6 +212,12 @@ $currentReviewList = $_SESSION["currentReviewList"];
         <!-- ********************************** -->
         <!--    tabla con datos del producto    -->
         <!-- ********************************** -->
+
+        <?php
+        //echo $_SESSION['isAFavoriteProduct'];
+        echo "<pre>";
+        print_r($_SESSION);
+        ?>
         <table>
             <tr>
                 <td id="min-players-row">
@@ -543,18 +555,86 @@ $currentReviewList = $_SESSION["currentReviewList"];
         });
     }
 
+    //funcion para agregar o eliminar a favorito
+    var favoriteIcon = document.getElementById('favorite-icon-loged');
 
-    var favoriteIcon = document.getElementById("favorite-icon");
-    var closeModalBtnFavoriteIcon = document.getElementById("closeModalBtnFavoriteIcon");
-    var overlayFavoriteIcon = document.getElementById("overlayFavoriteIcon");
+    favoriteIcon.addEventListener('click', function() {
 
-    // Añadimos el evento 'click' al botón de abrir la capa
-    favoriteIcon.addEventListener("click", function() {
-        overlayFavoriteIcon.style.display = "block";
+        var productId = <?php echo $_SESSION["currentProduct"]->getId_product() ?>;
+        var userId = <?php echo $_SESSION["user"]->getId_user() ?>;
+        // alert("productId: " + productId + " - userId: " + userId);
+        fetch(`http://localhost/tfg/4squares/controller/favoriteController.php?switchFavorite=true&productId=${productId}&userId=${userId}`, {
+                method: 'GET'
+            })
+            .then(response => {
+                if (response.ok) {
+                    if (this.classList.contains("favoriteSvg-on")) {
+                        this.classList.add("favoriteSvg");
+                        this.classList.remove("favoriteSvg-on");
+                    } else {
+                        this.classList.remove("favoriteSvg");
+                        this.classList.add("favoriteSvg-on");
+                    }
+                } else {
+                    alert('No se pudo pudo modificar favoritos.');
+                }
+            })
+            .catch(error => {
+                alert('No se pudo pudo modificar favoritos.');
+            });
     });
-    // Añadimos el evento 'click' al botón de cerrar
-    closeModalBtnFavoriteIcon.addEventListener("click", function() {
-        overlayFavoriteIcon.style.display = "none";
+
+    //funcion para ocultar o publicar producto
+    var hideProductIcon = document.getElementById('hideProductIcon');
+
+    hideProductIcon.addEventListener('click', function() {
+
+        var productId = <?php echo $_SESSION["currentProduct"]->getId_product() ?>;
+        var value = <?php echo $_SESSION["currentProduct"]->getHiden() ?>;
+        fetch(`http://localhost/tfg/4squares/controller/productController.php?switchProductHideState=true&productId=${productId}&value=${value}`, {
+                method: 'GET'
+            })
+            .then(response => {
+                if (response.ok) {
+                    if (this.classList.contains("hideSvg-off")) {
+                        this.classList.add("hideSvg");
+                        this.classList.remove("hideSvg-off");
+                    } else {
+                        this.classList.remove("hideSvg");
+                        this.classList.add("hideSvg-off");
+                    }
+                } else {
+                    alert('No se pudo pudo modificar favoritos.');
+                }
+            })
+            .catch(error => {
+                alert('No se pudo pudo modificar favoritos.');
+            });
+    });
+
+    //funcion para borrar un producto
+    var deleteProductIcon = document.getElementById('deleteProductIcon');
+
+    deleteProductIcon.addEventListener('click', function() {
+        var productId = <?php echo $_SESSION["currentProduct"]->getId_product() ?>;
+
+        if (confirm("¿Estás seguro de que quieres eliminar este producto? Esta acción eliminará definitivamente el producto.")) {
+            fetch(`http://localhost/tfg/4squares/controller/productController.php?deleteProduct=true&productId=${productId}`, {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        //Si se borra el producto
+                        alert('El producto ha sido eliminado.');
+                        location.href = 'http://localhost/tfg/4squares/index.php';
+                    } else {
+                        alert('No se pudo eliminar el producto.');
+                    }
+                })
+                .catch(error => {
+                    alert('No se pudo eliminar el producto.');
+                });
+        }
     });
 </script>
 
