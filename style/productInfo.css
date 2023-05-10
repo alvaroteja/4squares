@@ -35,7 +35,34 @@ body {
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
-
+.info-container-hidden {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    /* min-width: 600px; */
+    max-width: 1000px;
+    /* background-color: var(--bg-white); */
+    background: #c9c9c9ab;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.info-container-hidden p,
+.info-container-hidden img,
+.info-container-hidden h1,
+.info-container-hidden table,
+.info-container-hidden svg,
+.info-container-hidden button,
+.info-container-hidden #vote-button:hover {
+    opacity: 0.4;
+}
+.info-container-hidden .starSvgEmpty {
+    fill: none;
+}
 /****************/
 /*   carousel   */
 /****************/
@@ -322,7 +349,7 @@ form textarea:focus {
 }
 
 .hidden-review {
-    background-color: #c9c9c91a;
+    background-color: #c9c9c9ab;
 }
 .hidden-review p,
 .hidden-review img {

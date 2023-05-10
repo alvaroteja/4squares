@@ -8,9 +8,9 @@ if (isset($_SESSION["user"])) {
     $userCredentials = $_SESSION["user"]->getCredentials();
 }
 ?>
-
-<div class="productCon">
-    <div id="<?php echo ("productId-" . ($productList[$i]->getId_product())) ?>" class="carousel carousel-dark slide">
+<?php $productConHidden = $productList[$i]->getHiden() ? 'productConHidden' : ''; ?>
+<div id="productIdCon-<?php echo $productList[$i]->getId_product() ?>" class="productCon <?php echo $productConHidden ?>">
+    <div id="productId-<?php echo ($productList[$i]->getId_product()) ?>" class="carousel carousel-dark slide">
         <div class="carousel-inner">
             <?php
             for ($j = 0; $j < count($productList[$i]->getMedia_list()); $j++) {
@@ -84,24 +84,23 @@ if (isset($_SESSION["user"])) {
                 <div class="productCon-infoCon-header-buttons">
                     <?php
                     if ($userCredentials == 1) {
-                        echo ('
-                        
-                    <svg onclick="toggleClass(this,\'hideSvg\',\'hideSvg-off\')" class="hideSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    <svg class="deleteSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                    </svg>
-                    ');
+                        $hideProductIconClass = $productList[$i]->getHiden() ? 'hideSvg-off' : 'hideSvg';
+                        echo "
+                            <svg id='hideProductIcon-$i' class='hideProductIcon $hideProductIconClass' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                <path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'></path>
+                                <circle cx='12' cy='12' r='3'></circle>
+                            </svg>
+                        ";
+                        echo ("
+                            <svg id='deleteProductIcon' class='deleteSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                <polyline points='3 6 5 6 21 6'></polyline>
+                                <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>
+                                <line x1='10' y1='11' x2='10' y2='17'></line>
+                                <line x1='14' y1='11' x2='14' y2='17'></line>
+                            </svg>
+                        ");
                     }
                     ?>
-                    <svg onclick="toggleClass(this,'favoriteSvg','favoriteSvg-on')" class="favoriteSvg" xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                    </svg>
                     <a class="productCon-infoCon-header-buttons-amazon" href="<?php echo ($productList[$i]->getShopping_link()) . "+juego+de+mesa"; ?>">
                         <img class="button-amazon-hover" src="img/buttons/button-amazon-hover.png" alt="" />
                         <img class="button-amazon" src="img/buttons/button-amazon.png" alt="" />

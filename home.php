@@ -58,8 +58,11 @@ $productList = $_SESSION["productsList"];
 
 <body>
     <?php
-    // echo "<pre>∫";
+    // echo "<pre>";
     // print_r($_SESSION);
+    // echo "<pre>";
+    // print_r($_SESSION["currentProduct"]);
+    // print_r($_SESSION["productsList"][0]);
     include("./html/components/nav.php");
 
     include("./html/components/pageNav.php");
@@ -81,14 +84,74 @@ $productList = $_SESSION["productsList"];
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <script>
-        function toggleClass(element, class1, class2) {
-            if (element.classList.contains(class1) && !element.classList.contains(class2)) {
-                element.classList.add(class2);
-                element.classList.remove(class1);
-            } else if (!element.classList.contains(class1) && element.classList.contains(class2)) {
-                element.classList.add(class1);
-                element.classList.remove(class2);
-            }
+        //funcion para ocultar o publicar producto
+        const hideProductIcons = document.querySelectorAll('.hideProductIcon');
+
+        for (let i = 0; i < hideProductIcons.length; i++) {
+
+            hideProductIcons[i].addEventListener('click', function() {
+                //let hideProductIconId = this.id.split('-')[1];
+
+                let currentProductCon = this.parentNode.parentNode.parentNode.parentNode.parentNode;
+                let value = this.classList.contains("hideSvg-off") ? 1 : 0;
+                let productId = currentProductCon.id.split('-')[1];
+
+                fetch(`http://localhost/tfg/4squares/controller/productController.php?switchProductHideState=true&productId=${productId}&value=${value}`, {
+                        method: 'GET'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            //hago visible el producto
+                            if (this.classList.contains("hideSvg-off")) {
+                                this.classList.add("hideSvg");
+                                this.classList.remove("hideSvg-off");
+                                currentProductCon.classList.remove("productConHidden");
+                            } //oculto el producto
+                            else {
+                                this.classList.remove("hideSvg");
+                                this.classList.add("hideSvg-off");
+                                currentProductCon.classList.add("productConHidden");
+                            }
+                        } else {
+                            alert('No se pudo pudo modificar favoritos.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('No se pudo pudo modificar favoritos.');
+                    });
+            });
+        }
+
+
+        //funcion para borrar un producto
+
+        const deleteProductIcons = document.querySelectorAll('.deleteSvg');
+        console.log(deleteProductIcons.length);
+
+        for (let i = 0; i < deleteProductIcons.length; i++) {
+            deleteProductIcons[i].addEventListener('click', function() {
+                
+                let currentProductCon = this.parentNode.parentNode.parentNode.parentNode.parentNode;
+                let productId = currentProductCon.id.split('-')[1];
+
+                if (confirm("¿Estás seguro de que quieres eliminar este producto? Esta acción eliminará definitivamente el producto.")) {
+                    fetch(`http://localhost/tfg/4squares/controller/productController.php?deleteProduct=true&productId=${productId}`, {
+                            method: 'GET'
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                //Si se borra el producto
+                                alert('El producto ha sido eliminado.');
+                                location.href = 'http://localhost/tfg/4squares/index.php';
+                            } else {
+                                alert('No se pudo eliminar el producto.');
+                            }
+                        })
+                        .catch(error => {
+                            alert('No se pudo eliminar el producto.');
+                        });
+                }
+            });
         }
     </script>
 </body>

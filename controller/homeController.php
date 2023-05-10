@@ -4,6 +4,7 @@ include("../service/ProductService.php");
 include("../service/ScoreService.php");
 include("../model/ProductModel.php");
 include("../webSettings.php");
+include("../model/UserModel.php");
 session_start();
 
 // error_reporting(E_ALL);
@@ -14,7 +15,13 @@ $productService = new ProductService($connnection);
 
 //si no hay lista de IDs de producto o vamos a la page 1, se crea/actualiza
 if (!isset($_SESSION["productsIdList"]) || $_SESSION["currentPage"] == 1) {
-    $productsIdList = $productService->getAllIdProducts();
+    //Si el usuario es admin, la lista tendra tambien los productos ocultos, si no es admin, no se veran los productos ocultos
+    if (isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1) {
+        $productsIdList = $productService->getAllIdProducts();
+    } else {
+        $productsIdList = $productService->getAllIdProductsNotHidden();
+    }
+
     $_SESSION["productsIdList"] = $productsIdList;
     $maxPages = ceil(count($_SESSION["productsIdList"]) / $maxProductsAtHome);
     $_SESSION["maxPages"] = $maxPages;

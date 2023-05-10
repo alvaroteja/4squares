@@ -55,7 +55,8 @@ $currentReviewList = $_SESSION["currentReviewList"];
     //echo "<pre>";
     // print_r($productMediaList);
     //print_r($_SESSION);
-    ?><div class="info-container">
+    $infoContainerClass = $_SESSION["currentProduct"]->getHiden() ? 'info-container-hidden' : 'info-container';
+    ?><div id="info-container" class="<?php echo $infoContainerClass ?>">
         <!-- ********************************** -->
         <!--             carrousel              -->
         <!-- ********************************** -->
@@ -493,7 +494,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
 
                         // //cambia la clase del icono al pincharlo y la transparencia del comentario
                         if (this.classList.contains("muted-user-icon")) {
-                            alert('El usuario ha sido desmuteado.');
+                            //alert('El usuario ha sido desmuteado.');
                             const elements = document.querySelectorAll(`div.user-review [id^='muteIconUserId-'][id$='-${idUser}']`);
                             for (let j = 0; j < elements.length; j++) {
                                 const userNameAndNoticeUserIsMuted = elements[j].parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
@@ -503,7 +504,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
                                 userNameAndNoticeUserIsMuted.querySelector('.user-name').classList.remove('userNameMutedClass');
                             }
                         } else if (this.classList.contains("muted-user-icon-off")) {
-                            alert('El usuario ha sido muteado.');
+                            // alert('El usuario ha sido muteado.');
                             const elements = document.querySelectorAll(`div.user-review [id^='muteIconUserId-'][id$='-${idUser}']`);
                             for (let j = 0; j < elements.length; j++) {
                                 const userNameAndNoticeUserIsMuted = elements[j].parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
@@ -586,6 +587,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
 
     //funcion para ocultar o publicar producto
     var hideProductIcon = document.getElementById('hideProductIcon');
+    var infoContainer = document.getElementById('info-container');
 
     hideProductIcon.addEventListener('click', function() {
 
@@ -596,12 +598,18 @@ $currentReviewList = $_SESSION["currentReviewList"];
             })
             .then(response => {
                 if (response.ok) {
+                    //hago visible el producto
                     if (this.classList.contains("hideSvg-off")) {
                         this.classList.add("hideSvg");
                         this.classList.remove("hideSvg-off");
-                    } else {
+                        infoContainer.classList.add("info-container");
+                        infoContainer.classList.remove("info-container-hidden");
+                    } //oculto el producto
+                    else {
                         this.classList.remove("hideSvg");
                         this.classList.add("hideSvg-off");
+                        infoContainer.classList.remove("info-container");
+                        infoContainer.classList.add("info-container-hidden");
                     }
                 } else {
                     alert('No se pudo pudo modificar favoritos.');

@@ -102,6 +102,20 @@ class ProductService
         $con->close();
         return $idList;
     }
+    function getAllIdProductsNotHidden()
+    {
+        $idList = array();
+        $con = $this->connnection->getConnection();
+        $query = "SELECT id from products where hidden = 0 order by add_date ASC";
+        $resultset = $con->query($query);
+
+        foreach ($resultset as $result) {
+            array_push($idList, $result['id']);
+        }
+        //mysqli_close($con);
+        $con->close();
+        return $idList;
+    }
 
     /**
      * Obtiene el type en string correspondiente a un id_type.
@@ -189,7 +203,10 @@ class ProductService
 
     function switchProductHideState($productId, $value)
     {
+
         try {
+            session_start();
+            unset($_SESSION['productsIdList']);
             $value = $value == 0 ? 1 : 0;
             $con = $this->connnection->getConnection();
             $query = "UPDATE products SET hidden = $value WHERE id = $productId;";
