@@ -12,6 +12,7 @@ body {
     align-items: center;
     /* background: var(--bg-light); */
 }
+
 .container {
     display: flex;
     gap: 20px;
@@ -35,6 +36,7 @@ body {
     flex-wrap: wrap;
     gap: 50px;
 }
+
 #imgContainer {
     display: flex;
     flex-direction: column;
@@ -63,6 +65,7 @@ button {
     overflow: visible;
     padding: 0;
 }
+
 #avatar-btn {
     color: white;
     background-color: var(--primary);
@@ -84,18 +87,21 @@ button {
     color: var(--white-link);
     opacity: 0.7;
 }
+
 #dataContainer {
     display: flex;
     align-items: start;
     flex-direction: column;
     /* background-color: aqua; */
-    
+
     width: 50%;
     min-width: 300px;
 }
+
 .singleDate {
     width: 100%;
 }
+
 .singleDateTitle {
     font-size: 1rem;
     color: var(--text-white);
@@ -120,12 +126,14 @@ button {
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
 
-} 
+}
+
 .overlay.active {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .avatar-selector {
     display: flex;
     justify-content: center;
@@ -165,11 +173,73 @@ button {
     cursor: pointer;
     transition: box-shadow 0.4s ease;
 }
+
 .avatar-thumbnail:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     scale: 1.05;
     transition: box-shadow, scale 0.4s ease;
 }
+
 .box:not(:hover) {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+#favoriteProductsContainer {
+    background-color: red;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.favoriteProduct {
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+    max-width: 650px;
+    width: 45%;
+    display: flex;
+    gap: 20px;
+    background-color: white;
+}
+
+.favoriteProduct-img {
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1 / 1 !important;
+}
+
+
+#score-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: end;
+    /* background-color: purple; */
+}
+
+#product-score-number p {
+    font-size: 2rem;
+    margin: 0;
+    transform: translateY(5px);
+    line-height: 120%;
+    /* line-height: 3rem; */
+}
+
+#stars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+#stars>svg {
+    width: 30px;
+}
+
+.starSvgFilled {
+    fill: var(--primary);
+    stroke: var(--primary);
+}
+
+.starSvgEmpty {
+    stroke: var(--primary);
 }
