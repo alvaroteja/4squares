@@ -3,6 +3,7 @@
 @import "components/nav.css";
 @import "components/buttons.css";
 @import "standars.css";
+@import "components/buttons.css";
 
 body {
     padding-top: 200px;
@@ -15,10 +16,11 @@ body {
 
 .container {
     display: flex;
+    flex-direction: column;
     gap: 20px;
     padding: 20px;
-    width: 80%;
-    min-width: 600px;
+    width: 50%;
+    /* min-width: 600px; */
     max-width: 1000px;
     /* background-color: var(--bg-white); */
     background: rgba(255, 255, 255, 0.2);
@@ -33,3 +35,86 @@ body {
 /*******************************/
 /***     asdasdasdasdasda    ***/
 /*******************************/
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.width100 {
+    width: 100%;
+}
+
+.colum50 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    width: 50%;
+    min-width: 200px;
+}
+
+label {
+    color: var(--primary);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="submit"] {
+    border: none;
+}
+
+#nameAndBuyLinkContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    gap: 20px;
+}
+
+
+
+#nameContainer input,
+#buyLinkContainer input {
+    width: 100%;
+}
+
+#nameContainer,
+#buyLinkContainer,
+#descriptionCopntainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#buyLink {}
+
+#playersContainer,
+#lengthAndAgeContainer,
+#typeAndCategoryContainer,
+#publisherAndHiddenContainer {
+    display: flex;
+    width: 100%;
+    gap: 40px;
+}
+
+#hiddenContainer {
+    display: flex;
+}
+
+#hiddenRadioButtonContainer {
+    display: flex;
+    align-items: start;
+    gap: 30px;
+}
+
+#hiddenRadioButtonYesContainer,
+#hiddenRadioButtonNoContainer {
+    display: flex;
+    gap: 10px;
+}
+
+#hiddenRadioButtonYes {}
+
+#hiddenRadioButtonNo {}

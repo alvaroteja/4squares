@@ -8,74 +8,97 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
-    <link rel="stylesheet" href="style/userPanel.css" />
+    <link rel="stylesheet" href="style/addProduct.css" />
 </head>
 
 <body>
     <div class="container">
-        <div id="nameAndBuyLinkContainer">
-            <div id="nameContainer">
+        <form action="" method="post">
+
+            <div id="nameContainer" class="width100">
                 <label for="name">Nombre:</label>
-                <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" placeholder="El señor de los anillos (juego de mesa)">
             </div>
             <div id="buyLinkContainer">
                 <label for="buyLink">Link de compra:</label>
-                <input type="text" name="buyLink" id="buyLink">
+                <input type="text" name="buyLink" id="buyLink"
+                    placeholder="https://www.amazon.es/s?k=El+señor+de+los+anillos+juego+de+mesa">
             </div>
-        </div>
-        <div id="descriptionCopntainer">
-            <label for="description">Descripción</label>
-            <textarea name="description" id="description" cols="30" rows="10"></textarea>
-        </div>
-        <div id="playersContainer">
-            <div id="minPlayersContainer">
-                <label for="minPlayers">Jugadores mínimos:</label>
-                <input type="number" name="minPlayers" id="minPlayers">
+
+            <div id="descriptionCopntainer">
+                <label for="description">Descripción:</label>
+                <textarea name="description" id="description" class="width100" cols="30" rows="10"
+                    placeholder="Viajes por la Tierra Media es un juego de mesa totalmente cooperativo de fantasía y aventura..."></textarea>
             </div>
-            <div id="maxPlayersContainer">
-                <label for="maxPlayers">Jugadores máximos:</label>
-                <input type="number" name="maxPlayers" id="maxPlayers">
+            <div id="playersContainer">
+                <div id="minPlayersContainer" class="colum50">
+                    <label for="minPlayers">Jugadores mínimos:</label>
+                    <input type="number" name="minPlayers" id="minPlayers" class="width100" placeholder="1">
+                </div>
+                <div id="maxPlayersContainer" class="colum50">
+                    <label for="maxPlayers">Jugadores máximos:</label>
+                    <input type="number" name="maxPlayers" id="maxPlayers" class="width100" placeholder="10">
+                </div>
             </div>
-        </div>
-        <div id="lengthAndAgeContainer">
-            <div id="lengthContainer">
-                <label for="length">Duración:</label>
-                <input type="number" name="length" id="length">
+            <div id="lengthAndAgeContainer">
+                <div id="lengthContainer" class="colum50">
+                    <label for="length">Duración (mins):</label>
+                    <input type="number" name="length" id="length" class="width100" placeholder="90">
+                </div>
+                <div id="minAgeContainer" class="colum50">
+                    <label for="minAge">Edad mínima:</label>
+                    <input type="number" name="minAge" id="minAge" class="width100" placeholder="7">
+                </div>
             </div>
-            <div id="minAgeContainer">
-                <label for="minAge">Edad mínima:</label>
-                <input type="number" name="minAge" id="minAge">
+            <div id="typeAndCategoryContainer">
+                <div id="typeContainer" class="colum50">
+                    <label for="type">Tipo:</label>
+                    <select name="type" id="type" class="width100" required>
+                        <option value="value1" selected disabled>Selecciona tipo</option>
+                        <option value="value1">Value 1</option>
+                        <option value="value2">Value 2</option>
+                        <option value="value3">Value 3</option>
+                        <option value="value4">Value 4</option>
+                    </select>
+                </div>
+                <div id="categoryContainer" class="colum50">
+                    <label for="category">Categoría:</label>
+                    <select name="category" id="category" class="width100" required>
+                        <option value="value1" selected disabled>Selecciona categoría</option>
+                        <option value="value1">Value 1</option>
+                        <option value="value2">Value 2</option>
+                        <option value="value3">Value 3</option>
+                        <option value="value4">Value 4</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div id="typeAndCategoryContainer">
-            <div id="typeContainer">
-                <label for="type">Tipo:</label>
-                <select name="type" id="type"></select>
-            </div>
-            <div id="categoryContainer">
-                <label for="category">Categoría:</label>
-                <select name="category" id="category"></select>
-            </div>
-        </div>
-        <div id="publisherAndHiddenContainer">
-            <div id="publisherContainer">
-                <label for="publisher">Tipo:</label>
-                <select name="publisher" id="publisher"></select>
-            </div>
-            <div id="hiddenContainer">
-                <label for="hidden">Categoría:</label>
-                <div id="hiddenCheckBoxContainer">
-                    <div id="hiddenCheckBoxYesContainer">
-                        <label for="hiddenCheckBoxYes">yes</label>
-                        <input type="checkbox" name="hiddenCheckBoxYes" id="hiddenCheckBoxYes">
-                    </div>
-                    <div id="hiddenCheckBoxNoContainer">
-                        <label for="hiddenCheckBoxNo">No</label>
-                        <input type="checkbox" name="hiddenCheckBoxNo" id="hiddenCheckBoxNo">
+            <div id="publisherAndHiddenContainer">
+                <div id="publisherContainer" class="colum50">
+                    <label for="publisher">Editorial:</label>
+                    <select name="publisher" id="publisher" class="width100" required>
+                        <option value="value1" selected disabled>Selecciona editorial</option>
+                        <option value="value1">Value 1</option>
+                        <option value="value2">Value 2</option>
+                        <option value="value3">Value 3</option>
+                        <option value="value4">Value 4</option>
+                    </select>
+                </div>
+                <div id="hiddenContainer" class="colum50">
+                    <label for="hidden">Oculto:</label>
+                    <div id="hiddenRadioButtonContainer">
+                        <div id="hiddenRadioButtonYesContainer">
+                            <label for="hiddenRadioButtonYes">Sí</label>
+                            <input type="radio" name="hiddenRadioButton" id="hiddenRadioButtonYes">
+                        </div>
+                        <div id="hiddenRadioButtonNoContainer">
+                            <label for="hiddenRadioButtonNo">No</label>
+                            <input type="radio" name="hiddenRadioButton" id="hiddenRadioButtonNo" checked>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <input type="submit" class="button1">
+        </form>
     </div>
 
 </body>
