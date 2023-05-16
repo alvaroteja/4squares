@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style/userPanel.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div id="nameAndBuyLinkContainer">
+            <div id="nameContainer">
+                <label for="name">Nombre:</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div id="buyLinkContainer">
+                <label for="buyLink">Link de compra:</label>
+                <input type="text" name="buyLink" id="buyLink">
+            </div>
+        </div>
+        <div id="descriptionCopntainer">
+            <label for="description">Descripción</label>
+            <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        </div>
+        <div id="playersContainer">
+            <div id="minPlayersContainer">
+                <label for="minPlayers">Jugadores mínimos:</label>
+                <input type="number" name="minPlayers" id="minPlayers">
+            </div>
+            <div id="maxPlayersContainer">
+                <label for="maxPlayers">Jugadores máximos:</label>
+                <input type="number" name="maxPlayers" id="maxPlayers">
+            </div>
+        </div>
+        <div id="lengthAndAgeContainer">
+            <div id="lengthContainer">
+                <label for="length">Duración:</label>
+                <input type="number" name="length" id="length">
+            </div>
+            <div id="minAgeContainer">
+                <label for="minAge">Edad mínima:</label>
+                <input type="number" name="minAge" id="minAge">
+            </div>
+        </div>
+        <div id="typeAndCategoryContainer">
+            <div id="typeContainer">
+                <label for="type">Tipo:</label>
+                <select name="type" id="type"></select>
+            </div>
+            <div id="categoryContainer">
+                <label for="category">Categoría:</label>
+                <select name="category" id="category"></select>
+            </div>
+        </div>
+        <div id="publisherAndHiddenContainer">
+            <div id="publisherContainer">
+                <label for="publisher">Tipo:</label>
+                <select name="publisher" id="publisher"></select>
+            </div>
+            <div id="hiddenContainer">
+                <label for="hidden">Categoría:</label>
+                <div id="hiddenCheckBoxContainer">
+                    <div id="hiddenCheckBoxYesContainer">
+                        <label for="hiddenCheckBoxYes">yes</label>
+                        <input type="checkbox" name="hiddenCheckBoxYes" id="hiddenCheckBoxYes">
+                    </div>
+                    <div id="hiddenCheckBoxNoContainer">
+                        <label for="hiddenCheckBoxNo">No</label>
+                        <input type="checkbox" name="hiddenCheckBoxNo" id="hiddenCheckBoxNo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

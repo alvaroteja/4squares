@@ -216,8 +216,8 @@ $currentReviewList = $_SESSION["currentReviewList"];
 
         <?php
         //echo $_SESSION['isAFavoriteProduct'];
-        echo "<pre>";
-        print_r($_SESSION);
+        // echo "<pre>";
+        // print_r($_SESSION);
         ?>
         <table>
             <tr>

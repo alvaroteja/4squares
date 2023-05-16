@@ -3,9 +3,6 @@
 @import "components/nav.css";
 @import "components/buttons.css";
 @import "standars.css";
-@import "components/star.css";
-@import "components/homeCard.css";
-@import "components/pageNav.css";
 
 body {
     padding-top: 200px;
@@ -16,7 +13,7 @@ body {
     /* background: var(--bg-light); */
 }
 
-.productCon {
+.container {
     display: flex;
     gap: 20px;
     padding: 20px;
@@ -30,15 +27,9 @@ body {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-}
-.productConHidden {
-    background: #c9c9c9ab;
+    margin-bottom: 100px;
 }
 
-.productConHidden p,
-.productConHidden img,
-.productConHidden h2,
-.productConHidden svg,
-.productConHidden .buttonMoreInfoBox {
-    opacity: 0.4;
-}
+/*******************************/
+/***     asdasdasdasdasda    ***/
+/*******************************/

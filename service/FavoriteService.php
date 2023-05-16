@@ -63,15 +63,17 @@ class FavoriteService
                 $userPanelFavoriteDtoList = array();
                 $scoreService = new ScoreService($this->connnection);
                 while ($row = $resultset->fetch_object()) {
-                    $productId = $row->id_product;
-                    $img = $this->getProductImgByProducId($productId);;
-                    $name = $this->getProductNameByProducId($productId);
-                    $averageScore = $scoreService->getAverageScore($productId);
+                    if (!$this->checkIfProductIsHiddenById($row->id_product)) {
+                        $productId = $row->id_product;
+                        $img = $this->getProductImgByProducId($productId);;
+                        $name = $this->getProductNameByProducId($productId);
+                        $averageScore = $scoreService->getAverageScore($productId);
 
 
-                    $userPanelFavoriteDto = new UserPanelFavoriteDto($img, $name, $averageScore, $productId);
+                        $userPanelFavoriteDto = new UserPanelFavoriteDto($img, $name, $averageScore, $productId);
 
-                    array_push($userPanelFavoriteDtoList, $userPanelFavoriteDto);
+                        array_push($userPanelFavoriteDtoList, $userPanelFavoriteDto);
+                    }
                 }
 
                 $con->close();
@@ -117,6 +119,25 @@ class FavoriteService
             }
         } catch (Exception $e) {
             return "0-notFoundMedia/1.jpg";;
+        }
+    }
+    function checkIfProductIsHiddenById($idProduct)
+    {
+        try {
+            $con = $this->connnection->getConnection();
+            $query = "SELECT hidden FROM `products` WHERE id = $idProduct;";
+            $resultset = $con->query($query);
+            $con->close();
+
+            if ($resultset->num_rows == 0) {
+                return true;
+            } else {
+                $row = $resultset->fetch_object();
+                $hidden = $row->hidden;
+                return $hidden;
+            }
+        } catch (Exception $e) {
+            return true;;
         }
     }
 }

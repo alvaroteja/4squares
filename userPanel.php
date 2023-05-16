@@ -29,6 +29,9 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
 
 <head>
     <title>4squares</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
     <link rel="stylesheet" href="style/userPanel.css" />
 </head>
@@ -74,46 +77,47 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
             </div>
         </div>
         <?php
-        echo "<pre>";
+        //echo "<pre>";
         // print_r($_SESSION["user"]);
         // print_r($_SESSION["avatarsList"]);
-        print_r($userPanelFavoriteList);
+        //print_r($userPanelFavoriteList);
         ?>
     </div>
-    <div id="favoriteProductsContainer" class="container">
+    <div id="favoriteContainer" class="container">
+        <h2>Lista de favoritos</h2>
         <?php
-        for ($i = 0; $i < count($userPanelFavoriteList); $i++) {
-            $aveScor = $userPanelFavoriteList[$i]->getAverageScore();
-            $prodName = $userPanelFavoriteList[$i]->getName();
-            $prodImg = $userPanelFavoriteList[$i]->getImg();
+        if (!$userPanelFavoriteList) {
             echo "
-            <div class='favoriteProduct'>
-                <img class='favoriteProduct-img' src='./img/products/$prodImg' alt=''/>
-                <div class='favoriteProduct-dataContainer'>
-                    <h2>$prodName</h2>
-                    <div id='score-container'>
-                        <div id='product-score-number'>
-                            <p>$aveScor</p>
-                        </div>
-                        <div id='stars'>
-            ";
-            for ($j = 0; $j < 5; $j++) {
-                $class = "starSvgFilled";
-                if (round($userPanelFavoriteList[0]->getAverageScore()) < $j + 1) {
-                    $class = "starSvgEmpty";
-                }
-                echo ("
-                            <svg class='$class' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 24 24' fill='none' stroke='#000000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'>
-                                <polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'></polygon>
-                             </svg>
-                ");
+                <div id='emptyList'>
+                    <p >Tu <em>lista de favoritos</em> está vacía, date una vuelta por la web en busca de <em>los mejores juegos</em>.</p>
+                    <a href='./index.php'>
+                        <svg class='svg-icon' viewBox='0 0 20 20' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'>
+                            <path d='M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10'></path>
+                        </svg>
+                    </a>
+                </div>
+                ";
+        } else {
+            echo "
+                    <div id='favoriteProductsContainer'>
+                ";
+            for ($i = 0; $i < count($userPanelFavoriteList); $i++) {
+                $aveScor = $userPanelFavoriteList[$i]->getAverageScore();
+                $prodName = $userPanelFavoriteList[$i]->getName();
+                $prodImg = $userPanelFavoriteList[$i]->getImg();
+                include("./html/components/userPanelFavoriteProduct.php");
             }
             echo "
+                        <div class='favoriteProduct favoriteProductAdd'>
+                            <p>Anadir más</p>
+                            <a href='./index.php'>
+                            <svg class='addMoreFavorites' viewBox='0 0 20 20' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'>
+                                <path d='M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10'></path>
+                            </svg>
+                            </a>
                         </div>
                     </div>
-                </div>
-            </div>
-            ";
+                ";
         }
         ?>
 
@@ -138,6 +142,7 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
     closeModalBtn.addEventListener("click", function() {
         overlay.classList.remove("active");
     });
+
     // Añadimos el evento 'click' a todas las miniaturas de avatar
     for (let i = 0; i < avatarSelectorsImgs.length; i++) {
         avatarSelectorsImgs[i].addEventListener("click", function() {
@@ -163,6 +168,29 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
                 })
                 .catch(error => {
                     alert('No se pudo actualizar el avatar.');
+                });
+        });
+    }
+
+    // boton para eliminar favorito
+    var deleteFavoriteButtons = document.querySelectorAll('.eliminarBoton');
+    for (let i = 0; i < deleteFavoriteButtons.length; i++) {
+        deleteFavoriteButtons[i].addEventListener("click", function() {
+
+            var deleteButtonId = this.id.split('-')[1];
+
+            fetch(`http://localhost/tfg/4squares/controller/favoriteController.php?switchFavorite=true&userId=<?php echo $userId ?>&productId=${deleteButtonId}`, {
+                    method: 'GET'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        this.parentNode.parentNode.remove();
+                    } else {
+                        alert('No se pudo eliminar favorito.');
+                    }
+                })
+                .catch(error => {
+                    alert('No se pudo eliminar favorito.');
                 });
         });
     }
