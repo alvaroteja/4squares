@@ -23,6 +23,28 @@
     opacity: 0.7 !important;
 }
 
+.button1s {
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
+    text-decoration: none !important;
+    background-color: var(--secondary) !important;
+    color: var(--white-link) !important;
+    transition: 0.2s !important;
+}
+
+.button1s:hover {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2) !important;
+    background-color: var(--secondary) !important;
+    opacity: 0.9 !important;
+}
+
+.button1s:active {
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2) !important;
+    background-color: var(--secondary) !important;
+    color: var(--white-link) !important;
+    opacity: 0.7 !important;
+}
+
 /**************************/
 /* Button 2 Style         */
 /**************************/
