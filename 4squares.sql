@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2023 a las 19:36:11
+-- Tiempo de generación: 21-05-2023 a las 18:58:44
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -42,7 +42,21 @@ INSERT INTO `avatars` (`id`, `url`) VALUES
 (3, 'avatar03.png'),
 (4, 'avatar04.png'),
 (5, 'avatar05.png'),
-(6, 'avatar06.png');
+(6, 'avatar06.png'),
+(7, 'avatar07.png'),
+(8, 'avatar08.png'),
+(9, 'avatar09.png'),
+(10, 'avatar10.png'),
+(11, 'avatar11.png'),
+(12, 'avatar12.png'),
+(13, 'avatar13.png'),
+(14, 'avatar14.png'),
+(15, 'avatar15.png'),
+(16, 'avatar16.png'),
+(17, 'avatar17.png'),
+(18, 'avatar18.png'),
+(19, 'avatar19.png'),
+(20, 'avatar20.png');
 
 -- --------------------------------------------------------
 
@@ -83,6 +97,18 @@ CREATE TABLE `favorites` (
   `id_user` int(11) NOT NULL,
   `add_date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `favorites`
+--
+
+INSERT INTO `favorites` (`id`, `id_product`, `id_user`, `add_date`) VALUES
+(18, 4, 106, '2023-05-12'),
+(34, 1, 56, '2023-05-12'),
+(35, 31, 56, '2023-05-12'),
+(36, 8, 106, '2023-05-15'),
+(37, 3, 106, '2023-05-20'),
+(38, 2, 106, '2023-05-21');
 
 -- --------------------------------------------------------
 
@@ -406,7 +432,7 @@ INSERT INTO `reviews` (`id`, `id_product`, `id_user`, `review`, `add_date`, `hid
 (7, 1, 56, 'Ajedrez es uno de mis juegos favoritos de todos los tiempos. Me encanta la estrategia involucrada y la sensación de competencia.', '2023-05-02', 0),
 (8, 1, 98, 'El Ajedrez es un juego que siempre he disfrutado jugando. Me encanta la emoción de planear y ejecutar una estrategia exitosa.', '2023-05-02', 0),
 (10, 1, 72, 'El Ajedrez es un juego que siempre me ha gustado. Me encanta la sensación de competencia y el desafío que ofrece.', '2023-05-02', 0),
-(11, 1, 83, 'Ajedrez es un juego clásico que siempre me ha gustado. Me encanta la estrategia involucrada y la sensación de logro.', '2023-05-02', 1),
+(11, 1, 83, 'Ajedrez es un juego clásico que siempre me ha gustado. Me encanta la estrategia involucrada y la sensación de logro.', '2023-05-02', 0),
 (29, 1, 106, 'gf dghdfg dfg', '2023-05-06', 0);
 
 -- --------------------------------------------------------
@@ -2927,7 +2953,8 @@ INSERT INTO `scores` (`id`, `id_product`, `id_user`, `score`) VALUES
 (2551, 48, 100, 0),
 (2552, 49, 100, 0),
 (2553, 50, 100, 4),
-(2554, 1, 106, 5);
+(2554, 1, 106, 5),
+(2555, 3, 106, 2);
 
 -- --------------------------------------------------------
 
@@ -2974,7 +3001,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `surename`, `nickname`, `email`, `password`, `id_avatar`, `sing_up_date`, `muted`, `credentials`) VALUES
-(56, 'sofia', 'garcia', 'sofisticadasofia', 'sofiagarcia@gmail.com', '1234', 4, '2023-04-02', 0, 0),
+(56, 'sofia', 'garcia', 'sofisticadasofia', 'sofiagarcia@gmail.com', '1234', 7, '2023-04-02', 0, 0),
 (57, 'juan', 'fernandez', 'juansinmiedo', 'juanfernandez@gmail.com', '1234', 5, '2023-04-02', 0, 0),
 (58, 'ana', 'gonzalez', 'anamariposa', 'anagonzalez@gmail.com', '1234', 6, '2023-04-02', 0, 0),
 (59, 'carlos', 'perez', 'carlitoscool', 'carlosperez@gmail.com', '1234', 4, '2023-04-02', 0, 0),
@@ -3001,7 +3028,7 @@ INSERT INTO `users` (`id`, `first_name`, `surename`, `nickname`, `email`, `passw
 (80, 'isabella', 'rivera', 'isabellaluna', 'isabellarivera@gmail.com', '1234', 4, '2023-04-02', 0, 0),
 (81, 'daniel', 'morales', 'danielrojo', 'danielmorales@gmail.com', '1234', 1, '2023-04-02', 0, 0),
 (82, 'fernanda', 'rios', 'fernandafantasia', 'fernandarios@gmail.com', '1234', 6, '2023-04-02', 0, 0),
-(83, 'rafael', 'romero', 'rafarayo', 'rafaelromero@gmail.com', '1234', 2, '2023-04-02', 1, 0),
+(83, 'rafael', 'romero', 'rafarayo', 'rafaelromero@gmail.com', '1234', 2, '2023-04-02', 0, 0),
 (84, 'miranda', 'salazar', 'miramar', 'mirandasalazar@gmail.com', '1234', 5, '2023-04-02', 0, 0),
 (85, 'gonzalo', 'silva', 'gonzagalaxia', 'gonzalosilva@gmail.com', '1234', 2, '2023-04-02', 0, 0),
 (86, 'renata', 'zamora', 'renirosa', 'renatazamora@gmail.com', '1234', 5, '2023-04-02', 0, 0),
@@ -3024,7 +3051,7 @@ INSERT INTO `users` (`id`, `first_name`, `surename`, `nickname`, `email`, `passw
 (103, 'lorena', 'tapia', 'lorelluvia', 'lorenatapia@gmail.com', '1234', 5, '2023-04-02', 0, 0),
 (104, 'angel', 'chavez', 'angelalado', 'angelchavez@gmail.com', '1234', 5, '2023-04-02', 0, 0),
 (105, 'maria', 'miranda', 'mariposamaria', 'mariamiranda@gmail.com', '1234', 4, '2023-04-02', 0, 0),
-(106, 'admin', 'admin', 'admin', 'admin@gmail.com', '1234', 4, '2023-04-10', 0, 1),
+(106, 'admin', 'admin', 'admin', 'admin@gmail.com', '1234', 1, '2023-04-10', 0, 1),
 (107, 'Carmen', 'Prado', 'CPrado', 'cprado@gmail.com', '123456Aa@', 1, '2023-04-19', 0, 0),
 (108, 'Alvaro', 'Teja', 'aaa', 'a@gmail.com', '123456Aa@', 1, '2023-04-19', 0, 0),
 (109, 'Alvaro', 'Teja Centeno', 'aaaa', 'alteja17@gmail.com', '123456Aa@', 1, '2023-04-19', 0, 0);
@@ -3112,7 +3139,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `avatars`
 --
 ALTER TABLE `avatars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -3124,13 +3151,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de la tabla `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `product_medias`
@@ -3154,7 +3181,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT de la tabla `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2555;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2556;
 
 --
 -- AUTO_INCREMENT de la tabla `types`
