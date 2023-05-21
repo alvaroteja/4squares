@@ -37,7 +37,6 @@ body {
         width: 90%;
         min-width: auto;
         /* background-color: red; */
-
     }
 }
 
@@ -75,7 +74,6 @@ textarea::placeholder {
     font-style: italic;
 }
 
-
 /* input[type="submit"] {
     border: none;
     margin-top: 1000px;
@@ -84,31 +82,32 @@ textarea::placeholder {
 #submitButton {
     margin-top: 50px;
 }
-
+/* 
 #nameAndBuyLinkContainer {
     display: flex;
     flex-direction: column;
     align-items: start;
     width: 100%;
     gap: 20px;
-}
-
-
+} */
 
 #nameContainer input,
-#buyLinkContainer input {
+#buyLinkContainer input,
+#mediaLinkContainer input {
     width: 100%;
 }
 
 #nameContainer,
 #buyLinkContainer,
-#descriptionCopntainer {
+#descriptionCopntainer,
+#mediaLinkContainer {
     display: flex;
     flex-direction: column;
     align-items: start;
 }
 
-#buyLink {}
+#buyLink {
+}
 
 #playersContainer,
 #lengthAndAgeContainer,
@@ -121,7 +120,6 @@ textarea::placeholder {
 }
 
 @media screen and (max-width: 650px) {
-
     #playersContainer,
     #lengthAndAgeContainer,
     #typeAndCategoryContainer,
@@ -166,14 +164,15 @@ textarea::placeholder {
     gap: 10px;
 }
 
-#hiddenRadioButtonYes {}
+#hiddenRadioButtonYes {
+}
 
-#hiddenRadioButtonNo {}
-
-
+#hiddenRadioButtonNo {
+}
 
 /********************************/
-#file-input {}
+#file-input {
+}
 
 #preview-container {
     display: grid;
@@ -213,12 +212,11 @@ textarea::placeholder {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: scale .2s;
+    transition: scale 0.2s;
 }
 
 .delete-icon:hover {
     scale: 1.2;
-
 }
 
 .delete-icon svg {
@@ -259,4 +257,10 @@ textarea::placeholder {
     opacity: 0;
     width: 100%;
     height: 100%;
+}
+#errorInfo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: var(--text-danger);
 }

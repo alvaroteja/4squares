@@ -12,7 +12,14 @@
                 $avatarUrl =  $_SESSION["user"]->getId_avatar();
                 $userName = $_SESSION["user"]->getNickname();
                 echo ("
-                        <a class='button2' href='controller/loginController.php'>Log out</a>  
+                        <a class='button2' href='controller/loginController.php'>Log out</a>
+                    ");
+                if ($_SESSION["user"]->getCredentials() == 1) {
+                    echo ("
+                                <a class='button1' href='controller/addProductController.php'>Nuevo juego</a>
+                            ");
+                }
+                echo ("
                         <a id='userPanelLink' href='./userPanel.php'>
                             <div id='navUser'>
                                 <img id='navUserImg' src='./img/avatars/$avatarUrl' alt=''>
