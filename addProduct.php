@@ -121,7 +121,7 @@ $publishersList = $_SESSION["publishersList"];
                         </div>
                         <div id="hiddenRadioButtonNoContainer">
                             <label for="hiddenRadioButtonNo">No</label>
-                            <input type="radio" name="hidden" value="no" id="hiddenRadioButtonNo" checked />
+                            <input type="radio" name="hidden" value="no" var formData=id="hiddenRadioButtonNo" checked />
                         </div>
                     </div>
                 </div>
@@ -144,6 +144,7 @@ $publishersList = $_SESSION["publishersList"];
     </div>
 </body>
 <script>
+    const formData = new FormData();
     // Contenedor de previsualización de imágenes
     const previewContainer = document.getElementById("preview-container");
 
@@ -162,7 +163,7 @@ $publishersList = $_SESSION["publishersList"];
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const fileName = file["name"];
-            console.log(file);
+            //console.log(file);
             if (validateFileExtension(fileName)) {
                 // ver si esta foto ya esta subida
                 var alreadyUploaded = false;
@@ -173,6 +174,10 @@ $publishersList = $_SESSION["publishersList"];
                 }
                 //si el archivo no está subido, se sube
                 if (!alreadyUploaded) {
+                    // primero lo subimos al objeto formData
+                    //formData.append('images[]', files[i]);
+                    formData.append(fileName, files[i]);
+                    // console.log([...formData]);
                     // Crear un objeto URL para previsualizar la imagen
                     const imageURL = URL.createObjectURL(file);
 
@@ -212,6 +217,7 @@ $publishersList = $_SESSION["publishersList"];
                 alert("Formato de archivo no válido");
             }
         }
+        console.log([...formData]);
 
         fileInput.value = "";
     }
@@ -225,8 +231,26 @@ $publishersList = $_SESSION["publishersList"];
             thumbnailContainer = event.target.parentNode.parentNode;
         }
 
-        // Eliminar la imagen del array de imágenes seleccionadas
+        //detecto en que indice se encuentra la imagen a borrar
         const index = Array.from(previewContainer.children).indexOf(thumbnailContainer);
+
+        //Elimino la imagen del FormData
+        //console.log(selectedImages[index]["name"]);
+        formData.delete(selectedImages[index]["name"]);
+        //deleteImageFromFormData(selectedImages[index]["name"]);
+        console.log([...formData]);
+        console.log(formData);
+        for (var key of formData.keys()) {
+            var values = formData.getAll(key);
+
+            for (var value of values) {
+                if (value instanceof File) {
+                    console.log('Archivo:', value);
+                }
+            }
+        }
+
+        // Eliminar la imagen del array de imágenes seleccionadas
         selectedImages.splice(index, 1);
 
         // Eliminar la imagen de la previsualización
@@ -302,7 +326,6 @@ $publishersList = $_SESSION["publishersList"];
 
 
     //funcion para validar el tipo de archivo subido
-
     function validateFileExtension(fileName) {
         var fileExtension = fileName.split(".").pop().toLowerCase();
 
