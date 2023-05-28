@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2023 a las 18:58:44
+-- Tiempo de generación: 28-05-2023 a las 19:30:52
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -186,7 +186,8 @@ INSERT INTO `products` (`id`, `name`, `description`, `shopping_link`, `min_playe
 (47, 'Sheriff of Nottingham', 'Sheriff of Nottingham: Un juego de mesa de negociación y engaño en el que los jugadores asumen el papel de mercaderes y deben pasar mercancía a través de la aduana mientras tratan de engañar al sheriff.', 'https://www.amazon.es/s?k=Sheriff+of+Nottingham', 2, 11, 63, 5, 1, 9, 35, '2023-04-03 11:38:07', 0),
 (48, 'Scythe', 'Un juego de estrategia ambientado en una Europa alternativa en los años 20 en el que los jugadores construyen mechas y luchan por el control del territorio.', 'https://www.amazon.es/s?k=Scythe', 2, 9, 52, 4, 3, 7, 77, '2023-04-03 11:38:08', 0),
 (49, 'Talisman', 'Este juego de mesa es un juego de aventuras de fantasía donde los jugadores se mueven por un tablero y luchan contra monstruos y recolectan tesoros. Cada jugador selecciona un personaje con habilidades y atributos únicos y utiliza cartas para influir en los resultados de los dados. El objetivo del juego es llegar al centro del tablero y enfrentarse al poderoso Talismán. El juego incluye una gran cantidad de cartas y piezas, lo que lo hace muy temático y variado.', 'https://www.amazon.es/s?k=Talisman', 2, 12, 92, 11, 2, 8, 6, '2023-04-03 11:38:09', 0),
-(50, 'Dominion: Intrigue', 'Intrigue: Una expansión del juego Dominion en la que se añaden nuevas cartas y se pueden jugar partidas con más jugadores.', 'https://www.amazon.es/s?k=Dominion:+Intrigue', 2, 3, 82, 10, 2, 1, 106, '2023-04-03 11:38:10', 0);
+(50, 'Dominion: Intrigue', 'Intrigue: Una expansión del juego Dominion en la que se añaden nuevas cartas y se pueden jugar partidas con más jugadores.', 'https://www.amazon.es/s?k=Dominion:+Intrigue', 2, 3, 82, 10, 2, 1, 106, '2023-04-03 11:38:10', 0),
+(78, 'asd', 'asd', 'asd', 1, 20, 10, 10, 1, 1, 1, '2023-05-28 18:47:32', 0);
 
 -- --------------------------------------------------------
 
@@ -216,7 +217,9 @@ INSERT INTO `product_medias` (`id`, `id_product`, `url`, `type`) VALUES
 (8, 2, '2-Monopoly/4.jpg', 'image'),
 (9, 2, '2-Monopoly/5.jpg', 'image'),
 (10, 2, '2-Monopoly/6.jpg', 'image'),
-(11, 1, 'https://www.youtube.com/embed/x4R2EPkYzZk', 'video');
+(11, 1, 'https://www.youtube.com/embed/x4R2EPkYzZk', 'video'),
+(65, 78, 'asd', 'video'),
+(66, 78, 'asd/647385a4defa9.jpg', 'image');
 
 -- --------------------------------------------------------
 
@@ -3077,8 +3080,8 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `favorites`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_product` (`id_product`);
+  ADD KEY `favorites_ibfk_2` (`id_user`),
+  ADD KEY `favorites_ibfk_3` (`id_product`);
 
 --
 -- Indices de la tabla `products`
@@ -3094,7 +3097,7 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_medias`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_product` (`id_product`);
+  ADD KEY `product_medias_ibfk_1` (`id_product`);
 
 --
 -- Indices de la tabla `publishers`
@@ -3115,8 +3118,8 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `scores`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_product` (`id_product`);
+  ADD KEY `scores_ibfk_2` (`id_user`),
+  ADD KEY `scores_ibfk_3` (`id_product`);
 
 --
 -- Indices de la tabla `types`
@@ -3151,19 +3154,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de la tabla `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT de la tabla `product_medias`
 --
 ALTER TABLE `product_medias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `publishers`
@@ -3175,13 +3178,13 @@ ALTER TABLE `publishers`
 -- AUTO_INCREMENT de la tabla `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2556;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2557;
 
 --
 -- AUTO_INCREMENT de la tabla `types`
@@ -3203,8 +3206,8 @@ ALTER TABLE `users`
 -- Filtros para la tabla `favorites`
 --
 ALTER TABLE `favorites`
-  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `favorites_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `favorites_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `products`
@@ -3218,21 +3221,21 @@ ALTER TABLE `products`
 -- Filtros para la tabla `product_medias`
 --
 ALTER TABLE `product_medias`
-  ADD CONSTRAINT `product_medias_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `product_medias_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `reviews`
 --
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reviews_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `scores`
 --
 ALTER TABLE `scores`
-  ADD CONSTRAINT `scores_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `scores_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `scores_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `scores_ibfk_3` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `users`

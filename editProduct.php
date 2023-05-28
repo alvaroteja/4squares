@@ -1,13 +1,14 @@
 <?php
 // include("service/AvatarService.php");
 include("./model/UserModel.php");
+include("./model/ProductModel.php");
 // include("./service/DBConnection.php");
 // include_once("model/ProductModel.php");
 // include("./dto/reviewDto.php");
 session_start();
 
-if (!isset($_SESSION["user"]) || $_SESSION["user"]->getCredentials() != 1 || !isset($_SESSION['redireccion']) || empty($_SESSION['redireccion']) || $_SESSION['redireccion'] != "addProductController") {
-    header("Location: ./controller/addProductController.php");
+if (!isset($_SESSION["user"]) || $_SESSION["user"]->getCredentials() != 1 || !isset($_SESSION['redireccion']) || empty($_SESSION['redireccion']) || $_SESSION['redireccion'] != "editProductController") {
+    header("Location: ./controller/editProductController.php");
     exit;
 } else {
     unset($_SESSION['redireccion']);
@@ -16,6 +17,14 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]->getCredentials() != 1 || !is
 $typesList = $_SESSION["typesList"];
 $categoriesList = $_SESSION["categoriesList"];
 $publishersList = $_SESSION["publishersList"];
+
+$linkVideo = "";
+$mediaList = $_SESSION["currentEditingProduct"]->getMedia_list();
+foreach ($mediaList as $elemento) {
+    if ($elemento['type'] == 'video') {
+        $linkVideo = $elemento['url'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,52 +42,57 @@ $publishersList = $_SESSION["publishersList"];
 <body>
     <?php
     include("html/components/nav.php");
+    print_r($_SESSION["currentEditingProduct"]->getMedia_list());
     ?>
     <div class="container">
-        <h2 style="text-align: center">Agrega un juego a la web</h2>
+        <h2 style="text-align: center">Editando <?php echo $_SESSION["currentEditingProduct"]->getName() ?></h2>
         <form id="myForm" enctype="multipart/form-data">
             <div id="nameContainer" class="width100">
                 <label for="name">*Nombre:</label>
-                <input type="text" name="name" id="name" placeholder="El señor de los anillos (juego de mesa)" />
+                <input type="text" name="name" id="name" placeholder="El señor de los anillos (juego de mesa)" value="<?php echo $_SESSION["currentEditingProduct"]->getName() ?>" />
             </div>
             <div id="buyLinkContainer">
                 <label for="buyLink">Link de compra:</label>
-                <input type="text" name="buyLink" id="buyLink" placeholder="https://www.amazon.es/s?k=El+señor+de+los+anillos+juego+de+mesa" />
+                <input type="text" name="buyLink" id="buyLink" placeholder="https://www.amazon.es/s?k=El+señor+de+los+anillos+juego+de+mesa" value="<?php echo $_SESSION["currentEditingProduct"]->getShopping_link() ?>" />
             </div>
 
             <div id="descriptionCopntainer">
                 <label for="description">*Descripción:</label>
-                <textarea name="description" id="description" class="width100" cols="30" rows="10" placeholder="Viajes por la Tierra Media es un juego de mesa totalmente cooperativo de fantasía y aventura..."></textarea>
+                <textarea name="description" id="description" class="width100" cols="30" rows="10" placeholder="Viajes por la Tierra Media es un juego de mesa totalmente cooperativo de fantasía y aventura..."><?php echo $_SESSION["currentEditingProduct"]->getDescription() ?></textarea>
             </div>
             <div id="playersContainer">
                 <div id="minPlayersContainer" class="colum50">
                     <label for="minPlayers">*Jugadores mínimos:</label>
-                    <input type="number" name="minPlayers" id="minPlayers" class="width100" placeholder="1" />
+                    <input type="number" name="minPlayers" id="minPlayers" class="width100" placeholder="1" value="<?php echo $_SESSION["currentEditingProduct"]->getMin_playes() ?>" />
                 </div>
                 <div id="maxPlayersContainer" class="colum50">
                     <label for="maxPlayers">*Jugadores máximos:</label>
-                    <input type="number" name="maxPlayers" id="maxPlayers" class="width100" placeholder="10" />
+                    <input type="number" name="maxPlayers" id="maxPlayers" class="width100" placeholder="10" value="<?php echo $_SESSION["currentEditingProduct"]->getMax_players() ?>" />
                 </div>
             </div>
             <div id="lengthAndAgeContainer">
                 <div id="lengthContainer" class="colum50">
                     <label for="length">*Duración (mins):</label>
-                    <input type="number" name="length" id="length" class="width100" placeholder="90" />
+                    <input type="number" name="length" id="length" class="width100" placeholder="90" value="<?php echo $_SESSION["currentEditingProduct"]->getLength() ?>" />
                 </div>
                 <div id="minAgeContainer" class="colum50">
                     <label for="minAge">*Edad mínima:</label>
-                    <input type="number" name="minAge" id="minAge" class="width100" placeholder="7" />
+                    <input type="number" name="minAge" id="minAge" class="width100" placeholder="7" value="<?php echo $_SESSION["currentEditingProduct"]->getMinimum_age() ?>" />
                 </div>
             </div>
             <div id="typeAndCategoryContainer">
                 <div id="typeContainer" class="colum50">
                     <label for="type">*Tipo:</label>
                     <select name="type" id="type" class="width100" required>
-                        <option disabled="disabled" selected="selected">Selecciona tipo</option>
                         <?php
+
                         foreach ($typesList as $key => $value) {
+                            $selected = "";
+                            if ($value == $_SESSION["currentEditingProduct"]->getType()) {
+                                $selected = " selected='selected'";
+                            }
                             echo "
-                                    <option value='$value'>$value</option>
+                                    <option value='$value' $selected>$value</option>
                                 ";
                         }
                         ?>
@@ -87,11 +101,15 @@ $publishersList = $_SESSION["publishersList"];
                 <div id="categoryContainer" class="colum50">
                     <label for="category">*Categoría:</label>
                     <select name="category" id="category" class="width100" required>
-                        <option disabled="disabled" selected="selected">Selecciona categoría</option>
                         <?php
+
                         foreach ($categoriesList as $key => $value) {
+                            $selected = "";
+                            if ($value == $_SESSION["currentEditingProduct"]->getCategory()) {
+                                $selected = " selected='selected'";
+                            }
                             echo "
-                                    <option value='$value'>$value</option>
+                                    <option value='$value' $selected>$value</option>
                                 ";
                         }
                         ?>
@@ -102,11 +120,15 @@ $publishersList = $_SESSION["publishersList"];
                 <div id="publisherContainer" class="colum50">
                     <label for="publisher">*Editorial:</label>
                     <select name="publisher" id="publisher" class="width100" required>
-                        <option class="firstOption" disabled="disabled" selected="selected">Selecciona editorial</option>
                         <?php
+
                         foreach ($publishersList as $key => $value) {
+                            $selected = "";
+                            if ($value == $_SESSION["currentEditingProduct"]->getPublisher()) {
+                                $selected = " selected='selected'";
+                            }
                             echo "
-                                    <option value='$value'>$value</option>
+                                    <option value='$value' $selected>$value</option>
                                 ";
                         }
                         ?>
@@ -128,7 +150,7 @@ $publishersList = $_SESSION["publishersList"];
             </div>
             <div id="mediaLinkContainer">
                 <label for="videoLink">Link del video:</label>
-                <input type="text" name="videoLink" id="videoLink" placeholder="Inserta aquí el link del vídeo." />
+                <input type="text" name="videoLink" id="videoLink" placeholder="Inserta aquí el link del vídeo." value="<?php echo $linkVideo; ?>" />
             </div>
             <!-- <input type="file" id="file-input" multiple> -->
             <div class="custom-file-input button1s">

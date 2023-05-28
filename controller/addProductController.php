@@ -1,6 +1,7 @@
 <?php
 include("../model/UserModel.php");
 include("../service/addProductService.php");
+include("../service/productService.php");
 include("../service/DBConnection.php");
 session_start();
 
@@ -13,21 +14,60 @@ if (isset($_POST["sendingForm"])) {
     $connnection = new DBConnection();
     $addProductService = new AddProductService($connnection);
     $filters = $addProductService->validateInputs($_POST);
-    $response = array('message' => $filters);
+
+    //si hay errores en los campos los mandamos
+    if (count($filters) > 0) {
+        $response = array(
+            'success' => false,
+            'message' => $filters
+        );
+        echo json_encode($response);
+        exit;
+    }
+    //Si no hay errores en los datos, se guardan en la BBDD
+    $newProductId =  $addProductService->saveProductData($_POST);
+
+    if (!$newProductId) {
+        $response = array(
+            'success' => false,
+            'message' => 'Error: No se pudo guardar los datos.'
+        );
+        echo json_encode($response);
+        exit;
+    }
+
+    //Se guardan las imagenes en el server
+    if (count($_FILES) > 0) {
+        $response = $addProductService->saveImages($_FILES, $_POST["name"], $newProductId);
+        //echo json_encode($response);
+        //exit;
+
+        if (!$response) {
+            $response = array(
+                'success' => false,
+                'message' => 'Error: No se pudo guardar las imágenes.'
+            );
+            echo json_encode($response);
+            exit;
+        }
+    }
+
+    //$response = array('message' => "$newProductId");
+    //$response = array('message' => "sin imagenes");
     echo json_encode($response);
     exit;
 }
 
 $connnection = new DBConnection();
-$addProductService = new AddProductService($connnection);
+$productService = new ProductService($connnection);
 
-$typesList = $addProductService->getAllTypes();
+$typesList = $productService->getAllTypes();
 $_SESSION['typesList'] = $typesList;
 
-$categoriesList = $addProductService->getAllCategories();
+$categoriesList = $productService->getAllCategories();
 $_SESSION['categoriesList'] = $categoriesList;
 
-$publishersList = $addProductService->getAllPublishers();
+$publishersList = $productService->getAllPublishers();
 $_SESSION['publishersList'] = $publishersList;
 
 $_SESSION['redireccion'] = "addProductController";

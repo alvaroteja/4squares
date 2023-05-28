@@ -92,7 +92,7 @@ class ProductService
     {
         $idList = array();
         $con = $this->connnection->getConnection();
-        $query = "SELECT id from products order by add_date ASC";
+        $query = "SELECT id from products order by add_date DESC";
         $resultset = $con->query($query);
 
         foreach ($resultset as $result) {
@@ -106,7 +106,7 @@ class ProductService
     {
         $idList = array();
         $con = $this->connnection->getConnection();
-        $query = "SELECT id from products where hidden = 0 order by add_date ASC";
+        $query = "SELECT id from products where hidden = 0 order by add_date DESC";
         $resultset = $con->query($query);
 
         foreach ($resultset as $result) {
@@ -127,7 +127,7 @@ class ProductService
         $connnection = new DBConnection();
         $con = $connnection->getConnection();
 
-        $query = "SELECT type FROM `types` WHERE id = " . $id_type . ";";
+        $query = "SELECT type FROM `types` WHERE id = $id_type;";
         $resultset = $con->query($query);
         $row = $resultset->fetch_array(MYSQLI_ASSOC);
 
@@ -155,7 +155,6 @@ class ProductService
         $con->close();
         return $r[0];
     }
-
     /**
      * Obtiene el publisher en string correspondiente a un id_publisher.
      * @param integer $id_category
@@ -225,6 +224,78 @@ class ProductService
             $con->close();
         } catch (Exception $e) {
             return $e;
+        }
+    }
+
+    function getAllTypes()
+    {
+        $con = $this->connnection->getConnection();
+
+
+        $query = "SELECT type FROM `types` WHERE 1";
+        $resultset = $con->query($query);
+
+        if ($resultset->num_rows == 0) {
+            $con->close();
+            return false;
+        } else {
+            $typesList = [];
+
+            while ($row = $resultset->fetch_object()) {
+                $t = $row->type;
+                array_push($typesList, $t);
+            }
+            $con->close();
+
+            return $typesList;
+        }
+    }
+
+    function getAllCategories()
+    {
+        $con = $this->connnection->getConnection();
+
+
+        $query = "SELECT category FROM `categories` WHERE 1";
+        $resultset = $con->query($query);
+
+        if ($resultset->num_rows == 0) {
+            $con->close();
+            return false;
+        } else {
+            $categoriesList = [];
+
+            while ($row = $resultset->fetch_object()) {
+                $t = $row->category;
+                array_push($categoriesList, $t);
+            }
+            $con->close();
+
+            return $categoriesList;
+        }
+    }
+
+    function getAllPublishers()
+    {
+        $con = $this->connnection->getConnection();
+
+
+        $query = "SELECT publisher FROM `publishers` WHERE 1";
+        $resultset = $con->query($query);
+
+        if ($resultset->num_rows == 0) {
+            $con->close();
+            return false;
+        } else {
+            $publishersList = [];
+
+            while ($row = $resultset->fetch_object()) {
+                $t = $row->publisher;
+                array_push($publishersList, $t);
+            }
+            $con->close();
+
+            return $publishersList;
         }
     }
 }

@@ -15,7 +15,7 @@ class AddProductService
     protected $hidden;
     protected $validationList = [
         "name" => "",
-        "buyLink" => "",
+        //"buyLink" => "",
         "description" => "",
         "minPlayers" => "",
         "maxPlayers" => "",
@@ -28,7 +28,7 @@ class AddProductService
     ];
     protected $ElementsDictionary = [
         "name" => "nombre",
-        "buyLink" => "link de compra",
+        //"buyLink" => "link de compra",
         "description" => "descripción",
         "minPlayers" => "jugadores mínimos",
         "maxPlayers" => "jugadores máximos",
@@ -151,75 +151,224 @@ class AddProductService
         }
     }
 
-    function getAllTypes()
+    // function getAllTypes()
+    // {
+    //     $con = $this->connnection->getConnection();
+
+
+    //     $query = "SELECT type FROM `types` WHERE 1";
+    //     $resultset = $con->query($query);
+
+    //     if ($resultset->num_rows == 0) {
+    //         $con->close();
+    //         return false;
+    //     } else {
+    //         $typesList = [];
+
+    //         while ($row = $resultset->fetch_object()) {
+    //             $t = $row->type;
+    //             array_push($typesList, $t);
+    //         }
+    //         $con->close();
+
+    //         return $typesList;
+    //     }
+    // }
+
+    // function getAllCategories()
+    // {
+    //     $con = $this->connnection->getConnection();
+
+
+    //     $query = "SELECT category FROM `categories` WHERE 1";
+    //     $resultset = $con->query($query);
+
+    //     if ($resultset->num_rows == 0) {
+    //         $con->close();
+    //         return false;
+    //     } else {
+    //         $categoriesList = [];
+
+    //         while ($row = $resultset->fetch_object()) {
+    //             $t = $row->category;
+    //             array_push($categoriesList, $t);
+    //         }
+    //         $con->close();
+
+    //         return $categoriesList;
+    //     }
+    // }
+
+    // function getAllPublishers()
+    // {
+    //     $con = $this->connnection->getConnection();
+
+
+    //     $query = "SELECT publisher FROM `publishers` WHERE 1";
+    //     $resultset = $con->query($query);
+
+    //     if ($resultset->num_rows == 0) {
+    //         $con->close();
+    //         return false;
+    //     } else {
+    //         $publishersList = [];
+
+    //         while ($row = $resultset->fetch_object()) {
+    //             $t = $row->publisher;
+    //             array_push($publishersList, $t);
+    //         }
+    //         $con->close();
+
+    //         return $publishersList;
+    //     }
+    // }
+    function saveImages($files, $folderName, $productId)
     {
-        $con = $this->connnection->getConnection();
+        try {
 
+            // Array para almacenar los nombres de las imágenes guardadas
+            $imagesNames = array();
 
-        $query = "SELECT type FROM `types` WHERE 1";
-        $resultset = $con->query($query);
+            // Ruta donde se guardarán las imágenes en el servidor
+            $finalPath = "../img/products/$folderName/";
 
-        if ($resultset->num_rows == 0) {
-            $con->close();
-            return false;
-        } else {
-            $typesList = [];
-
-            while ($row = $resultset->fetch_object()) {
-                $t = $row->type;
-                array_push($typesList, $t);
+            //Si la ruta no existe, se crea
+            if (!is_dir($finalPath)) {
+                mkdir($finalPath, 0777, true);
             }
-            $con->close();
 
-            return $typesList;
+            // Iterar sobre cada archivo
+            foreach ($files['images']['tmp_name'] as $index => $tmpName) {
+                // Obtener nombre y extensión del archivo
+                $fileName = $files['images']['name'][$index];
+                $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                // Generar un nombre único para el archivo
+                $uniqueName = uniqid() . '.' . $fileExtension;
+
+                // Ruta completa del archivo en el servidor
+                $fullPath = $finalPath . $uniqueName;
+
+                // Mover el archivo al destino final en el servidor
+                move_uploaded_file($tmpName, $fullPath);
+
+                // Almacenar el nombre del archivo guardado en el array
+                $imagesNames[] = $uniqueName;
+
+                //por cada imagen que guardamos en el server, hago una insercion en la base de datos en la tabla product_media
+                $this->addImageToDDBB($productId, $fullPath);
+            }
+
+            // Preparar la respuesta JSON
+            $response = array(
+                'success' => true,
+                'message' => 'Imágenes guardadas correctamente',
+                //'imageNames' => $_POST["name"]
+                'imageNames' => $imagesNames
+            );
+            return $response;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    function addVideoToDDBB($productId, $link)
+    {
+        try {
+
+            $con = $this->connnection->getConnection();
+
+            $startsWith = "https://youtu.be/";
+
+            if (strpos($link, $startsWith) === 0) {
+                $link = "https://www.youtube.com/embed/" . substr($link, strlen($startsWith));
+            }
+
+            $query = "INSERT INTO `product_medias` (`id`, `id_product`, `url`, `type`) VALUES (NULL, '$productId', '$link', 'video');";
+            $resultset = $con->query($query);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    function addImageToDDBB($productId, $path)
+    {
+
+        try {
+            $con = $this->connnection->getConnection();
+            $path = str_replace("../img/products/", "", $path);
+            $query = "INSERT INTO `product_medias` (`id`, `id_product`, `url`, `type`) VALUES (NULL, '$productId', '$path', 'image');";
+            $resultset = $con->query($query);
+        } catch (Exception $e) {
+            return false;
         }
     }
 
-    function getAllCategories()
+    function saveProductData($productDataList)
     {
-        $con = $this->connnection->getConnection();
+        try {
 
+            $con = $this->connnection->getConnection();
 
-        $query = "SELECT category FROM `categories` WHERE 1";
-        $resultset = $con->query($query);
+            $name = $_POST["name"];
+            $description = $_POST["description"];
+            $shopping_link = (!isset($_POST["buyLink"]) || empty($_POST["buyLink"]) || $_POST["buyLink"] == "") ? "https://www.amazon.es/s?k=" . $name : $_POST["buyLink"];
+            $min_players = $_POST["minPlayers"];
+            $max_players = $_POST["maxPlayers"];
+            $length = $_POST["length"];
+            $minimum_age = $_POST["minAge"];
+            $type = $this->getProductTypeId($_POST["type"]);
+            $category = $this->getProductCategoryId($_POST["category"]);
+            $publisher = $this->getProductPublisherId($_POST["publisher"]);
+            $hidden = ($_POST["hidden"] == "yes") ? "1" : "0";
 
-        if ($resultset->num_rows == 0) {
-            $con->close();
-            return false;
-        } else {
-            $categoriesList = [];
+            $query = "INSERT INTO `products` (`id`, `name`, `description`, `shopping_link`, `min_players`, `max_players`, `length`, `minimum_age`, `type`, `category`, `publisher`, `add_date`, `hidden`)
+        VALUES (NULL, '$name', '$description', '$shopping_link', '$min_players', '$max_players', '$length', '$minimum_age', '$type', '$category', '$publisher', current_timestamp(), '$hidden');";
+            $con->query($query);
+            $insertId = $con->insert_id;
 
-            while ($row = $resultset->fetch_object()) {
-                $t = $row->category;
-                array_push($categoriesList, $t);
+            //si se ha enviado un link de video, se guarda en la BBDD
+            if (isset($_POST["videoLink"]) && !empty($_POST["videoLink"]) && $_POST["videoLink"] != "") {
+                $this->addVideoToDDBB($insertId, $_POST["videoLink"]);
             }
-            $con->close();
-
-            return $categoriesList;
+            return $insertId;
+        } catch (Exception $e) {
+            return false;
         }
     }
 
-    function getAllPublishers()
+    function getProductPublisherId($publisher)
     {
         $con = $this->connnection->getConnection();
 
-
-        $query = "SELECT publisher FROM `publishers` WHERE 1";
+        $query = "SELECT id FROM `publishers` WHERE publisher = '$publisher';";
         $resultset = $con->query($query);
+        $row = $resultset->fetch_array(MYSQLI_ASSOC);
 
-        if ($resultset->num_rows == 0) {
-            $con->close();
-            return false;
-        } else {
-            $publishersList = [];
+        $r = array_values($row);
+        $con->close();
+        return $r[0];
+    }
+    function getProductCategoryId($category)
+    {
+        $con = $this->connnection->getConnection();
 
-            while ($row = $resultset->fetch_object()) {
-                $t = $row->publisher;
-                array_push($publishersList, $t);
-            }
-            $con->close();
+        $query = "SELECT id FROM `categories` WHERE category = '$category';";
+        $resultset = $con->query($query);
+        $row = $resultset->fetch_array(MYSQLI_ASSOC);
 
-            return $publishersList;
-        }
+        $r = array_values($row);
+        $con->close();
+        return $r[0];
+    }
+    function getProductTypeId($type)
+    {
+        $con = $this->connnection->getConnection();
+
+        $query = "SELECT id FROM `types` WHERE type = '$type';";
+        $resultset = $con->query($query);
+        $row = $resultset->fetch_array(MYSQLI_ASSOC);
+
+        $r = array_values($row);
+        $con->close();
+        return $r[0];
     }
 }

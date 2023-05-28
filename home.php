@@ -126,11 +126,11 @@ $productList = $_SESSION["productsList"];
         //funcion para borrar un producto
 
         const deleteProductIcons = document.querySelectorAll('.deleteSvg');
-        console.log(deleteProductIcons.length);
+        //console.log(deleteProductIcons.length);
 
         for (let i = 0; i < deleteProductIcons.length; i++) {
             deleteProductIcons[i].addEventListener('click', function() {
-                
+
                 let currentProductCon = this.parentNode.parentNode.parentNode.parentNode.parentNode;
                 let productId = currentProductCon.id.split('-')[1];
 
@@ -153,7 +153,25 @@ $productList = $_SESSION["productsList"];
                 }
             });
         }
+        // Agregar evento de escucha a los botones de editar
+        const editButtons = document.querySelectorAll(".editSvg");
+        editButtons.forEach((button) => {
+            button.addEventListener("click", getEditIconProductId);
+        });
+
+        function getEditIconProductId(event) {
+            var parentContainer = "";
+            if (event.target.nodeName == "path") {
+                parentContainer = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+            } else {
+                parentContainer = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+            }
+            productId = parentContainer.id.substring("productIdCon-".length);
+            location.href = `http://localhost/tfg/4squares/controller/editProductController.php?productId=${productId}`;
+            console.log(productId);
+        }
     </script>
+
 </body>
 
 </html>

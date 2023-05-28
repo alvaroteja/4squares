@@ -78,7 +78,8 @@ $currentReviewList = $_SESSION["currentReviewList"];
                         </div>
                     ');
                     } elseif ($typeMedia == "video") {
-                        echo ('<div class="carousel-item">
+                        echo ('
+                        <div class="carousel-item ' . $active . '">
                             <div class="video">
                                 <iframe src="' . $urlMedia . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </div>
