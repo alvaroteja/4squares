@@ -32,6 +32,30 @@ if ($_SESSION["currentPage"] > $_SESSION["maxPages"]) {
     $_SESSION["currentPage"] = $_SESSION["maxPages"];
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['filterRequest']) {
+
+    $serachInput = $_POST["serachInput"];
+    echo "<pre>";
+    print_r($_POST);
+
+    $productsIdList = $productService->getIdProductsByFilter($_POST);
+
+    $_SESSION["productsIdList"] = $productsIdList;
+    $maxPages = ceil(count($_SESSION["productsIdList"]) / $maxProductsAtHome);
+    $_SESSION["maxPages"] = $maxPages;
+
+    //para el repintado de los filtros
+    $filterValues = [];
+    foreach ($_POST as $key => $value) {
+        $filterValues[$key] = $value;
+        $_SESSION[$key] = $value;
+    }
+    $_SESSION["filterValues"] = $filterValues;
+    // echo "<pre>";
+    // print_r($_SESSION);
+    // exit;
+}
+
 //Crea una lista de objetos producto que se va a mostrar en la pagina
 $productsIdList = $_SESSION['productsIdList'];
 $productsList = array();
@@ -49,6 +73,15 @@ for ($i; $i < $maxProductsAtHome * $_SESSION["currentPage"]; $i++) {
         break;
     }
 }
+
+$typesList = $productService->getAllTypes();
+$_SESSION['typesList'] = $typesList;
+
+$categoriesList = $productService->getAllCategories();
+$_SESSION['categoriesList'] = $categoriesList;
+
+$publishersList = $productService->getAllPublishers();
+$_SESSION['publishersList'] = $publishersList;
 
 $_SESSION["productsList"] = $productsList;
 

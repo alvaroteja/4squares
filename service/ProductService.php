@@ -116,7 +116,112 @@ class ProductService
         $con->close();
         return $idList;
     }
+    function getIdProductsByFilter($filter)
+    {
+        $serachInput = (isset($_POST['serachInput'])
+            && !empty($_POST['serachInput'])
+            && trim($_POST['serachInput']) != "")
+            ? " and name like '%" . trim($_POST['serachInput']) . "%' "
+            : " ";
+        $minPlayersSeachImput = (isset($_POST['minPlayersSeachImput'])
+            && !empty($_POST['minPlayersSeachImput'])
+            && trim($_POST['minPlayersSeachImput']) != ""
+            && is_numeric($_POST['minPlayersSeachImput'])
+            && $_POST['minPlayersSeachImput'] > 0)
+            ? " and min_players >= " . trim($_POST['minPlayersSeachImput']) . " "
+            : " ";
+        $maxPlayersSeachImput = (isset($_POST['maxPlayersSeachImput'])
+            && !empty($_POST['maxPlayersSeachImput'])
+            && trim($_POST['maxPlayersSeachImput']) != ""
+            && is_numeric($_POST['maxPlayersSeachImput'])
+            && $_POST['maxPlayersSeachImput'] > 0)
+            ? " and max_players <= " . trim($_POST['maxPlayersSeachImput']) . " "
+            : " ";
+        $minLengthSeachImput = (isset($_POST['minLengthSeachImput'])
+            && !empty($_POST['minLengthSeachImput'])
+            && trim($_POST['minLengthSeachImput']) != ""
+            && is_numeric($_POST['minLengthSeachImput'])
+            && $_POST['minLengthSeachImput'] > 0)
+            ? " and length >= " . trim($_POST['minLengthSeachImput']) . " "
+            : " ";
+        $maxLengthSeachImput = (isset($_POST['maxLengthSeachImput'])
+            && !empty($_POST['maxLengthSeachImput'])
+            && trim($_POST['maxLengthSeachImput']) != ""
+            && is_numeric($_POST['maxLengthSeachImput'])
+            && $_POST['maxLengthSeachImput'] > 0)
+            ? " and length <= " . trim($_POST['maxLengthSeachImput']) . " "
+            : " ";
+        $minAgeSeachImput = (isset($_POST['minAgeSeachImput'])
+            && !empty($_POST['minAgeSeachImput'])
+            && trim($_POST['minAgeSeachImput']) != ""
+            && is_numeric($_POST['minAgeSeachImput'])
+            && $_POST['minAgeSeachImput'] > 0)
+            ? " and minimum_age >= " . trim($_POST['minAgeSeachImput']) . " "
+            : " ";
+        $typeSeachImput = (isset($_POST['typeSeachImput'])
+            && !empty($_POST['typeSeachImput'])
+            && trim($_POST['typeSeachImput']) != ""
+            && is_numeric($_POST['typeSeachImput'])
+            && $_POST['typeSeachImput'] > 0)
+            ? " and type = " . $this->getProductTypeId($_POST['typeSeachImput']) . " "
+            : " ";
+        $categorySeachImput = (isset($_POST['categorySeachImput'])
+            && !empty($_POST['categorySeachImput'])
+            && trim($_POST['categorySeachImput']) != ""
+            && is_numeric($_POST['categorySeachImput'])
+            && $_POST['categorySeachImput'] > 0)
+            ? " and category = " . $this->getProductCategoryId($_POST['categorySeachImput']) . " "
+            : " ";
+        $publisherSeachImput = (isset($_POST['publisherSeachImput'])
+            && !empty($_POST['publisherSeachImput'])
+            && trim($_POST['publisherSeachImput']) != ""
+            && is_numeric($_POST['publisherSeachImput'])
+            && $_POST['publisherSeachImput'] > 0)
+            ? " and publisher = " . $this->getProductPublisherId($_POST['publisherSeachImput']) . " "
+            : " ";
+        $hiddenSeachImput = (isset($_POST['hiddenSeachImput'])
+            && !empty($_POST['hiddenSeachImput'])
+            && trim($_POST['hiddenSeachImput']) != ""
+            && $_POST['hiddenSeachImput'] == "yes")
+            ? "and hidden = 1"
+            : "and hidden = 0";
+        $minScoreSeachImput = (isset($_POST['minScoreSeachImput'])
+            && !empty($_POST['minScoreSeachImput'])
+            && trim($_POST['minScoreSeachImput']) != ""
+            && is_numeric($_POST['minScoreSeachImput'])
+            && $_POST['minScoreSeachImput'] > 0)
+            ? trim($_POST['minScoreSeachImput'])
+            : "0";
+        $maxScoreSeachImput = (isset($_POST['maxScoreSeachImput'])
+            && !empty($_POST['maxScoreSeachImput'])
+            && trim($_POST['maxScoreSeachImput']) != ""
+            && is_numeric($_POST['maxScoreSeachImput'])
+            && $_POST['maxScoreSeachImput'] > 0)
+            ? trim($_POST['maxScoreSeachImput'])
+            : "5";
+        //saco una lista de los ids de los productos filtrados menos la puntuacion
+        $idList = array();
+        $con = $this->connnection->getConnection();
+        $query = "SELECT id from products where 1 $serachInput $minPlayersSeachImput $maxPlayersSeachImput $minLengthSeachImput $maxLengthSeachImput $minAgeSeachImput $typeSeachImput $categorySeachImput $publisherSeachImput $hiddenSeachImput order by add_date DESC";
+        $resultset = $con->query($query);
 
+        foreach ($resultset as $result) {
+            array_push($idList, $result['id']);
+        }
+        //aplico un filtro con la puntuacion
+        $finalIdList = [];
+        $scoreService = new ScoreService($this->connnection);
+        foreach ($idList as $id) {
+            $averageScore = $scoreService->getAverageScore($id);
+            if ($averageScore >= $minScoreSeachImput and $averageScore <= $maxScoreSeachImput) {
+                array_push($finalIdList, $id);
+            }
+        }
+
+        $con->close();
+
+        return $finalIdList;
+    }
     /**
      * Obtiene el type en string correspondiente a un id_type.
      * @param integer $id_type
@@ -250,7 +355,18 @@ class ProductService
             return $typesList;
         }
     }
+    function getProductTypeId($type)
+    {
+        $con = $this->connnection->getConnection();
 
+        $query = "SELECT id FROM `types` WHERE type = '$type';";
+        $resultset = $con->query($query);
+        $row = $resultset->fetch_array(MYSQLI_ASSOC);
+
+        $r = array_values($row);
+        $con->close();
+        return $r[0];
+    }
     function getAllCategories()
     {
         $con = $this->connnection->getConnection();
@@ -273,6 +389,18 @@ class ProductService
 
             return $categoriesList;
         }
+    }
+    function getProductCategoryId($category)
+    {
+        $con = $this->connnection->getConnection();
+
+        $query = "SELECT id FROM `categories` WHERE category = '$category';";
+        $resultset = $con->query($query);
+        $row = $resultset->fetch_array(MYSQLI_ASSOC);
+
+        $r = array_values($row);
+        $con->close();
+        return $r[0];
     }
 
     function getAllPublishers()
@@ -297,6 +425,19 @@ class ProductService
 
             return $publishersList;
         }
+    }
+
+    function getProductPublisherId($publisher)
+    {
+        $con = $this->connnection->getConnection();
+
+        $query = "SELECT id FROM `publishers` WHERE publisher = '$publisher';";
+        $resultset = $con->query($query);
+        $row = $resultset->fetch_array(MYSQLI_ASSOC);
+
+        $r = array_values($row);
+        $con->close();
+        return $r[0];
     }
 }
 // if ($resultset->num_rows == 0) {

@@ -152,11 +152,11 @@ body {
     width: 150px;
 }
 
-.radioOption {
+.checkboxOption {
     flex-direction: row;
 }
 
-.radioOption input {
+.checkboxOption input {
     margin-top: 5px;
     width: 15px;
     height: 15px;

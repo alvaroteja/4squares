@@ -9,8 +9,8 @@ include("./webSettings.php");
 include_once("model/ProductModel.php");
 include("service/AvatarService.php");
 session_start();
-// echo "<pre>";
-// print_r($_SESSION);
+//echo "<pre>";
+//print_r($_SESSION['filterValues']['hiddenSeachImput']);
 //si se consigue llegar aqui sin una lista de productos en la sesion, manda a index para que se genere
 if (!isset($_SESSION["productsIdList"])) {
     header("Location: index.php");
@@ -21,6 +21,10 @@ $connnection = new DBConnection();
 
 $maxPages = count($_SESSION["productsIdList"]) / $maxProductsAtHome;
 $productsIdList = $_SESSION["productsIdList"];
+
+$typesList = $_SESSION["typesList"];
+$categoriesList = $_SESSION["categoriesList"];
+$publishersList = $_SESSION["publishersList"];
 //print_r(count($_SESSION["productsIdList"]));
 //echo ($maxPages);
 
@@ -57,84 +61,160 @@ $productList = $_SESSION["productsList"];
 </head>
 
 <body>
-    <form id="searchForm">
+    <?php
+    include("./html/components/nav.php");
+    ?>
+    <form id="searchForm" action="./controller/HOMEController.php" method="post">
+        <input type="hidden" name="filterRequest" value="true">
         <div class="searchBarContainer">
             <button onclick="toggleElement('extraOptionsContainer')" id="extraOptionsButton" class="searchBarContainerButton">
                 <svg class="svg-icon" viewBox='0 0 20 20' fill='none' stroke='#ffffff' stroke-width='0.5' stroke-linecap='round' stroke-linejoin='round'>
                     <path fill="#ffffff" d="M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10"></path>
                 </svg>
             </button>
-            <input id="serachInput" type="text" placeholder="Encuentra el juego que deseas...">
+            <input id="serachInput" name="serachInput" type="text" placeholder="Encuentra el juego que deseas..." value="<?php if ((isset($_SESSION['filterValues']['serachInput']) && !empty($_SESSION['filterValues']['serachInput']) && trim($_SESSION['filterValues']['serachInput']) != "")) {
+                                                                                                                                echo trim($_SESSION['filterValues']['serachInput']);
+                                                                                                                            } ?>">
             <button type="submit" value="" id="searchFomSubmit" class="searchBarContainerButton">
                 <svg class="svg-icon" viewBox='0 0 20 20' fill='#ffffff' stroke='#ffffff' stroke-width='0.5' stroke-linecap='round' stroke-linejoin='round'>
                     <path fill="#ffffff" d="M19.129,18.164l-4.518-4.52c1.152-1.373,1.852-3.143,1.852-5.077c0-4.361-3.535-7.896-7.896-7.896 c-4.361,0-7.896,3.535-7.896,7.896s3.535,7.896,7.896,7.896c1.934,0,3.705-0.698,5.078-1.853l4.52,4.519 c0.266,0.268,0.699,0.268,0.965,0C19.396,18.863,19.396,18.431,19.129,18.164z M8.567,15.028c-3.568,0-6.461-2.893-6.461-6.461 s2.893-6.461,6.461-6.461c3.568,0,6.46,2.893,6.46,6.461S12.135,15.028,8.567,15.028z"></path>
                 </svg>
             </button>
         </div>
-        <div id="extraOptionsContainer" class="hidden" style="display: none;">
+        <?php
+        $class = "class='hidden' style='display: none;'";
+        if (isset($_SESSION['filterValues'])) {
+            foreach ($_SESSION['filterValues'] as $key => $value) {
+                if (isset($value) && !empty($value) && trim($value != "") && $key != "filterRequest" && $key != "serachInput") {
+                    $class = "";
+                }
+            }
+        }
+
+
+        ?>
+        <div id="extraOptionsContainer" <?php echo $class; ?>>
             <div class="extraOption numberOption">
                 <label for="minPlayersSeachImput">Jugadores mínimos</label>
-                <input name="minPlayersSeachImput" id="minPlayersSeachImput" type="number" min="1" max="99">
+                <input name="minPlayersSeachImput" id="minPlayersSeachImput" type="number" min="1" max="99" value="<?php if ((isset($_SESSION['filterValues']['minPlayersSeachImput']) && !empty($_SESSION['filterValues']['minPlayersSeachImput']) && trim($_SESSION['filterValues']['minPlayersSeachImput']) != "")) {
+                                                                                                                        echo trim($_SESSION['filterValues']['minPlayersSeachImput']);
+                                                                                                                    } ?>">
             </div>
             <div class="extraOption numberOption">
                 <label for="maxPlayersSeachImput">Jugadores máximos</label>
-                <input name="maxPlayersSeachImput" id="maxPlayersSeachImput" type="number" type="number" min="1" max="99">
+                <input name="maxPlayersSeachImput" id="maxPlayersSeachImput" type="number" type="number" min="1" max="99" value="<?php if ((isset($_SESSION['filterValues']['maxPlayersSeachImput']) && !empty($_SESSION['filterValues']['maxPlayersSeachImput']) && trim($_SESSION['filterValues']['maxPlayersSeachImput']) != "")) {
+                                                                                                                                        echo trim($_SESSION['filterValues']['maxPlayersSeachImput']);
+                                                                                                                                    } ?>">
             </div>
             <div class="extraOption numberOption">
-                <label for="lengthSeachImput">Duración</label>
-                <input name="lengthSeachImput" id="lengthSeachImput" type="number" type="number" min="1" max="999">
+                <label for="minLengthSeachImput">Duración mínima</label>
+                <input name="minLengthSeachImput" id="minLengthSeachImput" type="number" type="number" min="1" max="999" value="<?php if ((isset($_SESSION['filterValues']['minLengthSeachImput']) && !empty($_SESSION['filterValues']['minLengthSeachImput']) && trim($_SESSION['filterValues']['minLengthSeachImput']) != "")) {
+                                                                                                                                    echo trim($_SESSION['filterValues']['minLengthSeachImput']);
+                                                                                                                                } ?>">
+            </div>
+            <div class="extraOption numberOption">
+                <label for="maxLengthSeachImput">Duración máxima</label>
+                <input name="maxLengthSeachImput" id="maxLengthSeachImput" type="number" type="number" min="1" max="999" value="<?php if ((isset($_SESSION['filterValues']['maxLengthSeachImput']) && !empty($_SESSION['filterValues']['maxLengthSeachImput']) && trim($_SESSION['filterValues']['maxLengthSeachImput']) != "")) {
+                                                                                                                                    echo trim($_SESSION['filterValues']['maxLengthSeachImput']);
+                                                                                                                                } ?>">
             </div>
             <div class="extraOption numberOption">
                 <label for="minAgeSeachImput" type="number">Edad mínima</label>
-                <input name="minAgeSeachImput" id="minAgeSeachImput" type="number" min="0" max="99">
+                <input name="minAgeSeachImput" id="minAgeSeachImput" type="number" min="0" max="99" value="<?php if ((isset($_SESSION['filterValues']['minAgeSeachImput']) && !empty($_SESSION['filterValues']['minAgeSeachImput']) && trim($_SESSION['filterValues']['minAgeSeachImput']) != "")) {
+                                                                                                                echo trim($_SESSION['filterValues']['minAgeSeachImput']);
+                                                                                                            } ?>">
             </div>
             <div class="extraOption numberOption">
                 <label for="minScoreSeachImput">Puntuación mínima</label>
-                <input name="minScoreSeachImput" id="minScoreSeachImput" type="number" type="number" min="0" max="5">
+                <input name="minScoreSeachImput" id="minScoreSeachImput" type="number" type="number" min="0" max="5" value="<?php if (isset($_SESSION['filterValues']['minScoreSeachImput']) && !empty($_SESSION['filterValues']['minScoreSeachImput']) && trim($_SESSION['filterValues']['minScoreSeachImput']) != "") {
+                                                                                                                                echo trim($_SESSION['filterValues']['minScoreSeachImput']);
+                                                                                                                            } ?>">
             </div>
             <div class="extraOption numberOption">
                 <label for="maxScoreSeachImput">Puntuación máxima</label>
-                <input name="maxScoreSeachImput" id="maxScoreSeachImput" type="number" type="number" min="0" max="5">
+                <input name="maxScoreSeachImput" id="maxScoreSeachImput" type="number" type="number" min="0" max="5" value="<?php if (isset($_SESSION['filterValues']['maxScoreSeachImput']) && !empty($_SESSION['filterValues']['maxScoreSeachImput']) && trim($_SESSION['filterValues']['maxScoreSeachImput']) != "") {
+                                                                                                                                echo trim($_SESSION['filterValues']['maxScoreSeachImput']);
+                                                                                                                            } ?>">
             </div>
             <div class="extraOption selectOption">
                 <label for="typeSeachImput">Tipo de juego</label>
                 <select name="typeSeachImput" id="typeSeachImput">
-                    <option value='' selected>Selecciona un tipo</option>
+                    <option value='' selected>...</option>
+                    <?php
+                    if ((isset($_SESSION['filterValues']['typeSeachImput']) && !empty($_SESSION['filterValues']['typeSeachImput']) && trim($_SESSION['filterValues']['typeSeachImput']) != "")) {
+                        $currenterType = $_SESSION['filterValues']['typeSeachImput'];
+                    } else {
+                        $currenterType = "";
+                    }
+                    foreach ($typesList as $key => $value) {
+                        $selected = "";
+                        if ($value == $currenterType) {
+                            $selected = "selected";
+                        }
+                        echo "
+                                    <option value='$value' $selected>$value</option>
+                                ";
+                    }
+                    ?>
                 </select>
             </div>
             <div class="extraOption selectOption">
                 <label for="categorySeachImput">Categoría</label>
                 <select name="categorySeachImput" id="categorySeachImput">
-                    <option value='' selected>Selecciona una categoria</option>
+                    <option value='' selected>...</option>
+                    <?php
+                    if ((isset($_SESSION['filterValues']['categorySeachImput']) && !empty($_SESSION['filterValues']['categorySeachImput']) && trim($_SESSION['filterValues']['categorySeachImput']) != "")) {
+                        $currenterType = $_SESSION['filterValues']['categorySeachImput'];
+                    } else {
+                        $currenterType = "";
+                    }
+                    foreach ($categoriesList as $key => $value) {
+                        $selected = "";
+                        if ($value == $currenterType) {
+                            $selected = "selected";
+                        }
+                        echo "
+                                    <option value='$value' $selected>$value</option>
+                                ";
+                    }
+                    ?>
                 </select>
             </div>
             <div class="extraOption selectOption">
                 <label for="publisherSeachImput">Editorial</label>
                 <select name="publisherSeachImput" id="publisherSeachImput">
-                    <option value='' selected>Selecciona una editorial</option>
+                    <option value='' selected>...</option>
+                    <?php
+                    if ((isset($_SESSION['filterValues']['publisherSeachImput']) && !empty($_SESSION['filterValues']['publisherSeachImput']) && trim($_SESSION['filterValues']['publisherSeachImput']) != "")) {
+                        $currenterType = $_SESSION['filterValues']['publisherSeachImput'];
+                    } else {
+                        $currenterType = "";
+                    }
+                    foreach ($publishersList as $key => $value) {
+                        $selected = "";
+                        if ($value == $currenterType) {
+                            $selected = "selected";
+                        }
+                        echo "
+                                    <option value='$value' $selected>$value</option>
+                                ";
+                    }
+                    ?>
                 </select>
             </div>
-            <div class="extraOption radioOption">
+            <div class="extraOption checkboxOption">
                 <label for="hiddenSeachImput">Oculto</label>
-                <input type="radio" name="hiddenSeachImput" value="yes" id="hiddenSeachImput" />
+                <?php
+                if ((isset($_SESSION['filterValues']['hiddenSeachImput']) && !empty($_SESSION['filterValues']['hiddenSeachImput']) && trim($_SESSION['filterValues']['hiddenSeachImput']) != "")) {
+                    $checked = "checked";
+                } else {
+                    $checked = "";
+                } ?>
+                <input type="checkbox" name="hiddenSeachImput" value="yes" id="hiddenSeachImput" <?php echo $checked ?> />
             </div>
         </div>
     </form>
-    <script>
-        function toggleOptions() {
-            var optionsMenu = document.getElementById("options-menu");
-            optionsMenu.classList.toggle("show");
-        }
-    </script>
     <?php
-    // echo "<pre>";
-    // print_r($_SESSION);
-    // echo "<pre>";
-    // print_r($_SESSION["currentProduct"]);
-    // print_r($_SESSION["productsList"][0]);
-
-    include("./html/components/nav.php");
-
     include("./html/components/pageNav.php");
 
     //todo esto para asegurarnos que al llegar al final de la lista de productos, si queda alguno suelto, no salga outofbounds del array
@@ -147,6 +227,10 @@ $productList = $_SESSION["productsList"];
         for ($i = 0; $i < $limit; $i++) {
             include("./html/components/homeCard.php");
         }
+    }
+    if (count($_SESSION['productsIdList']) == 0) {
+        //meter aqui lo que va a salir cuando no haya productos en la lista
+        echo "no hay nada";
     }
 
 
@@ -258,8 +342,16 @@ $productList = $_SESSION["productsList"];
                 }, 300);
             }
         }
+
+        function toggleOptions() {
+            var optionsMenu = document.getElementById("options-menu");
+            optionsMenu.classList.toggle("show");
+        }
     </script>
 
 </body>
 
 </html>
+<?php
+unset($_SESSION['filterValues']);
+?>
