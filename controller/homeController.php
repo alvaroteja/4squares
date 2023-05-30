@@ -35,8 +35,8 @@ if ($_SESSION["currentPage"] > $_SESSION["maxPages"]) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['filterRequest']) {
 
     $serachInput = $_POST["serachInput"];
-    echo "<pre>";
-    print_r($_POST);
+    // echo "<pre>";
+    // print_r($_POST);
 
     $productsIdList = $productService->getIdProductsByFilter($_POST);
 

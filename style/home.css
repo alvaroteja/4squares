@@ -62,12 +62,29 @@ body {
     margin-bottom: 30px;
 }
 
-.searchBarContainerButton {
+#searchFomSubmit {
     border-style: none;
     background-color: var(--primary);
     width: 40px;
     height: 40px;
     /* margin: 1px; */
+}
+
+#extraOptionsButton {
+    border-style: none;
+    background-color: var(--bg-white);
+    border: 1px solid var(--primary);
+    border-right: none;
+    width: 40px;
+    height: 40px;
+    /* margin: 1px; */
+}
+#extraOptionsButton svg {
+    stroke: var(--bg-muted);
+}
+
+#extraOptionsButton path {
+    fill: var(--bg-muted);
 }
 
 #extraOptionsButton .svg-icon {
@@ -90,7 +107,8 @@ body {
     width: 300px;
     height: 40px;
     border-style: none;
-    border: 1px solid var(--primary);
+    border-top: 1px solid var(--primary);
+    border-bottom: 1px solid var(--primary);
     /* margin: 1px; */
 }
 
@@ -132,6 +150,7 @@ body {
 
     opacity: 1;
     transition: opacity 0.3s ease;
+    border: none;
 }
 
 .hidden {
