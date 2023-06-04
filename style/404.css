@@ -1,0 +1,17 @@
+@import "normalize.css";
+@import "colors.css";
+@import "components/buttons.css";
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    min-height: 100vh;
+    padding: 0 20px;
+}
+
+body > img {
+    max-width: 800px;
+}

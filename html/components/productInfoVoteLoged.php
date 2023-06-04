@@ -1,4 +1,4 @@
-<!-- <button id="vote-button">Abrir capa</button> -->
+
 <div id="overlay">
     <div id="modal">
         <button id="closeModalBtn">&times;</button>

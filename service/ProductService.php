@@ -1,17 +1,5 @@
 <?php
-//include("/xampp/htdocs/tfg/4squares/model/ProductModel.php");
-//include_once("../model/ProductModel.php");
-//include_once("model/ProductModel.php");
 
-
-// $test = new ProductService();
-
-// $product = $test->getAProduct(11);
-//echo ($test->getAProduct("8")->getCategory());
-//echo ($test->getAProduct("9")->getPublisher());
-//echo ($test->getProductCategory(9));
-// echo "<pre>";
-// print_r($product);
 
 class ProductService
 {
@@ -21,13 +9,6 @@ class ProductService
     {
         $this->connnection = $connnection;
     }
-    // $lista = getAllProducts();
-    // $lista[0]->setMedia_url("foto01.png");
-    // $lista[0]->setMedia_url("foto02.png");
-    // $lista[0]->setMedia_url("foto03.png");
-    // echo ("<pre>");
-    // print_r($lista[0]->getMedia_list());
-    // print_r(getAllProducts());
 
     /**
      * Obtiene un objeto producto al pasarle un id de producto.
@@ -118,10 +99,10 @@ class ProductService
     }
     function getIdProductsByFilter($filter)
     {
-        $serachInput = (isset($_POST['serachInput'])
-            && !empty($_POST['serachInput'])
-            && trim($_POST['serachInput']) != "")
-            ? " and name like '%" . trim($_POST['serachInput']) . "%' "
+        $searchInput = (isset($_POST['searchInput'])
+            && !empty($_POST['searchInput'])
+            && trim($_POST['searchInput']) != "")
+            ? " and name like '%" . trim($_POST['searchInput']) . "%' "
             : " ";
         $minPlayersSeachImput = (isset($_POST['minPlayersSeachImput'])
             && !empty($_POST['minPlayersSeachImput'])
@@ -161,21 +142,18 @@ class ProductService
         $typeSeachImput = (isset($_POST['typeSeachImput'])
             && !empty($_POST['typeSeachImput'])
             && trim($_POST['typeSeachImput']) != ""
-            && is_numeric($_POST['typeSeachImput'])
             && $_POST['typeSeachImput'] > 0)
             ? " and type = " . $this->getProductTypeId($_POST['typeSeachImput']) . " "
             : " ";
         $categorySeachImput = (isset($_POST['categorySeachImput'])
             && !empty($_POST['categorySeachImput'])
             && trim($_POST['categorySeachImput']) != ""
-            && is_numeric($_POST['categorySeachImput'])
             && $_POST['categorySeachImput'] > 0)
             ? " and category = " . $this->getProductCategoryId($_POST['categorySeachImput']) . " "
             : " ";
         $publisherSeachImput = (isset($_POST['publisherSeachImput'])
             && !empty($_POST['publisherSeachImput'])
             && trim($_POST['publisherSeachImput']) != ""
-            && is_numeric($_POST['publisherSeachImput'])
             && $_POST['publisherSeachImput'] > 0)
             ? " and publisher = " . $this->getProductPublisherId($_POST['publisherSeachImput']) . " "
             : " ";
@@ -202,7 +180,7 @@ class ProductService
         //saco una lista de los ids de los productos filtrados menos la puntuacion
         $idList = array();
         $con = $this->connnection->getConnection();
-        $query = "SELECT id from products where 1 $serachInput $minPlayersSeachImput $maxPlayersSeachImput $minLengthSeachImput $maxLengthSeachImput $minAgeSeachImput $typeSeachImput $categorySeachImput $publisherSeachImput $hiddenSeachImput order by add_date DESC";
+        $query = "SELECT id from products where 1 $searchInput $minPlayersSeachImput $maxPlayersSeachImput $minLengthSeachImput $maxLengthSeachImput $minAgeSeachImput $typeSeachImput $categorySeachImput $publisherSeachImput $hiddenSeachImput order by add_date DESC";
         $resultset = $con->query($query);
 
         foreach ($resultset as $result) {
@@ -304,6 +282,26 @@ class ProductService
             return $mediaList;
         }
     }
+
+    function getProductImagesList($id_product)
+    {
+        $con = $this->connnection->getConnection();
+
+        $query = "SELECT `url` FROM `product_medias` WHERE id_product=" . $id_product . " and type ='image';";
+        $resultset = $con->query($query);
+        if ($resultset->num_rows == 0) {
+            $con->close();
+            return false;
+        } else {
+            $imagesList = array();
+            foreach ($resultset as $result) {
+                array_push($imagesList, $result['url']);
+            }
+            $con->close();
+            return $imagesList;
+        }
+    }
+
 
     function switchProductHideState($productId, $value)
     {
@@ -440,7 +438,4 @@ class ProductService
         return $r[0];
     }
 }
-// if ($resultset->num_rows == 0) {
-//     return false;
-// } else {
-// }
+

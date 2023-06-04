@@ -44,17 +44,15 @@ $currentReviewList = $_SESSION["currentReviewList"];
 <html lang="en">
 
 <head>
-    <title>4squares</title>
+    <title>4squares - información del producto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
     <link rel="stylesheet" href="./style/productInfo.css" />
+    <link rel="icon" href="./img/icons/favicon.ico">
 </head>
 
 <body>
     <?php
     include("html/components/nav.php");
-    //echo "<pre>";
-    // print_r($productMediaList);
-    //print_r($_SESSION);
     $infoContainerClass = $_SESSION["currentProduct"]->getHiden() ? 'info-container-hidden' : 'info-container';
     ?><div id="info-container" class="<?php echo $infoContainerClass ?>">
         <!-- ********************************** -->
@@ -140,10 +138,11 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 </svg>
             ";
         }
-        //Si usuario registrado tiene permisos de admin, añadimos el boton ocultar producto y borrar producto
+        //Si usuario registrado tiene permisos de admin, añadimos el boton ocultar producto, borrar producto y editar
 
         $hideProductIcon = "";
         $deleteProductIcon = "";
+        $editProductIcon = "";
         $hideProductIconClass = $_SESSION["currentProduct"]->getHiden() ? 'hideSvg-off' : 'hideSvg';
         if (isset($_SESSION["user"]) && $_SESSION["user"]->getCredentials() == 1) {
             $hideProductIcon = "
@@ -160,7 +159,13 @@ $currentReviewList = $_SESSION["currentReviewList"];
                     <line x1='14' y1='11' x2='14' y2='17'></line>
                 </svg>
             ";
+            $editProductIcon = "
+                <svg id='editProductIcon'class='editSvg' xmlns='http://www.w3.org/2000/svg' width='24' viewBox='0 0 20 20'>
+                    <path fill='none' d='M19.404,6.65l-5.998-5.996c-0.292-0.292-0.765-0.292-1.056,0l-2.22,2.22l-8.311,8.313l-0.003,0.001v0.003l-0.161,0.161c-0.114,0.112-0.187,0.258-0.21,0.417l-1.059,7.051c-0.035,0.233,0.044,0.47,0.21,0.639c0.143,0.14,0.333,0.219,0.528,0.219c0.038,0,0.073-0.003,0.111-0.009l7.054-1.055c0.158-0.025,0.306-0.098,0.417-0.211l8.478-8.476l2.22-2.22C19.695,7.414,19.695,6.941,19.404,6.65z M8.341,16.656l-0.989-0.99l7.258-7.258l0.989,0.99L8.341,16.656z M2.332,15.919l0.411-2.748l4.143,4.143l-2.748,0.41L2.332,15.919z M13.554,7.351L6.296,14.61l-0.849-0.848l7.259-7.258l0.423,0.424L13.554,7.351zM10.658,4.457l0.992,0.99l-7.259,7.258L3.4,11.715L10.658,4.457z M16.656,8.342l-1.517-1.517V6.823h-0.003l-0.951-0.951l-2.471-2.471l1.164-1.164l4.942,4.94L16.656,8.342z'></path>
+                </svg>
+            ";
         }
+
         ?>
         <h1 id="product-name"><?php echo $productName ?></h1>
         <div id="score-vote-buy-container">
@@ -185,7 +190,7 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 </div>
             </div>
             <div id="vote-buy-buttons">
-                <?php echo $hideProductIcon . $deleteProductIcon . $favoriteIcon ?>
+                <?php echo $hideProductIcon . $deleteProductIcon . $editProductIcon . $favoriteIcon ?>
                 <button id="vote-button"><?php echo isset($_SESSION['productScoreByUser']) && $_SESSION['productScoreByUser'] ? 'Cambiar voto' : "Votar"; ?></button>
                 <a id="buy-button" href="<?php echo $productShoppingLink ?>">
                     <img class="button-amazon-hover" src="img/buttons/button-amazon-hover.png" alt="" />
@@ -216,9 +221,6 @@ $currentReviewList = $_SESSION["currentReviewList"];
         <!-- ********************************** -->
 
         <?php
-        //echo $_SESSION['isAFavoriteProduct'];
-        // echo "<pre>";
-        // print_r($_SESSION);
         ?>
         <table>
             <tr>
@@ -490,12 +492,9 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 })
                 .then(response => {
                     if (response.ok) {
-                        // const userNameAndNoticeUserIsMuted = this;
-                        //const userNameAndNoticeUserIsMuted = this.parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
 
                         // //cambia la clase del icono al pincharlo y la transparencia del comentario
                         if (this.classList.contains("muted-user-icon")) {
-                            //alert('El usuario ha sido desmuteado.');
                             const elements = document.querySelectorAll(`div.user-review [id^='muteIconUserId-'][id$='-${idUser}']`);
                             for (let j = 0; j < elements.length; j++) {
                                 const userNameAndNoticeUserIsMuted = elements[j].parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
@@ -505,7 +504,6 @@ $currentReviewList = $_SESSION["currentReviewList"];
                                 userNameAndNoticeUserIsMuted.querySelector('.user-name').classList.remove('userNameMutedClass');
                             }
                         } else if (this.classList.contains("muted-user-icon-off")) {
-                            // alert('El usuario ha sido muteado.');
                             const elements = document.querySelectorAll(`div.user-review [id^='muteIconUserId-'][id$='-${idUser}']`);
                             for (let j = 0; j < elements.length; j++) {
                                 const userNameAndNoticeUserIsMuted = elements[j].parentNode.parentNode.parentNode.parentNode.querySelector('.user-review-data').querySelector('.userNameAndNoticeUserIsMuted');
@@ -564,7 +562,6 @@ $currentReviewList = $_SESSION["currentReviewList"];
 
         var productId = <?php echo $_SESSION["currentProduct"]->getId_product() ?>;
         var userId = <?php echo $_SESSION["user"]->getId_user() ?>;
-        // alert("productId: " + productId + " - userId: " + userId);
         fetch(`http://localhost/tfg/4squares/controller/favoriteController.php?switchFavorite=true&productId=${productId}&userId=${userId}`, {
                 method: 'GET'
             })
@@ -645,6 +642,23 @@ $currentReviewList = $_SESSION["currentReviewList"];
                 });
         }
     });
+
+    // Agregar evento de escucha a los botones de editar
+    const editButtons = document.querySelectorAll(".editSvg");
+    editButtons.forEach((button) => {
+        button.addEventListener("click", getEditIconProductId);
+    });
+
+    function getEditIconProductId(event) {
+        var parentContainer = "";
+        if (event.target.nodeName == "path") {
+            parentContainer = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        } else {
+            parentContainer = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+        }
+        productId = parentContainer.id.substring("productIdCon-".length);
+        location.href = 'http://localhost/tfg/4squares/controller/editProductController.php?productId=<?php echo $productId ?>';
+    }
 </script>
 
 </html>

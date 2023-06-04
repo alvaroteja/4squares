@@ -1,7 +1,5 @@
 <?php
-//echo "<pre>";
-// print_r($productList[$i]->getMedia_list()[0]) 
-//$averageScore = $scoreService->getAverageScore($productList[$i]->getId_product());
+
 $averageScore = $productList[$i]->getAverageScore();
 $userCredentials = 0;
 if (isset($_SESSION["user"])) {

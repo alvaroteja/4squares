@@ -28,13 +28,13 @@ if (isset($_POST["writeComment"])) {
 elseif (isset($_GET["deleteReview"])) {
     $reviewService = new ReviewService($connnection);
     $reviewService->deleteReview($_GET["deleteReview"]);
-    //$currentProductId = $_POST['id_product'];
+
 }
 //si se llega aqui para ocultar un comentario
 elseif (isset($_GET["hideReview"])) {
     $reviewService = new ReviewService($connnection);
     $reviewService->hideReview($_GET["hideReview"], $_GET["value"]);
-    //$currentProductId = $_POST['id_product'];
+
 }
 //si se llega aqui para votar el producto
 elseif (isset($_POST["score"])) {

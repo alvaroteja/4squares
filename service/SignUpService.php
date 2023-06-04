@@ -5,7 +5,6 @@ class SignUpService
 {
     protected $connnection;
     protected $Messages;
-    //var $SignUpValidations = new SignUpValidations($connnection, $Messages);
     public function __construct($connnection, $Messages)
     {
         $this->connnection = $connnection;
@@ -43,11 +42,9 @@ class SignUpService
             $query = "INSERT INTO `users` (`id`, `first_name`, `surename`, `nickname`, `email`, `password`, `id_avatar`, `sing_up_date`, `muted`, `credentials`) VALUES (NULL, '$name', '$surname', '$userName', '$email', '$password', '1', current_timestamp(), '0', '0');";
 
             if ($con->query($query) === TRUE) {
-                //echo "Se ha creado el usuario satisfactoriamente.";
                 $con->close();
                 return true;
             } else {
-                //echo "Error: " . $query . "<br>" . $con->error;
                 $con->close();
                 return false;
             }

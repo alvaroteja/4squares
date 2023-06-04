@@ -68,6 +68,28 @@ class AddProductService
         }
         return $response;
     }
+    public function validateUpdateInputs($list)
+    {
+        $response = [];
+        $response = $this->checkIfMissingInputs($list);
+        //si todos los campos tienen contenido, emepzamos a validar el contenido
+        if (count($response) == 0) {
+           
+            // ver que los campos numericos son numericos
+            if (!$this->checkIfNumber($list["minPlayers"])) $response["minPlayers"] = "El valor de 'jugadores mínimos' no es válido.";
+            if (!$this->checkIfNumber($list["maxPlayers"])) $response["maxPlayers"] = "El valor de 'jugadores máximos' no es válido.";
+            if (!$this->checkIfNumber($list["length"])) $response["length"] = "El valor de 'duración' no es válido.";
+            if (!$this->checkIfNumber($list["minAge"])) $response["minAge"] = "El valor de 'edad mínima' no es válido.";
+
+            // ver que maxPlayers es mayor o igual que minPlayers
+            if ($list["minPlayers"] > $list["maxPlayers"]) $response["minPlayers"] = "El mínimo de jugadores no puede ser mayor que el máximo de jugadores.";
+            // ver que los selectores tienen campos que existen en la base de datos
+            if (!$this->checkIfSelectExist("type", $list["type"])) $response["type"] = "El tipo seleccionado no existe en la base de datos";
+            if (!$this->checkIfSelectExist("category", $list["category"])) $response["category"] = "La categoría seleccionada no existe en la base de datos";
+            if (!$this->checkIfSelectExist("publisher", $list["publisher"])) $response["publisher"] = "La editorial seleccionada no existe en la base de datos";
+        }
+        return $response;
+    }
     public function checkIfMissingInputs($list)
     {
         $response = [];
@@ -76,9 +98,6 @@ class AddProductService
                 $translation = $this->ElementsDictionary["$key"];
                 $response["$key"] = "El campo '$translation' es obligatorio.";
             }
-            // else {
-            //     $validationList["$key"] = $list["$key"];
-            // }
         }
         return $response;
     }
@@ -151,77 +170,6 @@ class AddProductService
         }
     }
 
-    // function getAllTypes()
-    // {
-    //     $con = $this->connnection->getConnection();
-
-
-    //     $query = "SELECT type FROM `types` WHERE 1";
-    //     $resultset = $con->query($query);
-
-    //     if ($resultset->num_rows == 0) {
-    //         $con->close();
-    //         return false;
-    //     } else {
-    //         $typesList = [];
-
-    //         while ($row = $resultset->fetch_object()) {
-    //             $t = $row->type;
-    //             array_push($typesList, $t);
-    //         }
-    //         $con->close();
-
-    //         return $typesList;
-    //     }
-    // }
-
-    // function getAllCategories()
-    // {
-    //     $con = $this->connnection->getConnection();
-
-
-    //     $query = "SELECT category FROM `categories` WHERE 1";
-    //     $resultset = $con->query($query);
-
-    //     if ($resultset->num_rows == 0) {
-    //         $con->close();
-    //         return false;
-    //     } else {
-    //         $categoriesList = [];
-
-    //         while ($row = $resultset->fetch_object()) {
-    //             $t = $row->category;
-    //             array_push($categoriesList, $t);
-    //         }
-    //         $con->close();
-
-    //         return $categoriesList;
-    //     }
-    // }
-
-    // function getAllPublishers()
-    // {
-    //     $con = $this->connnection->getConnection();
-
-
-    //     $query = "SELECT publisher FROM `publishers` WHERE 1";
-    //     $resultset = $con->query($query);
-
-    //     if ($resultset->num_rows == 0) {
-    //         $con->close();
-    //         return false;
-    //     } else {
-    //         $publishersList = [];
-
-    //         while ($row = $resultset->fetch_object()) {
-    //             $t = $row->publisher;
-    //             array_push($publishersList, $t);
-    //         }
-    //         $con->close();
-
-    //         return $publishersList;
-    //     }
-    // }
     function saveImages($files, $folderName, $productId)
     {
         try {
@@ -271,6 +219,36 @@ class AddProductService
             return false;
         }
     }
+    function deteleImages($deleteImagesList)
+    {
+        foreach ($deleteImagesList as $key => $value) {
+            try {
+                $con = $this->connnection->getConnection();
+
+                $query = "DELETE FROM product_medias WHERE url = '$value';";
+                $resultset = $con->query($query);
+                $con->close();
+                unlink("../img/products/$value");
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+    }
+    function checkIfProductHasVideo($productId)
+    {
+        $con = $this->connnection->getConnection();
+
+        $query = "SELECT * FROM `product_medias` WHERE id_product = '$productId' AND type = 'video'";
+        $resultset = $con->query($query);
+
+        if ($resultset->num_rows == 0) {
+            $con->close();
+            return false;
+        } else {
+            $con->close();
+            return true;
+        }
+    }
     function addVideoToDDBB($productId, $link)
     {
         try {
@@ -285,10 +263,46 @@ class AddProductService
 
             $query = "INSERT INTO `product_medias` (`id`, `id_product`, `url`, `type`) VALUES (NULL, '$productId', '$link', 'video');";
             $resultset = $con->query($query);
+            $con->close();
         } catch (Exception $e) {
             return false;
         }
     }
+
+    function updateVideoToDDBB($productId, $link)
+    {
+        try {
+
+            $con = $this->connnection->getConnection();
+
+            $startsWith = "https://youtu.be/";
+
+            if (strpos($link, $startsWith) === 0) {
+                $link = "https://www.youtube.com/embed/" . substr($link, strlen($startsWith));
+            }
+
+            $query = "UPDATE `product_medias` SET url = '$link' WHERE type = 'video' AND id_product = $productId;";
+
+            $resultset = $con->query($query);
+            $con->close();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    function deleteVideoToDDBB($productId)
+    {
+        try {
+
+            $con = $this->connnection->getConnection();
+
+            $query = "DELETE FROM product_medias WHERE id_product = '$productId' AND type = 'video';";
+            $resultset = $con->query($query);
+            $con->close();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     function addImageToDDBB($productId, $path)
     {
 
@@ -334,6 +348,52 @@ class AddProductService
             return false;
         }
     }
+    function updateProductData($productDataList)
+    {
+        try {
+
+            $con = $this->connnection->getConnection();
+            $productId = $productDataList["productId"];
+            $name = $productDataList["name"];
+            $description = $productDataList["description"];
+            $shopping_link = (!isset($productDataList["buyLink"]) || empty($productDataList["buyLink"]) || $productDataList["buyLink"] == "") ? "https://www.amazon.es/s?k=" . $name : $productDataList["buyLink"];
+            $min_players = $productDataList["minPlayers"];
+            $max_players = $productDataList["maxPlayers"];
+            $length = $productDataList["length"];
+            $minimum_age = $productDataList["minAge"];
+            $type = $this->getProductTypeId($productDataList["type"]);
+            $category = $this->getProductCategoryId($productDataList["category"]);
+            $publisher = $this->getProductPublisherId($productDataList["publisher"]);
+            $hidden = ($productDataList["hidden"] == "yes") ? "1" : "0";
+
+            //Aqui tengo que actualizar el nombre de la carpeta de las imagenes antes de cambiar el nombre del producto en la base de datos
+            //$this->updateMediaFolderName($productId, $name);
+
+
+            $query = "UPDATE `products`
+                    SET name='$name', description='$description', shopping_link='$shopping_link', min_players=$min_players, max_players=$max_players, length=$length, minimum_age=$minimum_age, type=$type, category=$category, publisher=$publisher, hidden=$hidden
+                    WHERE id = $productId;";
+
+            $con->query($query);
+
+            //mira si el producto ya tenia un video subido
+            $videoAlreadyExists = $this->checkIfProductHasVideo($productId);
+            //Si ya existia y viene un video nuevo, reemplazarlo
+            if ($videoAlreadyExists && (isset($productDataList["videoLink"]) && !empty($productDataList["videoLink"]) && $productDataList["videoLink"] != "")) {
+                $this->updateVideoToDDBB($productId, $productDataList["videoLink"]);
+            }
+            //Si no existia y viene un video nuevo, crearlo
+            else if (!$videoAlreadyExists && (isset($productDataList["videoLink"]) && !empty($productDataList["videoLink"]) && $productDataList["videoLink"] != "")) {
+                $this->addVideoToDDBB($productId, $productDataList["videoLink"]);
+            }
+            //si ya existia y no viene ningun video, lo borramos
+            else if ($videoAlreadyExists && (!isset($productDataList["videoLink"]) || empty($productDataList["videoLink"]) || $productDataList["videoLink"] == "")) {
+                $this->deleteVideoToDDBB($productId);
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 
     function getProductPublisherId($publisher)
     {
@@ -370,5 +430,20 @@ class AddProductService
         $r = array_values($row);
         $con->close();
         return $r[0];
+    }
+    function updateMediaFolderName($productId, $newName)
+    {
+
+        $con = $this->connnection->getConnection();
+
+        $query = "SELECT url FROM `product_medias` WHERE id_product = '$productId' limit 1;";
+        $resultset = $con->query($query);
+        $row = $resultset->fetch_array(MYSQLI_ASSOC);
+
+        $r = array_values($row);
+        $con->close();
+
+        $oldName = explode("/", $r[0])[0];
+        rename($oldName, $newName);
     }
 }

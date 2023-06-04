@@ -69,4 +69,4 @@ echo ("
         </ul>
     </div>
 ");
-//echo ("pagination: " . $pagination . " | firstNumer: " . $firstNumer . " | lastNumber: " . $lastNumber . " | session max pages: " . $_SESSION["maxPages"] . " | currentPage: " . $_SESSION["currentPage"] . " | a: " . (($pagination + 1) % 2));
+

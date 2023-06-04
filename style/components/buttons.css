@@ -267,3 +267,31 @@
 .delete-user-icon-off:active {
     opacity: 0.6;
 }
+
+/**************************/
+/* edit product Button    */
+/**************************/
+.editSvg {
+    cursor: pointer;
+    transition: 0.2s;
+}
+.editSvg:hover path {
+    fill: var(--secondary);
+    stroke: var(--secondary);
+    stroke-width: 0;
+}
+
+.editSvg:active path {
+    opacity: 0.6;
+}
+
+.editSvg path,
+.editSvg polygon,
+.editSvg rect {
+    fill: var(--dark-link);
+}
+
+.editSvg circle {
+    stroke: var(--dark-link);
+    stroke-width: 1;
+}

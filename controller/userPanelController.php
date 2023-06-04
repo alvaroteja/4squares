@@ -9,9 +9,6 @@ include("../model/AvatarModel.php");
 
 session_start();
 
-// error_reporting(E_ALL);
-// ini_set('display_errors', '1');
-
 $connnection = new DBConnection();
 if (!isset($_SESSION["user"])) {
     header("Location: ../login.php");
@@ -22,12 +19,11 @@ if (!isset($_SESSION["user"])) {
 $favoriteService = new FavoriteService($connnection);
 $userPanelFavoriteDtoList = $favoriteService->getAllFavoritesByUserId($_SESSION["user"]->getId_user());
 $_SESSION["userPanelFavoriteList"] = $userPanelFavoriteDtoList;
-// echo "<pre>";
-// print_r($userPanelFavoriteDtoList);
+
 //cargar en sesion la lista de avatares disponibles
 $avatarService = new AvatarService($connnection);
 $avatarsList = $avatarService->getAllAvatars();
 $_SESSION["avatarsList"] = $avatarsList;
-//
+
 $_SESSION['userPanelControllerRedireccion'] = true;
 header("Location: ../userPanel.php");

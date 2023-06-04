@@ -106,7 +106,6 @@ class FavoriteService
     {
         try {
             $con = $this->connnection->getConnection();
-            //$query = "SELECT url FROM `product_medias` WHERE id_product = $productId LIMIT 1;";
             $query = "SELECT url FROM `product_medias` WHERE id_product = $productId AND type = 'image' LIMIT 1;";
 
             $resultset = $con->query($query);

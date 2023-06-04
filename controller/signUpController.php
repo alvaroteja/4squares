@@ -5,24 +5,19 @@ include_once("../generalData/signUpMessages.php");
 
 session_start();
 
-//$connnection = new DBConnection();
+
 //Si ya está logeado el usuario, vamos a logout
 if (isset($_SESSION['user'])) {
     header("Location: ../logout.php");
 } else {
     //Si venimos por el post, validar datos
     if (isset($_POST['signUp'])) {
-        //echo "<pre>";
-        //echo "esto es el post";
-        //print_r($_POST);
 
         $connnection = new DBConnection();
         $singUpMessages = new SignUpMessages();
         $signUpService = new SignUpService($connnection, $singUpMessages);
         $errorList = $signUpService->validateInputs($_POST);
-        // echo "<pre>";
-        // echo "esto es la lista de errores:<br>";
-        // print_r($errorList);
+
         if ($errorList === true) {
             unset($_SESSION["signUpErrors"]);
             unset($_SESSION["signUpData"]);

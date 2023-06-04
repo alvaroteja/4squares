@@ -15,6 +15,10 @@ if (isset($_POST["sendingForm"])) {
     $addProductService = new AddProductService($connnection);
     $filters = $addProductService->validateInputs($_POST);
 
+    $response = array(
+        'success' => true,
+        'message' => 'Todo bien.'
+    );
     //si hay errores en los campos los mandamos
     if (count($filters) > 0) {
         $response = array(
@@ -39,8 +43,6 @@ if (isset($_POST["sendingForm"])) {
     //Se guardan las imagenes en el server
     if (count($_FILES) > 0) {
         $response = $addProductService->saveImages($_FILES, $_POST["name"], $newProductId);
-        //echo json_encode($response);
-        //exit;
 
         if (!$response) {
             $response = array(
@@ -52,8 +54,6 @@ if (isset($_POST["sendingForm"])) {
         }
     }
 
-    //$response = array('message' => "$newProductId");
-    //$response = array('message' => "sin imagenes");
     echo json_encode($response);
     exit;
 }

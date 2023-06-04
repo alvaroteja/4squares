@@ -1,9 +1,7 @@
 <?php
-// include("service/AvatarService.php");
+
 include("./model/UserModel.php");
-// include("./service/DBConnection.php");
-// include_once("model/ProductModel.php");
-// include("./dto/reviewDto.php");
+
 session_start();
 
 if (!isset($_SESSION["user"]) || $_SESSION["user"]->getCredentials() != 1 || !isset($_SESSION['redireccion']) || empty($_SESSION['redireccion']) || $_SESSION['redireccion'] != "addProductController") {
@@ -25,9 +23,10 @@ $publishersList = $_SESSION["publishersList"];
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
     <link rel="stylesheet" href="style/addProduct.css" />
+    <link rel="icon" href="./img/icons/favicon.ico">
+    <title>4squares - añadir producto</title>
 </head>
 
 <body>
@@ -130,13 +129,11 @@ $publishersList = $_SESSION["publishersList"];
                 <label for="videoLink">Link del video:</label>
                 <input type="text" name="videoLink" id="videoLink" placeholder="Inserta aquí el link del vídeo." />
             </div>
-            <!-- <input type="file" id="file-input" multiple> -->
             <div class="custom-file-input button1s">
                 <label for="file-input">Seleccionar archivos</label>
                 <input type="file" id="file-input" accept=".jpg, .jpeg, .png" multiple />
             </div>
             <div id="preview-container" class="displayNone"></div>
-            <!-- <input type="file" name="images[]" multiple> -->
             <button id="submitButton" type="submit" class="button1" style="border-style: none">Enviar</button>
             <input type="hidden" name="sendingForm" value="true">
         </form>
@@ -171,7 +168,6 @@ $publishersList = $_SESSION["publishersList"];
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const fileName = file["name"];
-            //console.log(file);
             if (validateFileExtension(fileName)) {
                 // ver si esta foto ya esta subida
                 var alreadyUploaded = false;
@@ -185,7 +181,6 @@ $publishersList = $_SESSION["publishersList"];
                     // primero lo subimos al objeto formDataImages
                     formDataImages.append('images[]', files[i]);
 
-                    // console.log([...formDataImages]);
                     // Crear un objeto URL para previsualizar la imagen
                     const imageURL = URL.createObjectURL(file);
 
@@ -247,7 +242,6 @@ $publishersList = $_SESSION["publishersList"];
         nombreImagen = selectedImages[index]["name"];
 
         formDataImages = eliminarImagen(formDataImages, nombreImagen);
-        //console.log([...formDataImages]);
 
         // Eliminar la imagen del array de imágenes seleccionadas
         selectedImages.splice(index, 1);
@@ -273,8 +267,7 @@ $publishersList = $_SESSION["publishersList"];
         for (const [key, value] of formDataImages.entries()) {
             formData.append(key, value);
         }
-        //console.log([...formDataImages]);
-        //console.log([...formData]);
+
         // Realiza la solicitud Fetch al controlador
         fetch("./controller/addProductController.php", {
                 method: "POST",
@@ -349,9 +342,6 @@ $publishersList = $_SESSION["publishersList"];
         previewContainer.innerHTML = "";
         previewContainer.classList.add("displayNone");
     }
-    // // Agregar evento de escucha al formulario para enviarlo
-    // const form = document.getElementById("myForm");
-    // form.addEventListener("submit", handleSubmit);
 </script>
 
 </html>

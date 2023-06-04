@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2023 a las 19:30:52
+-- Tiempo de generación: 04-06-2023 a las 16:50:47
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -107,8 +107,8 @@ INSERT INTO `favorites` (`id`, `id_product`, `id_user`, `add_date`) VALUES
 (34, 1, 56, '2023-05-12'),
 (35, 31, 56, '2023-05-12'),
 (36, 8, 106, '2023-05-15'),
-(37, 3, 106, '2023-05-20'),
-(38, 2, 106, '2023-05-21');
+(44, 2, 106, '2023-05-30'),
+(47, 50, 106, '2023-06-04');
 
 -- --------------------------------------------------------
 
@@ -146,9 +146,9 @@ INSERT INTO `products` (`id`, `name`, `description`, `shopping_link`, `min_playe
 (7, 'Carcassonne', 'Un juego de colocación de losetas en el que los jugadores construyen la ciudad de Carcassonne y sus alrededores. El objetivo es obtener la mayor cantidad de puntos completando ciudades, caminos y monasterios.', 'https://www.amazon.es/s?k=Carcassonne', 2, 8, 68, 12, 1, 1, 158, '2023-04-03 11:37:27', 0),
 (8, 'Dominion', 'Un juego de construcción de mazos en el que los jugadores construyen sus propios mazos de cartas y compiten por puntos. El objetivo es obtener la mayor cantidad de puntos comprando cartas y construyendo un mazo eficiente.', 'https://www.amazon.es/s?k=Dominion', 2, 12, 146, 12, 2, 9, 72, '2023-04-03 11:37:28', 0),
 (9, 'Pandemic', 'Un juego cooperativo en el que los jugadores trabajan juntos para detener la propagación de enfermedades por todo el mundo. El objetivo es curar las cuatro enfermedades antes de que se propague por todo el mundo.', 'https://www.amazon.es/s?k=Pandemic', 2, 10, 133, 3, 1, 4, 42, '2023-04-03 11:37:29', 0),
-(10, 'Clue', 'Un juego de deducción en el que los jugadores deben descubrir quién mató al Sr. Black, con qué arma y en qué habitación. Los jugadores hacen preguntas y deducen la solución del crimen.', 'https://www.amazon.es/s?k=Clue', 2, 8, 62, 8, 1, 6, 98, '2023-04-03 11:37:30', 0),
+(10, 'Cluedo', 'Un juego de deducción en el que los jugadores deben descubrir quién mató al Sr. Black, con qué arma y en qué habitación. Los jugadores hacen preguntas y deducen la solución del crimen.', 'https://www.amazon.es/s?k=Clue', 2, 8, 62, 8, 1, 6, 98, '2023-04-03 11:37:30', 0),
 (11, 'Jenga', 'Un juego de habilidad en el que los jugadores deben retirar bloques de madera de una torre y colocarlos en la parte superior sin hacer que se derrumbe.', 'https://www.amazon.es/s?k=Jenga', 2, 3, 110, 12, 4, 1, 35, '2023-04-03 11:37:31', 0),
-(12, 'Twister', 'Un juego físico en el que los jugadores deben colocar sus manos y pies en círculos de colores en un tapete. El objetivo es no caerse mientras los otros jugadores hacen lo mismo.', 'https://www.amazon.es/s?k=Twister', 2, 11, 26, 0, 4, 7, 68, '2023-04-03 11:37:32', 0),
+(12, 'Twister', 'Un juego físico en el que los jugadores deben colocar sus manos y pies en círculos de colores en un tapete. El objetivo es no caerse mientras los otros jugadores hacen lo mismo.', 'https://www.amazon.es/s?k=Twister', 2, 11, 26, 1, 4, 7, 68, '2023-04-03 11:37:32', 0),
 (13, 'Puerto Rico', 'Un juego de estrategia en el que los jugadores construyen edificios y plantaciones en la isla de Puerto Rico. El objetivo es obtener la mayor cantidad de puntos comerciando con las plantaciones y los edificios.', 'https://www.amazon.es/s?k=Puerto+Rico', 2, 12, 35, 12, 3, 2, 105, '2023-04-03 11:37:33', 0),
 (14, 'Ticket to Ride', 'Un juego de mesa de estrategia en el que los jugadores construyen vías de tren entre ciudades para obtener puntos.', 'https://www.amazon.es/s?k=Ticket+to+Ride', 2, 2, 105, 8, 1, 1, 34, '2023-04-03 11:37:34', 0),
 (15, 'Battleship', 'Un juego de mesa de estrategia en el que dos jugadores se turnan para tratar de hundir los barcos del oponente.', 'https://www.amazon.es/s?k=Battleship', 2, 8, 68, 2, 1, 6, 167, '2023-04-03 11:37:35', 0),
@@ -159,12 +159,12 @@ INSERT INTO `products` (`id`, `name`, `description`, `shopping_link`, `min_playe
 (20, 'Santorini', 'Un juego de mesa de estrategia en el que los jugadores construyen edificios en una isla y tratan de llegar a la cima de la montaña. El objetivo es ser el primero en alcanzar la cima o bloquear a los oponentes.', 'https://www.amazon.es/s?k=Santorini', 2, 7, 79, 3, 1, 3, 160, '2023-04-03 11:37:40', 0),
 (21, 'Codenames', 'Un juego de palabras en el que los jugadores deben adivinar la palabra correcta a partir de una pista dada por su compañero de equipo.', 'https://www.amazon.es/s?k=Codenames', 2, 7, 77, 9, 2, 7, 152, '2023-04-03 11:37:41', 0),
 (22, 'Munchkin', 'Un juego de cartas en el que los jugadores asumen el papel de aventureros en un mundo de fantasía y luchan contra monstruos para obtener niveles y tesoros.', 'https://www.amazon.es/s?k=Munchkin', 2, 11, 140, 2, 2, 9, 8, '2023-04-03 11:37:42', 0),
-(23, 'Magic: The Gathering', 'Un juego de cartas coleccionable en el que los jugadores construyen mazos de cartas con diferentes habilidades y hechizos para derrotar a su oponente.', 'https://www.amazon.es/s?k=Magic:+The+Gathering', 2, 12, 27, 5, 2, 6, 90, '2023-04-03 11:37:43', 0),
+(23, 'Magic The Gathering', 'Un juego de cartas coleccionable en el que los jugadores construyen mazos de cartas con diferentes habilidades y hechizos para derrotar a su oponente.', 'https://www.amazon.es/s?k=Magic:+The+Gathering', 2, 12, 27, 5, 2, 6, 90, '2023-04-03 11:37:43', 0),
 (24, 'King of Tokyo', 'Un juego de mesa de dados en el que los jugadores juegan como monstruos gigantes que luchan por el control de la ciudad de Tokio.', 'https://www.amazon.es/s?k=King+of+Tokyo', 2, 2, 72, 2, 4, 3, 78, '2023-04-03 11:37:44', 0),
 (25, 'Bang!', 'Un juego de mesa de deducción en el que los jugadores juegan como forajidos del Viejo Oeste que intentan matar al Sheriff o al Vice-Sheriff mientras evitan ser descubiertos.', 'https://www.amazon.es/s?k=Bang!', 2, 2, 101, 11, 2, 4, 153, '2023-04-03 11:37:45', 0),
-(26, 'Betrayal at Baldurs Gate', 'Un juego de mesa de aventuras en el que los jugadores exploran una ciudad de fantasía y se enfrentan a criaturas malignas. Uno de los jugadores se convierte en el traidor y debe luchar contra los demás.', 'https://www.amazon.es/s?k=Betrayal+at+Baldurs+Gate', 2, 12, 72, 0, 3, 9, 4, '2023-04-03 11:37:46', 0),
+(26, 'Betrayal at Baldurs Gate', 'Un juego de mesa de aventuras en el que los jugadores exploran una ciudad de fantasía y se enfrentan a criaturas malignas. Uno de los jugadores se convierte en el traidor y debe luchar contra los demás.', 'https://www.amazon.es/s?k=Betrayal+at+Baldurs+Gate', 2, 12, 72, 1, 3, 9, 4, '2023-04-03 11:37:46', 0),
 (27, 'Boss Monster', 'Un juego de mesa de construcción de mazos en el que los jugadores juegan como jefes de mazmorra que construyen mazmorras para atraer a los aventureros y matarlos.', 'https://www.amazon.es/s?k=Boss+Monster', 2, 10, 71, 8, 2, 6, 60, '2023-04-03 11:37:47', 0),
-(28, 'Dead of Winter', 'Un juego de mesa de supervivencia en el que los jugadores intentan sobrevivir en un mundo post-apocalíptico infestado de zombis. Los jugadores tienen que reunir recursos, luchar contra los zombis y cumplir con objetivos secretos.', 'https://www.amazon.es/s?k=Dead+of+Winter', 2, 11, 118, 0, 3, 4, 75, '2023-04-03 11:37:48', 0),
+(28, 'Dead of Winter', 'Un juego de mesa de supervivencia en el que los jugadores intentan sobrevivir en un mundo post-apocalíptico infestado de zombis. Los jugadores tienen que reunir recursos, luchar contra los zombis y cumplir con objetivos secretos.', 'https://www.amazon.es/s?k=Dead+of+Winter', 2, 11, 118, 1, 3, 4, 75, '2023-04-03 11:37:48', 0),
 (29, 'Spyfall', 'Un juego de mesa de deducción en el que los jugadores juegan como espías que intentan adivinar la ubicación secreta mientras evitan ser descubiertos.', 'https://www.amazon.es/s?k=Spyfall', 2, 3, 23, 12, 2, 1, 16, '2023-04-03 11:37:49', 0),
 (30, 'The Resistance', 'Un juego de roles en el que los jugadores se dividen en dos equipos, los rebeldes y los espías. Los espías deben sabotear las misiones de los rebeldes sin ser descubiertos.', 'https://www.amazon.es/s?k=The+Resistance', 2, 3, 127, 2, 2, 3, 163, '2023-04-03 11:37:50', 0),
 (31, 'Gloomhaven', 'Un juego de mesa de aventuras en el que los jugadores controlan un grupo de mercenarios en un mundo de fantasía y completan misiones para ganar puntos y experiencia.', 'https://www.amazon.es/s?k=Gloomhaven', 2, 12, 92, 11, 3, 6, 36, '2023-04-03 11:37:51', 0),
@@ -180,14 +180,13 @@ INSERT INTO `products` (`id`, `name`, `description`, `shopping_link`, `min_playe
 (41, 'Power Grid', 'Un juego de mesa de estrategia económica en el que los jugadores intentan construir y gestionar una red eléctrica para suministrar energía a diferentes ciudades.', 'https://www.amazon.es/s?k=Power+Grid', 2, 4, 142, 12, 1, 1, 7, '2023-04-03 11:38:01', 0),
 (42, 'Small World', 'Un juego de mesa de estrategia en el que los jugadores controlan razas fantásticas y luchan por el control de territorios y recursos.', 'https://www.amazon.es/s?k=Small+World', 2, 8, 113, 6, 1, 4, 121, '2023-04-03 11:38:02', 0),
 (43, 'Arkham Horror', 'Un juego de mesa de aventuras en el que los jugadores juegan como investigadores que intentan evitar que los monstruos de Lovecraft destruyan la ciudad de Arkham.', 'https://www.amazon.es/s?k=Arkham+Horror', 2, 9, 104, 4, 3, 1, 49, '2023-04-03 11:38:03', 0),
-(44, 'A Game of Thrones: The Board Game', 'The Board Game: Basado en los libros y la serie de televisión, este juego de mesa es una simulación de guerra y diplomacia entre varias familias de Westeros. Los jugadores tratan de conquistar y controlar los territorios para ganar el control del Trono de Hierro. El juego incluye elementos de estrategia, intriga y traición.', 'https://www.amazon.es/s?k=A+Game+of+Thrones:+The+Board+Game', 2, 6, 21, 1, 3, 5, 136, '2023-04-03 11:38:04', 0),
+(44, 'A Game of Thrones The Board Game', 'The Board Game: Basado en los libros y la serie de televisión, este juego de mesa es una simulación de guerra y diplomacia entre varias familias de Westeros. Los jugadores tratan de conquistar y controlar los territorios para ganar el control del Trono de Hierro. El juego incluye elementos de estrategia, intriga y traición.', 'https://www.amazon.es/s?k=A+Game+of+Thrones:+The+Board+Game', 2, 6, 21, 1, 3, 5, 136, '2023-04-03 11:38:04', 0),
 (45, '7 Wonders', 'Un juego de mesa de estrategia en el que los jugadores construyen ciudades antiguas y maravillas del mundo para obtener puntos.', 'https://www.amazon.es/s?k=7+Wonders', 2, 6, 20, 6, 2, 7, 23, '2023-04-03 11:38:05', 0),
 (46, 'Lords of Waterdeep', 'Este juego de mesa de estrategia es ambientado en la ciudad ficticia de Waterdeep en el universo de Dungeons & Dragons. Los jugadores asumen el papel de señores encubiertos y compiten por la influencia en la ciudad mediante la adquisición de aventureros y la realización de misiones. El juego incluye una mecánica de colocación de trabajadores y un elemento de ocultamiento de información.', 'https://www.amazon.es/s?k=Lords+of+Waterdeep', 2, 6, 76, 12, 1, 7, 110, '2023-04-03 11:38:06', 0),
 (47, 'Sheriff of Nottingham', 'Sheriff of Nottingham: Un juego de mesa de negociación y engaño en el que los jugadores asumen el papel de mercaderes y deben pasar mercancía a través de la aduana mientras tratan de engañar al sheriff.', 'https://www.amazon.es/s?k=Sheriff+of+Nottingham', 2, 11, 63, 5, 1, 9, 35, '2023-04-03 11:38:07', 0),
 (48, 'Scythe', 'Un juego de estrategia ambientado en una Europa alternativa en los años 20 en el que los jugadores construyen mechas y luchan por el control del territorio.', 'https://www.amazon.es/s?k=Scythe', 2, 9, 52, 4, 3, 7, 77, '2023-04-03 11:38:08', 0),
 (49, 'Talisman', 'Este juego de mesa es un juego de aventuras de fantasía donde los jugadores se mueven por un tablero y luchan contra monstruos y recolectan tesoros. Cada jugador selecciona un personaje con habilidades y atributos únicos y utiliza cartas para influir en los resultados de los dados. El objetivo del juego es llegar al centro del tablero y enfrentarse al poderoso Talismán. El juego incluye una gran cantidad de cartas y piezas, lo que lo hace muy temático y variado.', 'https://www.amazon.es/s?k=Talisman', 2, 12, 92, 11, 2, 8, 6, '2023-04-03 11:38:09', 0),
-(50, 'Dominion: Intrigue', 'Intrigue: Una expansión del juego Dominion en la que se añaden nuevas cartas y se pueden jugar partidas con más jugadores.', 'https://www.amazon.es/s?k=Dominion:+Intrigue', 2, 3, 82, 10, 2, 1, 106, '2023-04-03 11:38:10', 0),
-(78, 'asd', 'asd', 'asd', 1, 20, 10, 10, 1, 1, 1, '2023-05-28 18:47:32', 0);
+(50, 'Dominion Intrigue', 'Intrigue: Una expansión del juego Dominion en la que se añaden nuevas cartas y se pueden jugar partidas con más jugadores.', 'https://www.amazon.es/s?k=Dominion:+Intrigue', 2, 3, 82, 10, 2, 1, 106, '2023-04-03 11:38:10', 0);
 
 -- --------------------------------------------------------
 
@@ -218,8 +217,165 @@ INSERT INTO `product_medias` (`id`, `id_product`, `url`, `type`) VALUES
 (9, 2, '2-Monopoly/5.jpg', 'image'),
 (10, 2, '2-Monopoly/6.jpg', 'image'),
 (11, 1, 'https://www.youtube.com/embed/x4R2EPkYzZk', 'video'),
-(65, 78, 'asd', 'video'),
-(66, 78, 'asd/647385a4defa9.jpg', 'image');
+(201, 50, 'Dominion Intrigue/647c82b2182cf.jpg', 'image'),
+(202, 50, 'Dominion Intrigue/647c82b21c55c.jpg', 'image'),
+(207, 49, 'Talisman/647c83914e9a4.jpg', 'image'),
+(208, 49, 'Talisman/647c839b34cb1.jpg', 'image'),
+(209, 49, 'Talisman/647c839b35f3c.jpg', 'image'),
+(210, 48, 'Scythe/647c83f5cbcf3.jpg', 'image'),
+(211, 48, 'Scythe/647c83f5cd424.jpg', 'image'),
+(212, 48, 'Scythe/647c83f5d39e7.jpg', 'image'),
+(213, 48, 'Scythe/647c83f5d7542.jpg', 'image'),
+(214, 48, 'Scythe/647c83f5d8f36.jpg', 'image'),
+(215, 47, 'Sheriff of Nottingham/647c842679f5b.jpg', 'image'),
+(216, 47, 'Sheriff of Nottingham/647c84267ffb1.jpg', 'image'),
+(217, 47, 'Sheriff of Nottingham/647c842687a5a.jpg', 'image'),
+(218, 46, 'Lords of Waterdeep/647c849e1281d.jpg', 'image'),
+(219, 45, '7 Wonders/647c84ce7aa8e.jpg', 'image'),
+(220, 45, '7 Wonders/647c84ce7f154.jpg', 'image'),
+(221, 45, '7 Wonders/647c84ce8273c.jpg', 'image'),
+(230, 44, 'A Game of Thrones The Board Game/647c850642bba.jpg', 'image'),
+(231, 44, 'A Game of Thrones The Board Game/647c850646fb2.jpg', 'image'),
+(232, 44, 'A Game of Thrones The Board Game/647c850648b2e.jpg', 'image'),
+(233, 44, 'A Game of Thrones The Board Game/647c850649ecf.jpg', 'image'),
+(234, 43, 'Arkham Horror/647c85fb7764c.jpg', 'image'),
+(235, 43, 'Arkham Horror/647c85fb7d2c2.jpg', 'image'),
+(236, 43, 'Arkham Horror/647c85fb7ec09.jpg', 'image'),
+(237, 42, 'Small World/647c8628df9be.jpg', 'image'),
+(238, 42, 'Small World/647c8628e0d45.jpg', 'image'),
+(239, 42, 'Small World/647c8628e6de8.jpg', 'image'),
+(240, 41, 'Power Grid/647c8650b246c.jpg', 'image'),
+(241, 41, 'Power Grid/647c8650b62de.jpg', 'image'),
+(242, 40, 'Terraforming Mars/647c868555374.jpg', 'image'),
+(243, 40, 'Terraforming Mars/647c868556533.jpg', 'image'),
+(244, 40, 'Terraforming Mars/647c86855d2fb.jpg', 'image'),
+(245, 40, 'Terraforming Mars/647c868562aa2.jpg', 'image'),
+(246, 39, 'The Settlers of Catan/647c872cb067c.jpg', 'image'),
+(247, 39, 'The Settlers of Catan/647c872cb4398.jpg', 'image'),
+(248, 39, 'The Settlers of Catan/647c872cb7a32.jpg', 'image'),
+(249, 38, 'Spy Alley/647c875d4e3c3.jpg', 'image'),
+(250, 38, 'Spy Alley/647c875d50c28.jpg', 'image'),
+(251, 38, 'Spy Alley/647c875d51b65.jpg', 'image'),
+(252, 37, 'Hanabi/647c878741995.jpg', 'image'),
+(253, 37, 'Hanabi/647c8787462a9.jpg', 'image'),
+(254, 36, 'Forbidden Island/647c87c98fd46.jpg', 'image'),
+(255, 36, 'Forbidden Island/647c87c994422.jpg', 'image'),
+(256, 36, 'Forbidden Island/647c87c997a7a.jpg', 'image'),
+(257, 35, 'Machi Koro/647c87ef57eb8.jpg', 'image'),
+(258, 35, 'Machi Koro/647c87ef5c293.jpg', 'image'),
+(259, 34, 'Sushi Go!/647c8810f11f8.jpg', 'image'),
+(260, 34, 'Sushi Go!/647c88110138a.jpg', 'image'),
+(261, 33, 'Photosynthesis/647c8838251b6.jpg', 'image'),
+(262, 33, 'Photosynthesis/647c8838298bd.jpg', 'image'),
+(263, 33, 'Photosynthesis/647c88382a86a.jpg', 'image'),
+(264, 33, 'Photosynthesis/647c883830d7e.jpg', 'image'),
+(265, 32, 'Hive/647c886911d49.jpg', 'image'),
+(266, 32, 'Hive/647c886915f3d.jpg', 'image'),
+(267, 32, 'Hive/647c8869190ee.jpg', 'image'),
+(268, 31, 'Gloomhaven/647c888fcb074.jpg', 'image'),
+(269, 31, 'Gloomhaven/647c888fcbde1.jpg', 'image'),
+(270, 31, 'Gloomhaven/647c888fccc7f.jpg', 'image'),
+(271, 30, 'The Resistance/647c8e6e02cb6.jpg', 'image'),
+(272, 30, 'The Resistance/647c8e6e0836d.jpg', 'image'),
+(273, 30, 'The Resistance/647c8e6e0dddf.jpg', 'image'),
+(274, 29, 'Spyfall/647c8e8fc51bd.jpg', 'image'),
+(275, 29, 'Spyfall/647c8e9cea4e9.jpg', 'image'),
+(276, 29, 'Spyfall/647c8e9ceeb93.jpg', 'image'),
+(277, 28, 'Dead of Winter/647c8ed9708b8.jpg', 'image'),
+(278, 28, 'Dead of Winter/647c8ed974a18.jpg', 'image'),
+(279, 28, 'Dead of Winter/647c8ed97875a.jpg', 'image'),
+(280, 28, 'Dead of Winter/647c8ed97b48b.jpg', 'image'),
+(281, 27, 'Boss Monster/647c8f0522466.jpg', 'image'),
+(282, 27, 'Boss Monster/647c8f052693b.jpg', 'image'),
+(283, 27, 'Boss Monster/647c8f05281d7.jpg', 'image'),
+(284, 27, 'Boss Monster/647c8f052e115.jpg', 'image'),
+(285, 26, 'Betrayal at Baldurs Gate/647c8f465eb43.jpg', 'image'),
+(286, 26, 'Betrayal at Baldurs Gate/647c8f4666225.jpg', 'image'),
+(287, 26, 'Betrayal at Baldurs Gate/647c8f4669e9c.jpg', 'image'),
+(288, 25, 'Bang!/647c8f7482be0.jpg', 'image'),
+(289, 25, 'Bang!/647c8f74868e4.jpg', 'image'),
+(290, 25, 'Bang!/647c8f7489f8b.jpg', 'image'),
+(291, 25, 'Bang!/647c8f748dace.jpg', 'image'),
+(292, 24, 'King of Tokyo/647c8fa575820.jpg', 'image'),
+(293, 24, 'King of Tokyo/647c8fa5799cd.jpg', 'image'),
+(294, 24, 'King of Tokyo/647c8fa57c876.jpg', 'image'),
+(295, 24, 'King of Tokyo/647c8fa580e06.jpg', 'image'),
+(296, 23, 'Magic The Gathering/647c8fd3c3cbe.jpg', 'image'),
+(297, 23, 'Magic The Gathering/647c8fd3c8349.jpg', 'image'),
+(298, 23, 'Magic The Gathering/647c8fd3cbbaa.jpg', 'image'),
+(299, 23, 'Magic The Gathering/647c8fd3d0921.jpg', 'image'),
+(300, 22, 'Munchkin/647c900c8f52e.jpg', 'image'),
+(301, 22, 'Munchkin/647c900c93486.jpg', 'image'),
+(302, 22, 'Munchkin/647c900c964e9.jpg', 'image'),
+(303, 22, 'Munchkin/647c900c991a3.jpg', 'image'),
+(304, 21, 'Codenames/647c90390a6cf.jpg', 'image'),
+(305, 21, 'Codenames/647c90390fc81.jpg', 'image'),
+(306, 21, 'Codenames/647c903915faf.jpg', 'image'),
+(307, 20, 'Santorini/647c906d70b93.jpg', 'image'),
+(308, 20, 'Santorini/647c906d7669b.jpg', 'image'),
+(309, 20, 'Santorini/647c906d77ee5.jpg', 'image'),
+(310, 19, 'Azul/647c909cbfab9.jpg', 'image'),
+(311, 19, 'Azul/647c909cc0efc.jpg', 'image'),
+(312, 19, 'Azul/647c909cc7801.jpg', 'image'),
+(313, 18, 'Splendor/647c90c105845.jpg', 'image'),
+(314, 18, 'Splendor/647c90c10b737.jpg', 'image'),
+(315, 18, 'Splendor/647c90c111ae4.jpg', 'image'),
+(316, 18, 'Splendor/647c90c116f86.jpg', 'image'),
+(317, 17, 'Dixit/647c90dfe521b.jpg', 'image'),
+(318, 17, 'Dixit/647c90dfe9463.jpg', 'image'),
+(319, 17, 'Dixit/647c90dfec5ad.jpg', 'image'),
+(320, 17, 'Dixit/647c90dfed5ca.jpg', 'image'),
+(321, 16, 'Stratego/647c9110046bf.jpg', 'image'),
+(322, 16, 'Stratego/647c91100a87d.jpg', 'image'),
+(323, 16, 'Stratego/647c9110100a3.jpg', 'image'),
+(324, 16, 'Stratego/647c911015e9e.jpg', 'image'),
+(325, 16, 'Stratego/647c91101bffb.jpg', 'image'),
+(326, 16, 'Stratego/647c91101f52d.jpg', 'image'),
+(327, 15, 'Battleship/647c913696609.jpg', 'image'),
+(328, 15, 'Battleship/647c91369afa0.jpg', 'image'),
+(329, 15, 'Battleship/647c91369bee7.jpg', 'image'),
+(330, 14, 'Ticket to Ride/647c9164e07ff.jpg', 'image'),
+(331, 14, 'Ticket to Ride/647c9164e1d28.jpg', 'image'),
+(332, 14, 'Ticket to Ride/647c9164e2ad1.jpg', 'image'),
+(333, 14, 'Ticket to Ride/647c9164e3782.jpg', 'image'),
+(334, 13, 'Puerto Rico/647c918b2b7b0.jpg', 'image'),
+(335, 13, 'Puerto Rico/647c918b2f76c.jpg', 'image'),
+(336, 12, 'Twister/647c91b976293.jpg', 'image'),
+(337, 12, 'Twister/647c91b97a57a.jpg', 'image'),
+(338, 12, 'Twister/647c91b97e83d.jpg', 'image'),
+(339, 11, 'Jenga/647c91e32f9b3.jpg', 'image'),
+(340, 11, 'Jenga/647c91e333c86.jpg', 'image'),
+(341, 11, 'Jenga/647c91e337571.jpg', 'image'),
+(342, 10, 'Clue/647c921705997.jpg', 'image'),
+(343, 10, 'Clue/647c92170717f.jpg', 'image'),
+(344, 10, 'Clue/647c921707f85.jpg', 'image'),
+(345, 10, 'Clue/647c921708d83.jpg', 'image'),
+(346, 9, 'Pandemic/647c923cc9957.jpg', 'image'),
+(347, 9, 'Pandemic/647c923ccaffc.jpg', 'image'),
+(348, 9, 'Pandemic/647c923cd19de.jpg', 'image'),
+(349, 9, 'Pandemic/647c923cd5eda.jpg', 'image'),
+(350, 8, 'Dominion/647c926a0495b.jpg', 'image'),
+(351, 8, 'Dominion/647c926a09113.jpg', 'image'),
+(352, 8, 'Dominion/647c926a0c9e7.jpg', 'image'),
+(353, 8, 'Dominion/647c926a14927.jpg', 'image'),
+(354, 7, 'Carcassonne/647c9291348f6.jpg', 'image'),
+(355, 7, 'Carcassonne/647c92913d9dc.jpg', 'image'),
+(356, 7, 'Carcassonne/647c929143033.jpg', 'image'),
+(357, 7, 'Carcassonne/647c92914495a.jpg', 'image'),
+(358, 6, 'Catan/647c92b84e7e5.jpg', 'image'),
+(359, 6, 'Catan/647c92b854757.jpg', 'image'),
+(360, 6, 'Catan/647c92b85a33d.jpg', 'image'),
+(361, 6, 'Catan/647c92b85dc52.jpg', 'image'),
+(362, 5, 'Trivial Pursuit/647c92deef4fd.jpg', 'image'),
+(363, 5, 'Trivial Pursuit/647c92def346d.jpg', 'image'),
+(364, 4, 'Risk/647c9302a34d5.jpg', 'image'),
+(365, 4, 'Risk/647c9302a4908.jpg', 'image'),
+(366, 4, 'Risk/647c9302a56db.jpg', 'image'),
+(367, 4, 'Risk/647c9302ab3b9.jpg', 'image'),
+(368, 3, 'Scrabble/647c932edc0bb.jpg', 'image'),
+(369, 3, 'Scrabble/647c932edd3d3.jpg', 'image'),
+(370, 3, 'Scrabble/647c932ee0a53.jpg', 'image'),
+(371, 3, 'Scrabble/647c932ee4ad9.jpg', 'image');
 
 -- --------------------------------------------------------
 
@@ -2957,7 +3113,8 @@ INSERT INTO `scores` (`id`, `id_product`, `id_user`, `score`) VALUES
 (2552, 49, 100, 0),
 (2553, 50, 100, 4),
 (2554, 1, 106, 5),
-(2555, 3, 106, 2);
+(2555, 3, 106, 2),
+(2559, 50, 106, 2);
 
 -- --------------------------------------------------------
 
@@ -3154,19 +3311,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de la tabla `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT de la tabla `product_medias`
 --
 ALTER TABLE `product_medias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=374;
 
 --
 -- AUTO_INCREMENT de la tabla `publishers`
@@ -3178,13 +3335,13 @@ ALTER TABLE `publishers`
 -- AUTO_INCREMENT de la tabla `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2557;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2560;
 
 --
 -- AUTO_INCREMENT de la tabla `types`
@@ -3196,7 +3353,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- Restricciones para tablas volcadas

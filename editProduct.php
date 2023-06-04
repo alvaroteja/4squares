@@ -1,10 +1,7 @@
 <?php
-// include("service/AvatarService.php");
+
 include("./model/UserModel.php");
 include("./model/ProductModel.php");
-// include("./service/DBConnection.php");
-// include_once("model/ProductModel.php");
-// include("./dto/reviewDto.php");
 session_start();
 
 if (!isset($_SESSION["user"]) || $_SESSION["user"]->getCredentials() != 1 || !isset($_SESSION['redireccion']) || empty($_SESSION['redireccion']) || $_SESSION['redireccion'] != "editProductController") {
@@ -19,12 +16,17 @@ $categoriesList = $_SESSION["categoriesList"];
 $publishersList = $_SESSION["publishersList"];
 
 $linkVideo = "";
+$imagesListBefore = [];
+
 $mediaList = $_SESSION["currentEditingProduct"]->getMedia_list();
 foreach ($mediaList as $elemento) {
     if ($elemento['type'] == 'video') {
         $linkVideo = $elemento['url'];
+    } else if ($elemento['type'] == 'image') {
+        array_push($imagesListBefore, $elemento['url']);
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,15 +36,16 @@ foreach ($mediaList as $elemento) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>4squares - editar producto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
     <link rel="stylesheet" href="style/addProduct.css" />
+    <link rel="icon" href="./img/icons/favicon.ico">
 </head>
 
 <body>
     <?php
     include("html/components/nav.php");
-    print_r($_SESSION["currentEditingProduct"]->getMedia_list());
+
     ?>
     <div class="container">
         <h2 style="text-align: center">Editando <?php echo $_SESSION["currentEditingProduct"]->getName() ?></h2>
@@ -152,21 +155,49 @@ foreach ($mediaList as $elemento) {
                 <label for="videoLink">Link del video:</label>
                 <input type="text" name="videoLink" id="videoLink" placeholder="Inserta aquí el link del vídeo." value="<?php echo $linkVideo; ?>" />
             </div>
-            <!-- <input type="file" id="file-input" multiple> -->
+            <?php
+            if (count($imagesListBefore) > 0) {
+                echo "
+                    <label id='old-images-preview-container-label' for='old-images-preview-container'>Imágenes actuales:</label>
+                    <div id='old-images-preview-container'>
+                ";
+            }
+            foreach ($imagesListBefore as $key => $value) {
+                $imageId = explode("/", $value);
+                $imageId = explode(".", $imageId[1]);
+                echo "
+                        <div  class='thumbnail-container'>
+                            <img src='./img/products/$value' class='preview-image'>
+                            <span class='old-images-delete-icon'>
+                                <svg class='svg-icon del-ic' viewBox='0 0 20 20'>
+                                    <path d='M10.185,1.417c-4.741,0-8.583,3.842-8.583,8.583c0,4.74,3.842,8.582,8.583,8.582S18.768,14.74,18.768,10C18.768,5.259,14.926,1.417,10.185,1.417 M10.185,17.68c-4.235,0-7.679-3.445-7.679-7.68c0-4.235,3.444-7.679,7.679-7.679S17.864,5.765,17.864,10C17.864,14.234,14.42,17.68,10.185,17.68 M10.824,10l2.842-2.844c0.178-0.176,0.178-0.46,0-0.637c-0.177-0.178-0.461-0.178-0.637,0l-2.844,2.841L7.341,6.52c-0.176-0.178-0.46-0.178-0.637,0c-0.178,0.176-0.178,0.461,0,0.637L9.546,10l-2.841,2.844c-0.178,0.176-0.178,0.461,0,0.637c0.178,0.178,0.459,0.178,0.637,0l2.844-2.841l2.844,2.841c0.178,0.178,0.459,0.178,0.637,0c0.178-0.176,0.178-0.461,0-0.637L10.824,10z'>
+                                    </path>
+                                </svg>
+                            </span>
+                        </div>
+                    ";
+            }
+            if (count($imagesListBefore) > 0) {
+                echo "
+                    </div>
+                ";
+            }
+            ?>
+
             <div class="custom-file-input button1s">
                 <label for="file-input">Seleccionar archivos</label>
                 <input type="file" id="file-input" accept=".jpg, .jpeg, .png" multiple />
             </div>
             <div id="preview-container" class="displayNone"></div>
-            <!-- <input type="file" name="images[]" multiple> -->
             <button id="submitButton" type="submit" class="button1" style="border-style: none">Enviar</button>
             <input type="hidden" name="sendingForm" value="true">
+            <input type="hidden" name="productId" value="<?php echo $_SESSION["currentEditingProduct"]->getId_product() ?>">
         </form>
         <div id="errorInfo"></div>
     </div>
     <div id="overlay" class="overlay">
         <div class="popup">
-            <p class="mensaje">El juego ha sido creado correctamente.</p>
+            <p class="mensaje">El juego ha sido actualizado.</p>
             <button class="button1" onclick="closePopup()">Aceptar</button>
         </div>
     </div>
@@ -193,7 +224,6 @@ foreach ($mediaList as $elemento) {
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const fileName = file["name"];
-            //console.log(file);
             if (validateFileExtension(fileName)) {
                 // ver si esta foto ya esta subida
                 var alreadyUploaded = false;
@@ -207,7 +237,6 @@ foreach ($mediaList as $elemento) {
                     // primero lo subimos al objeto formDataImages
                     formDataImages.append('images[]', files[i]);
 
-                    // console.log([...formDataImages]);
                     // Crear un objeto URL para previsualizar la imagen
                     const imageURL = URL.createObjectURL(file);
 
@@ -247,7 +276,6 @@ foreach ($mediaList as $elemento) {
                 alert("Formato de archivo no válido");
             }
         }
-        console.log([...formDataImages]);
 
         fileInput.value = "";
     }
@@ -269,7 +297,6 @@ foreach ($mediaList as $elemento) {
         nombreImagen = selectedImages[index]["name"];
 
         formDataImages = eliminarImagen(formDataImages, nombreImagen);
-        //console.log([...formDataImages]);
 
         // Eliminar la imagen del array de imágenes seleccionadas
         selectedImages.splice(index, 1);
@@ -295,10 +322,16 @@ foreach ($mediaList as $elemento) {
         for (const [key, value] of formDataImages.entries()) {
             formData.append(key, value);
         }
-        //console.log([...formDataImages]);
-        //console.log([...formData]);
+
+        //agrego las imagenes que hay que borrar al formdata
+        var deleteImagesList = oldImagesListbeforeUpdate.filter(element => !oldImagesListAfterUpdate.includes(element));
+        oldImagesListAfterUpdate = getUrlImagesFromDivId('old-images-preview-container');
+        oldImagesListbeforeUpdate = getUrlImagesFromDivId('old-images-preview-container');
+        const deleteImagesListJSON = JSON.stringify(deleteImagesList);
+        formData.append('deleteImagesList', deleteImagesListJSON);
+
         // Realiza la solicitud Fetch al controlador
-        fetch("./controller/addProductController.php", {
+        fetch("./controller/editProductController.php", {
                 method: "POST",
                 body: formData
             })
@@ -307,7 +340,6 @@ foreach ($mediaList as $elemento) {
                 // Maneja la respuesta del controlador
                 console.log(data.message); // Muestra el mensaje del controlador
                 console.log(data);
-
 
                 const errorInfoDiv = document.getElementById("errorInfo");
                 errorInfoDiv.innerHTML = "";
@@ -359,8 +391,10 @@ foreach ($mediaList as $elemento) {
     }
 
     function closePopup() {
+        window.location.href = "http://localhost/tfg/4squares/index.php";
         var overlay = document.getElementById("overlay");
         overlay.style.display = "none";
+
     }
 
     function resetForm() {
@@ -371,9 +405,64 @@ foreach ($mediaList as $elemento) {
         previewContainer.innerHTML = "";
         previewContainer.classList.add("displayNone");
     }
-    // // Agregar evento de escucha al formulario para enviarlo
-    // const form = document.getElementById("myForm");
-    // form.addEventListener("submit", handleSubmit);
+
+    //lista de las imagenes que ya tenia el producto subidas, para comparar en el back que se ha modificado
+    oldImagesListAfterUpdate = [];
+    oldImagesListAfterUpdate = getUrlImagesFromDivId('old-images-preview-container');
+    oldImagesListbeforeUpdate = [];
+    oldImagesListbeforeUpdate = getUrlImagesFromDivId('old-images-preview-container');
+
+    //botones borrado images actuales
+    const deleteButtons = document.querySelectorAll(".old-images-delete-icon");
+    deleteButtons.forEach((button) => {
+        button.addEventListener("click", handleDeleteOldImage);
+    });
+
+    // capturo el contenedor de las imagenes antiguas
+    const oldImagesPreviewContainer = document.getElementById("old-images-preview-container");
+
+    function handleDeleteOldImage(event) {
+        var thumbnailContainer = "";
+
+        if (event.target.nodeName == "path") {
+            thumbnailContainer = event.target.parentNode.parentNode.parentNode;
+        } else {
+            thumbnailContainer = event.target.parentNode.parentNode;
+        }
+
+        //detecto en que indice se encuentra la imagen a borrar
+        const index = Array.from(oldImagesPreviewContainer.children).indexOf(thumbnailContainer);
+
+        // Eliminar la imagen del array de imágenes seleccionadas
+        oldImagesListAfterUpdate.splice(index, 1);
+
+        // Eliminar la imagen de la previsualización
+        oldImagesPreviewContainer.removeChild(thumbnailContainer);
+
+        if (oldImagesListAfterUpdate.length == 0) {
+            oldImagesPreviewContainer.remove();
+            document.getElementById('old-images-preview-container-label').remove();
+        };
+    }
+
+    function getUrlImagesFromDivId(divId) {
+        try {
+            var div = document.getElementById(divId);
+            var images = div.getElementsByTagName('img');
+            var urls = [];
+
+            for (var i = 0; i < images.length; i++) {
+                url = images[i].src.split('/')
+                url = url[7] + '/' + url[8];
+                urls.push(url);
+            }
+
+            return urls;
+        } catch {
+            urls = [];
+            return urls;
+        }
+    }
 </script>
 
 </html>

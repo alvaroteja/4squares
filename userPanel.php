@@ -28,12 +28,13 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
 <html lang="en">
 
 <head>
-    <title>4squares</title>
+    <title>4squares -panel de usuario</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
     <link rel="stylesheet" href="style/userPanel.css" />
+    <link rel="icon" href="./img/icons/favicon.ico">
 </head>
 
 <body>
@@ -55,7 +56,6 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
     <div id="userDataContainer" class="container">
         <div id="imgContainer">
             <img id="avatar-img" src="./img/avatars/<?php echo $_SESSION["user"]->getId_avatar() ?>" alt="Avatar actual" class="avatar-img" />
-            <!-- <button id="avatar-btn" class="avatar-btn">Cambiar avatar</button> -->
             <button id="avatar-btn">Cambiar avatar</button>
         </div>
         <div id="dataContainer">
@@ -77,10 +77,6 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
             </div>
         </div>
         <?php
-        //echo "<pre>";
-        // print_r($_SESSION["user"]);
-        // print_r($_SESSION["avatarsList"]);
-        //print_r($userPanelFavoriteList);
         ?>
     </div>
     <div id="favoriteContainer" class="container">
@@ -134,7 +130,6 @@ $userPanelFavoriteList = $_SESSION["userPanelFavoriteList"];
 
     // Añadimos el evento 'click' al botón de abrir la capa
     voteButton.addEventListener("click", function() {
-        console.log(overlay.classList);
         overlay.classList.add("active");
     });
 

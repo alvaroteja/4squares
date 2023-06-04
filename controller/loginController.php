@@ -5,14 +5,10 @@ include("../service/AvatarService.php");
 
 session_start();
 
-//$connnection = new DBConnection();
-//$loginService = new LoginService($connnection);
 //Si ya está logeado el usuario, vamos a logout
 if (isset($_SESSION['user'])) {
     if (isset($_POST['logout'])) {
         session_destroy();
-        // unset($_SESSION['user']);
-        // unset($_SESSION);
         header("Location: ../index.php");
     } else {
         header("Location: ../logout.php");
@@ -21,15 +17,11 @@ if (isset($_SESSION['user'])) {
 
     //Si venimos por el post, validar datos
     if (isset($_POST['login'])) {
-        //echo "<pre>";
-        //echo "esto es el post";
-        //print_r($_POST);
 
         $connnection = new DBConnection();
         $loginService = new LoginService($connnection);
         $errorList = $loginService->validateInputs($_POST);
-        //echo "esto es la lista de errores";
-        //print_r($errorList);
+
         //Si hay errores los pasamos por el get a la vista
         if (gettype($errorList) != "object" && count($errorList) > 0) {
             //generamos el get
@@ -58,8 +50,6 @@ if (isset($_SESSION['user'])) {
             $avatarService = new AvatarService($connnection);
             $avatarUrl = $avatarService->getAvatarByID($errorList->getId_avatar());
             $errorList->setId_avatar($avatarUrl);
-            // print_r($errorList);
-            // exit;
 
             $_SESSION['user'] = $errorList;
             header("Location: ../index.php");

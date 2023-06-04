@@ -7,9 +7,6 @@ include("../webSettings.php");
 include("../model/UserModel.php");
 session_start();
 
-// error_reporting(E_ALL);
-// ini_set('display_errors', '1');
-
 $connnection = new DBConnection();
 $productService = new ProductService($connnection);
 
@@ -34,9 +31,7 @@ if ($_SESSION["currentPage"] > $_SESSION["maxPages"]) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['filterRequest']) {
 
-    $serachInput = $_POST["serachInput"];
-    // echo "<pre>";
-    // print_r($_POST);
+    $searchInput = $_POST["searchInput"];
 
     $productsIdList = $productService->getIdProductsByFilter($_POST);
 
@@ -51,9 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['filterRequest']) {
         $_SESSION[$key] = $value;
     }
     $_SESSION["filterValues"] = $filterValues;
-    // echo "<pre>";
-    // print_r($_SESSION);
-    // exit;
 }
 
 //Crea una lista de objetos producto que se va a mostrar en la pagina
